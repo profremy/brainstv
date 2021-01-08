@@ -1,0 +1,24 @@
+:root {
+    --color-background: #f2f3f5;
+}
+
+.jumbotron {
+    background-color: var(--color-background);
+    border-radius: 0;
+    padding-top: 10px;
+    margin-bottom: 0;
+    min-height: 87vh;
+
+}
+
+/* Buttons */
+.btn-outline-success {
+    color:var(--white);
+    border-color: var(--white);
+}
+
+.btn-outline-success:hover {
+    color: var(--dark);
+    background-color:var(--light);
+    border-color: var(--light);
+}

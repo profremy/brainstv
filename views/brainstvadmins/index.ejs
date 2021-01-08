@@ -1,0 +1,46 @@
+<div class="jumbotron container-fluid">
+    <h1 class="display-4">Welcome, SuperAdmin!</h1>
+    <p class="lead">Use the tabs below to insert and edit content.</p>
+    <hr class="my-4">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-logo-tab" data-toggle="tab" href="#nav-logo" role="tab" aria-controls="nav-logo" aria-selected="true">Logo</a>
+        <a class="nav-item nav-link" id="nav-flashMessage-tab" data-toggle="tab" href="#nav-flashMessage" role="tab" aria-controls="nav-flashMessage" aria-selected="false">Info Flash</a>
+        <a class="nav-item nav-link" id="nav-popUpInfo-tab" data-toggle="tab" href="#nav-popUpInfo" role="tab" aria-controls="nav-popUpInfo" aria-selected="false">Pop Up</a>
+        <a class="nav-item nav-link" id="nav-shows-tab" data-toggle="tab" href="#nav-shows" role="tab" aria-controls="nav-shows" aria-selected="true">Shows</a>
+        <a class="nav-item nav-link" id="nav-newsroom-tab" data-toggle="tab" href="#nav-newsroom" role="tab" aria-controls="nav-newsroom" aria-selected="false">News Room</a>
+        <a class="nav-item nav-link" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" aria-controls="nav-users" aria-selected="false">Members</a>
+        <a class="nav-item nav-link" id="nav-adminusers-tab" data-toggle="tab" href="#nav-adminusers" role="tab" aria-controls="nav-users" aria-selected="false">Admin</a>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade admin-tab-pane show active" id="nav-logo" role="tabpanel" aria-labelledby="nav-logo-tab">Upload Company Logo</div>
+      <div class="tab-pane fade admin-tab-pane" id="nav-flashMessage" role="tabpanel" aria-labelledby="nav-flashMessage-tab">Post/Edit/Update/Delete Flash Message</div>
+      <div class="tab-pane fade admin-tab-pane" id="nav-popUpInfo" role="tabpanel" aria-labelledby="nav-popUpInfo-tab">Post/Edit/Update/Delete PopUpInfo</div>
+      <div class="tab-pane fade admin-tab-pane" id="nav-shows" role="tabpanel" aria-labelledby="nav-shows-tab">ON NOW, NEXT, LATER</div>
+      <div class="tab-pane fade admin-tab-pane" id="nav-newsroom" role="tabpanel" aria-labelledby="nav-newsroom-tab">Post/Edit/Update/Delete News</div>
+      <div class="tab-pane fade admin-tab-pane" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+        <h4 class="section-sub-heading">View and Delete Club Members</h4>
+        <div class="row">
+          <div class="auto-grid">
+            <!-- <a href="/brainstvadmin/new" class="btn btn-lg btn-success">Create New Admin User</a> -->
+            <a href="/brainstvadmins/clubMembers" class="btn btn-lg btn-primary">View Club Member Profile</a>
+            <!-- <a href="/brainstvadmin/update" class="btn btn-lg btn-warning">Change Admin Password</a> -->
+            <a href="/brainstvadmins/deleteUser" class="btn btn-lg btn-danger">Delete Club Member</a>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade admin-tab-pane" id="nav-adminusers" role="tabpanel" aria-labelledby="nav-users-tab">
+        <h4 class="section-sub-heading">Admin Users Management Console</h4>
+        <div class="row">
+            <div class="auto-grid">
+              <a href="/brainstvadmins/new" class="btn btn-lg btn-success">Create New Admin User</a>
+              <a href="/brainstvadmins/viewAdmin" class="btn btn-lg btn-primary">View Admin Users</a>
+              <a href="/brainstvadmins/updateAdmin" class="btn btn-lg btn-warning">Change Admin Password</a>
+              <a href="/brainstvadmins/deleteAdmin" class="btn btn-lg btn-danger">Delete Admin User</a>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>

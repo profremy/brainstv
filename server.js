@@ -1,24 +1,25 @@
 const path = require('path');
-var result;
+
 if (process.env.NODE_ENV !== 'production') {
   const dotenv = require('dotenv');
-  result = dotenv.config({ path: './.env' });
-
-  // check that .env is loading
-  if (result.error) {
-    throw result.error;
-  }
-  console.log(result.parsed);
-  //console.log(process.env)
+  const result = dotenv.config({ path: './.env' });
 }
+
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const bodyParser = require('body-parser');
+
 const indexRouter = require('./routes/index');
-const mongoose = require('mongoose');
+const brainstvadminRouter = require('./routes/brainstvadmins');
+const loginRouter = require('./routes/login');
+const tvScheduleRouter = require('./routes/tvSchedule');
+const registerRouter = require('./routes/register');
+const brainstvRouter = require('./routes/brainstv');
 
 const app = express();
 
 const PORT = process.env.PORT || 5000;
+const mongoose = require('mongoose');
 const DB = process.env.DB_CONN_STRING.replace('<password>', process.env.DB_CONN_PW);
 
 app.set('view engine', 'ejs');
@@ -27,6 +28,7 @@ app.set('layout', 'layouts/layout');
 
 app.use(expressLayouts);
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 
 // Connect to live database
 mongoose.connect(DB, {
@@ -41,6 +43,11 @@ db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Live db Connection to Mongoose Successful!'));
 
 app.use('/', indexRouter);
+app.use('/brainstvadmins', brainstvadminRouter);
+app.use('/login', loginRouter);
+app.use('/tvSchedule', tvScheduleRouter);
+app.use('/register', registerRouter);
+app.use('/brainstv', brainstvRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);

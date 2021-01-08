@@ -1,0 +1,19 @@
+footer {
+    padding: 1rem 0 0.5rem;
+    background: linear-gradient(to bottom, var(--color-background-dark), var(--color-background-light));
+    color: var(--white);
+    text-align: center;
+    /* position: fixed;
+    bottom: 0;
+    left: 0; */
+    width: 100%;
+}
+
+footer .nav-item a {
+    color: var(--white);
+}
+
+footer .nav-item:not(:last-child) {
+    border-right: 1px solid var(--white);
+    border-color: var(--white);
+}

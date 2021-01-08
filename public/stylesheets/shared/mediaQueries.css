@@ -1,0 +1,135 @@
+@media only screen and (max-width: 2560px) {
+    /* Header ejs*/
+    .menuItems {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.5s;
+    }
+
+    .auto-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+        width: 60%;
+        margin: 0 auto;
+        gap: 10px;
+    } 
+}
+
+@media only screen and (hover: none) {
+    /* Index ejs Start/Home page */
+    #popUpMessageLabel {
+        font-size: 23px;
+    }
+
+
+    #navbarNav .menuItems {
+        margin-right: 0;
+    }
+
+    .navbar-nav .nav-item:not(:last-child) {
+        margin-right: 0;
+    }
+
+    .menuItems:hover {
+        transform: scale(1)
+    }
+
+
+    #logo {
+        margin-top: -22px;
+    }
+
+}
+
+@media only screen and (max-width: 1024px) {
+    .auto-grid {
+        grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+        width: 90%;
+    } 
+}
+
+@media only screen and (max-width: 991px) {
+    /* Header ejs*/
+    .navbar-nav .nav-item:nth-of-type(odd) {
+        background-color: var(--light);
+    }
+
+    footer .nav-item:not(:last-child) {
+        border-right: 0;
+    }
+
+    footer .nav-item {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+    }
+
+    .navbar-nav .menuItems {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    
+
+}
+
+@media only screen and (max-width: 768px) {
+    .auto-grid {
+        grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+        width: 80%;
+    } 
+}
+
+@media only screen and (max-width: 576px) {
+    /* Header ejs*/
+    #searchForm {
+        position: relative;
+        width: 100%;
+    }
+
+    .informationFlash h3 {
+        font-size: 1rem;
+    }
+
+    #searchBtn {
+        position: absolute;
+        top: -8px;
+        right: 0;
+        background-color: var(--color-background-dark);
+        border-radius: 0 0.25rem 0.25rem 0;
+    }
+
+    .menuItems:hover {
+        transform: scale(1)
+    }
+
+    /* BrainstvAdmin Index ejs */
+    .display-4 {
+        font-size: 30px;
+    }
+
+    /* Footer ejs */
+    footer {
+        font-size: 70%;
+    }
+
+    .auto-grid {
+        grid-template-columns: 1fr;
+        width: 90%;
+    } 
+}
+
+@media only screen and (max-width: 480px) {
+
+    /* Header ejs */
+    #auth-link {
+        font-size: 1rem;
+    }
+
+    footer .nav-item {
+        grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    }
+}

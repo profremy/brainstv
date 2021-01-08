@@ -1,0 +1,12 @@
+.section-sub-heading {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.admin-tab-pane {
+    background-color: var(--white);
+    padding: 15px;
+    border-bottom: var(--light-border);
+    border-left: var(--light-border);
+    border-right: var(--light-border);
+}

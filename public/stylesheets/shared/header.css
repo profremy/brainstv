@@ -1,0 +1,102 @@
+header {
+    box-shadow: var(--box-shadow);
+    background-color:var(--white);
+
+}
+.top-header {
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(to bottom, var(--color-background-dark), var(--color-background-light));
+    color: var(--white);
+
+}
+
+.top-header a {
+    color: var(--white);
+    text-decoration: none;
+}
+.top-header a:hover {
+    background-color:var(--light);
+    color: var(--dark);
+}
+
+.social-icons i:not(:last-child) {
+    margin-right: 5px;
+}
+
+.social-icons i:hover {
+    cursor: pointer;
+}
+
+#searchBtn {
+    color:var(--white);
+    border-color: var(--white);
+}
+#searchBtn:hover {
+    color: var(--dark);
+    background-color:var(--light);
+    border-color: var(--light);
+}
+
+#logo {
+    width: 130px;
+    height: auto;
+    margin-top: -30px;
+}
+
+/* .menuItems {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s;
+} */
+.menuItems:hover {
+    transform: scale(1.2)
+}
+
+.navbar-nav .nav-item:not(:last-child) {
+    margin-right: 30px;
+}
+
+.nav-menu-buttons  {
+    margin: 0 auto;
+}
+
+.shows {
+    color: var(--teal);
+}
+.games {
+    color: var(--red);
+}
+.videos {
+    color: var(--green);
+}
+.activities {
+    color: var(--pink);
+}
+.takePart {
+    color: var(--cyan);
+}
+.eClassRoom {
+    color: var(--dark);
+}
+.newsRoom {
+    color: var(--indigo);
+}
+.ellipsis {
+    color: var(--primary);
+}
+
+/* Sticky Header */
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+header.sticky {
+    transition: all 8s ease;
+}
+

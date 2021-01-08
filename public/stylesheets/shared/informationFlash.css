@@ -1,0 +1,51 @@
+.informationFlash {
+    color: var(--white);
+    background-color: var(--pink);
+    padding: 1px 0;
+    margin-bottom: 5px;
+    height: 50px;	
+    overflow: hidden;
+    position: relative;
+  }
+  .informationFlash h3 {
+      display: inline-block;
+      white-space: nowrap;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      line-height: 50px;
+      text-align: center;
+  
+      /* Starting position */
+         -moz-transform:translateX(100%);
+         -webkit-transform:translateX(100%);	
+         transform:translateX(100%);
+  
+   /* Apply animation to this element */	
+         -moz-animation: informationFlash 35s linear infinite;
+         -webkit-animation: informationFlash 35s linear infinite;
+         animation: informationFlash 35s linear infinite;
+  }
+  
+  /* Move it (define the animation) */
+        @-moz-keyframes informationFlash {
+         0%   { -moz-transform: translateX(100%); }
+         100% { -moz-transform: translateX(-100%); }
+        }
+        @-webkit-keyframes informationFlash {
+         0%   { -webkit-transform: translateX(100%); }
+         100% { -webkit-transform: translateX(-100%); }
+        }
+        @keyframes informationFlash {
+         0%   { 
+         -moz-transform: translateX(100%); /* Firefox bug fix */
+         -webkit-transform: translateX(100%); /* Firefox bug fix */
+         transform: translateX(100%); 		
+         }
+         100% { 
+         -moz-transform: translateX(-100%); /* Firefox bug fix */
+         -webkit-transform: translateX(-100%); /* Firefox bug fix */
+         transform: translateX(-100%); 
+         }
+        }

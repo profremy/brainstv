@@ -1,0 +1,72 @@
+
+/* Most popular question style starts here */
+.js__view {
+    display: block;
+}
+
+.js__hide {
+    display: none;
+}
+
+.mpq {
+    width: 90%;
+    margin: 15px auto;
+}
+
+.mpq h1 {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.mpq p {
+    margin: 0;
+}
+
+.mpqGroup {
+    list-style: none;
+    padding: 0;
+}
+
+.mpq__list:first-child {
+    border-top: 1px solid var(--color-background-light);
+}
+
+.mpq__list {
+    border-bottom: 1px solid var(--color-background-light);
+    padding: 10px 5px;
+}
+
+.question {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.answer {
+    display: none;
+}
+
+.viewMore {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: var(--color-background-light);
+}
+
+.viewMore__btn ion-icon {
+    font-size: 64px;
+}
+
+ion-icon {
+    font-size: 32px;
+    color: var(--color-background-light);
+    --ionicon-stroke-width: 32px;
+    vertical-align: top;
+    fill: var(--color-background-light);
+    
+}
+
+/* Most popular question style ends here */
