@@ -7,33 +7,35 @@
 
     <nav class="navbar navbar-light bg-info">
         <a class="navbar-brand">Search User Name</a>
-        <form action="/brainstvadmins/viewAdmin" method="GET" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" name="userName" value="<%= searchOptions.userName %>"
+        <form action="/brainstvadmins/viewAdmin" method="GET" class="form-inline my-2 my-lg-0 searchForm">
+            <input class="form-control mr-sm-2" type="search" name="userName" value="<%= searchOptions.userName %>"
                 placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-success my-2 my-sm-0 searchBtn" type="submit">Search</button>
 
         </form>
     </nav>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">User Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Admin Role</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% admins.forEach(admin => { %>
-            <tr>
-                <th scope="row"></th>
-                <td><%= admin.userName %></td>
-                <td><%= admin.userEmail %></td>
-                <td><%= admin.adminRole %></td>
-            </tr>
-            <% }) %>
-        </tbody>
-    </table>
+    <div class="table-responsive-sm">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Admin Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% admins.forEach(admin => { %>
+                <tr>
+                    <th scope="row"></th>
+                    <td><%= admin.userName %></td>
+                    <td><%= admin.userEmail %></td>
+                    <td><%= admin.adminRole %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
 
     <div class="form-group row">
         <div class="col-sm-10">
