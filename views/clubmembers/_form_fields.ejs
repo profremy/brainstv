@@ -1,0 +1,183 @@
+<!-- <div class="card">
+    <div class="card-header bg-yellow">
+        Basic Information
+    </div>
+    <div class="card-body">
+        <h5>With a BrainsTV Club account you can:</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fa fa-check-circle-o" aria-hidden="true"></i><span>Add your
+                    profile picture</span></li>
+            <li class="list-group-item"><i class="fa fa-check-circle-o" aria-hidden="true"></i><span>Add your
+                    profile picture</span></li>
+        </ul>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <h5 class="card-title">NAME</h5>
+        <div class="form-row">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Last name">
+            </div>
+        </div>
+        <h5 class="card-title">ADDRESS</h5>
+        <a href="#" class="btn btn-info">Next</a>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-4 desktopScreen">
+        <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-basic-list" data-toggle="list"
+                href="#list-basic" role="tab" aria-controls="basic">Basic Information</a>
+            <a class="list-group-item list-group-item-action" id="list-moreInfo-list" data-toggle="list"
+                href="#list-moreInfo" role="tab" aria-controls="moreInfo">Tell us more about you</a>
+            <a class="list-group-item list-group-item-action" id="list-contact-details-list" data-toggle="list"
+                href="#list-contact-details" role="tab" aria-controls="contact-details">Contact details</a>
+            <a class="list-group-item list-group-item-action" id="list-login-details-list" data-toggle="list"
+                href="#list-login-details" role="tab" aria-controls="login-details">Create login details</a>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-basic" role="tabpanel" aria-labelledby="list-basic-list">
+                <div class="card">
+                    <div class="card-header bg-yellow">
+                        Basic Information
+                    </div>
+                    <div class="card-body">
+                        <h5>With a BrainsTV Club account you can:</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="form-li-flex"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                <p>Add
+                                    your
+                                    profile picture</p>
+                            </li>
+                            <li class="form-li-flex"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                <p>Create your own user name</p>
+                            </li>
+                            <li class="form-li-flex"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                <p>And
+                                    lots more to come...</p>
+                            </li>
+                        </ul>
+
+                        <h5 class="marginTopBottomSmall">NAME</h5>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" name="firstname" class="form-control form-border"
+                                    placeholder="First name">
+                            </div>
+                            <div class="col">
+                                <input type="text" name="lastname" class="form-control form-border"
+                                    placeholder="Last name">
+                            </div>
+                        </div>
+                        <h5 class="marginTopBottomSmall">ADDRESS</h5>
+                        <div class="form-group">
+                            <input type="text" name="address" class="form-control form-border" id="address"
+                                placeholder="Your address">
+                        </div>
+                        <span id="switch-list-moreInfo" class="msf-cta">Next</span>
+                        <!-- <span id="switch-list-moreInfo" class="msf-cta">Next</span> -->
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="list-moreInfo" role="tabpanel" aria-labelledby="list-moreInfo-list">
+                <div class="card">
+                    <div class="card-header bg-yellow">
+                        Tell us more about yourself
+                    </div>
+                    <div class="card-body">
+                        <h5>Nice to meet you <span class="clubmember-name">REMIGIUS RICHARDS</span><br>
+                        </h5>
+
+                        <h5 class="marginTopBottomSmall">Are you...</h5>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" name="firstname" class="form-control form-border"
+                                    placeholder="First name">
+                            </div>
+                            <div class="col">
+                                <input type="text" name="lastname" class="form-control form-border"
+                                    placeholder="Last name">
+                            </div>
+                        </div>
+                        <h5 class="marginTopBottomSmall">How old are you?</h5>
+                        <div class="form-group">
+                            <input type="text" name="address" class="form-control form-border" id="address"
+                                placeholder="Your address">
+                        </div>
+                        <span id="switch-list-basic" class="msf-cta">Previous</span>
+                        <span id="switch-list-contact-details" class="msf-cta">Next</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="list-contact-details" role="tabpanel"
+                aria-labelledby="list-contact-details-list">
+                <div class="card">
+                    <div class="card-header bg-yellow">
+                        Your Contact Details
+                    </div>
+                    <div class="card-body">
+                        <h5 class="marginTopBottomSmall">PHONE NUMBER</h5>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" name="firstname" class="form-control form-border"
+                                    placeholder="First name">
+                            </div>
+                            <div class="col">
+                                <input type="text" name="lastname" class="form-control form-border"
+                                    placeholder="Last name">
+                            </div>
+                        </div>
+                        <h5 class="marginTopBottomSmall">Where do you live?</h5>
+                        <div class="form-group">
+                            <input type="text" name="address" class="form-control form-border" id="address"
+                                placeholder="Your address">
+                        </div>
+                        <span id="switch-list-moreInfo" class="msf-cta">Previous</span>
+                        <span id="switch-list-login-details" class="msf-cta">Next</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="list-login-details" role="tabpanel"
+                aria-labelledby="list-login-details-list">
+                <div class="card">
+                    <div class="card-header bg-yellow">
+                        Create you password
+                    </div>
+                    <div class="card-body">
+                        <h5>Almost there...<br>
+                            You need to create a secret password to use with your email address when you sign in.</h5>
+                        <h5 class="marginTopBottomSmall">CHOOSE YOUR PASSWORD</h5>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" name="firstname" class="form-control form-border"
+                                    placeholder="First name">
+                            </div>
+                            <div class="col">
+                                <input type="text" name="lastname" class="form-control form-border"
+                                    placeholder="Last name">
+                            </div>
+                        </div>
+                        <h5 class="marginTopBottomSmall">CONFIRM YOUR PASSWORD</h5>
+                        <div class="form-group">
+                            <input type="text" name="address" class="form-control form-border" id="address"
+                                placeholder="Your address">
+                        </div>
+                        <span id="switch-list-contact-details" class="msf-cta">Previous</span>
+                        <button type="submit" class="btn btn-success" id="loader"><i class="fa fa-cloud"
+                                aria-hidden="true"></i><span>Register</span></button>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>

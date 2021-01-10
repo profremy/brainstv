@@ -13,8 +13,8 @@ const indexRouter = require('./routes/index');
 const brainstvadminRouter = require('./routes/brainstvadmins');
 const loginRouter = require('./routes/login');
 const tvScheduleRouter = require('./routes/tvSchedule');
-const registerRouter = require('./routes/register');
 const brainstvRouter = require('./routes/brainstv');
+const clubMemberRouter = require('./routes/clubmembers');
 
 const app = express();
 
@@ -46,8 +46,8 @@ app.use('/', indexRouter);
 app.use('/brainstvadmins', brainstvadminRouter);
 app.use('/login', loginRouter);
 app.use('/tvSchedule', tvScheduleRouter);
-app.use('/register', registerRouter);
 app.use('/brainstv', brainstvRouter);
+app.use('/clubmembers', clubMemberRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);

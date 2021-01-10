@@ -170,4 +170,34 @@ window.addEventListener('scroll', scrollThrottle);
   });
 }
 
+{
+  // Multi step form handler
+  // Click simulation
+  function simulateClick(idString) {
+    const event = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+    const switchSection = document.getElementById(`${idString}`);
+    switchSection.dispatchEvent(event);
+  }
+
+  elements.app.addEventListener('click', (e) => {
+    var targetLink = e.target.getAttribute('id');
+    const extras = targetLink.length - 7;
+    const switchId = targetLink.slice(0, `-${extras}`); // "switch-"
+
+    if (switchId === 'switch-') {
+      var id = targetLink.slice(7);
+      var idString = id + '-list';
+      simulateClick(idString);
+
+      // $(document).on('click', '#switch-list-moreInfo', function (event) {
+      //   event.preventDefault();
+      //   $('#list-moreInfo' + '-list').click();
+      // });
+    }
+  });
+}
 console.log('end of script');

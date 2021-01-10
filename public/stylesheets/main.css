@@ -38,6 +38,7 @@ body {
 .flex {
     display: flex;
     justify-content: space-evenly;
+    */
 }
 
 /* ******************************** */
@@ -98,4 +99,68 @@ textarea:focus::-moz-placeholder {
 #success {
     text-align: center;
     margin: 0 auto;
+}
+
+/* Club Members Registration */
+.bg-newclubmember {
+    background-image: url(../images/landscape.png);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.bg-yellow {
+    background-color: var(--bg-yellow);
+    color: #2e2e2e !important;
+}
+
+.border-radius-none {
+    border-radius: 0 !important;
+}
+
+.page-heading {
+    /* display: inline-block; */
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-border {
+    border: var(--form-border) !important;
+}
+
+.msf-cta {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    background-color: var(--blue) !important;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.fa-check-circle-o:before {
+    content: "\f05d";
+    vertical-align: sub !important;
+}
+
+.form-li-flex {
+    display: flex;
+    list-style: none;
 }

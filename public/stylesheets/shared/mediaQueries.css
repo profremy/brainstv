@@ -53,6 +53,21 @@
 
 @media only screen and (max-width: 991px) {
 
+    .btn:not(:disabled):not(.disabled),
+    .msf-cta {
+        border-radius: 0 !important;
+    }
+
+    .desktopScreen {
+        display: none;
+    }
+
+    .col-4,
+    .col-8 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
     /* Header ejs*/
     .navbar-nav .nav-item:nth-of-type(odd) {
         background-color: var(--light);
@@ -99,12 +114,19 @@
         font-size: 1rem;
     }
 
+    #searchBtn {
+        background-color: var(--color-background-dark);
+    }
+
+    .searchBtn {
+        background-color: var(--info);
+    }
+
     #searchBtn,
     .searchBtn {
         position: absolute;
         top: -8px;
         right: 0;
-        background-color: var(--color-background-dark);
         border-radius: 0 0.25rem 0.25rem 0;
     }
 
@@ -132,7 +154,7 @@
 
     /* Header ejs */
     #auth-link {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     footer .nav-item {

@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Admin = require('../models/brainstvadmin');
+const SiteLogo = require('../models/brainstvlogo');
 
 //Admin User Page Route
 router.get('/', (req, res) => {
+  // Only admin users can view this route
+
   res.render('brainstvadmins/index');
 });
 
@@ -46,6 +49,30 @@ router.post('/', async (req, res) => {
     res.render('brainstvadmins/new', {
       admin: admin,
       errorMessage: 'Error creating Admin User',
+    });
+  }
+});
+
+//New Site Logo Route
+router.get('/uploadsitelogo', (req, res) => {
+  res.render('brainstvadmins/uploadsitelogo', { logo: new SiteLogo() });
+});
+
+// Upload site logo
+router.post('/', async (req, res) => {
+  const logo = new SiteLogo({
+    siteLogoImage: req.body.siteLogoImage,
+  });
+
+  try {
+    const newSiteLogo = await logo.save();
+    // res.redirect(`brainstvadmin/${newAdminUser.id}`);
+    res.redirect('brainstvadmins');
+    // { successMessage: `Admin user with role ${req.body.adminRole} was create.` };
+  } catch {
+    res.render('brainstvadmins/uploadsitelogo', {
+      admin: admin,
+      errorMessage: 'Error uploading site logo image',
     });
   }
 });
