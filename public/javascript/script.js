@@ -173,7 +173,25 @@ window.addEventListener('scroll', scrollThrottle);
 {
   // Multi step form handler
   // Click simulation
-  function simulateClick(idString) {
+  var fname = document.querySelector('.clubmember_firstname');
+  greeting = (firstname) => {
+    var date = new Date();
+    var hours = date.getHours();
+    var message = hours < 12 ? 'Good Morning' : hours < 18 ? 'Good Afternoon' : 'Good Evening';
+
+    if (firstname !== '') {
+      fname.textContent = `${message} ${firstname},`;
+    } else {
+      fname.textContent = `${message},`;
+    }
+  };
+
+  document.getElementById('switch-list-moreInfo').addEventListener('click', () => {
+    var firstNameValue = document.getElementById('firstname').value;
+    greeting(firstNameValue);
+  });
+
+  simulateClick = (idString) => {
     const event = new MouseEvent('click', {
       view: window,
       bubbles: true,
@@ -181,16 +199,26 @@ window.addEventListener('scroll', scrollThrottle);
     });
     const switchSection = document.getElementById(`${idString}`);
     switchSection.dispatchEvent(event);
-  }
+  };
 
   elements.app.addEventListener('click', (e) => {
-    var targetLink = e.target.getAttribute('id');
-    const extras = targetLink.length - 7;
-    const switchId = targetLink.slice(0, `-${extras}`); // "switch-"
+    var switchId, targetLink;
+    if (e.target.hasAttribute('id')) {
+      targetLink = e.target.getAttribute('id');
+      // const targetLink = e.target.getAttribute('id');
+
+      if (targetLink.hasOwnProperty('length')) {
+        const extraChar = targetLink.length - 7;
+        switchId = targetLink.slice(0, `-${extraChar}`); // "switch-"
+        // const switchId = targetLink.slice(0, `-${extraChar}`); // "switch-"
+        const remainingId = targetLink.slice(`-${extraChar}`);
+        //console.log(remainingId);
+      }
+    }
 
     if (switchId === 'switch-') {
-      var id = targetLink.slice(7);
-      var idString = id + '-list';
+      const id = targetLink.slice(7);
+      const idString = id + '-list';
       simulateClick(idString);
 
       // $(document).on('click', '#switch-list-moreInfo', function (event) {
