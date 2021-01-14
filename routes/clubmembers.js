@@ -14,9 +14,22 @@ router.get('/newClubMember', (req, res) => {
   res.render('clubmembers/newclubmember');
 });
 
+//Thank you for Registering page
+router.get('/registered', (req, res) => {
+  res.render('clubmembers/registered');
+});
+
 //Create New User Route
 router.post('/', async (req, res) => {
-  res.send('Create ClumbMember');
+  //res.send('Create ClumbMember');
+  try {
+    console.log(req.body);
+    res.redirect('clubmembers/registered');
+  } catch (err) {
+    res.render('clubmembers/newclubmember', {
+      errorMessage: 'There was an error, review all fields highlighted in red and try again.',
+    });
+  }
 });
 
 module.exports = router;

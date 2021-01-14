@@ -1,4 +1,21 @@
 @media only screen and (max-width: 2560px) {
+    .mobileScreen {
+        display: none;
+    }
+
+    .twelveplus {
+        position: relative;
+        margin-bottom: 1.5rem
+    }
+
+    .twelveplusfeedback {
+        position: absolute;
+        width: 100%;
+        top: 80%;
+        left: -182%;
+        width: max-content;
+        transform: translate(-188%, 28%);
+    }
 
     /* Header ejs*/
     .menuItems {
@@ -14,6 +31,17 @@
         width: 60%;
         margin: 0 auto;
         gap: 10px;
+    }
+
+    .middleOR {
+        position: relative;
+    }
+
+    .or {
+        position: absolute;
+        top: 50%;
+        left: 30%;
+        transform: translate(0, -50%);
     }
 }
 
@@ -42,6 +70,10 @@
         margin-top: -22px;
     }
 
+    #backToTop {
+        display: none;
+    }
+
 }
 
 @media only screen and (max-width: 1024px) {
@@ -60,6 +92,10 @@
 
     .desktopScreen {
         display: none;
+    }
+
+    .mobileScreen {
+        display: block;
     }
 
     .col-4,
@@ -90,6 +126,18 @@
         padding-right: 10px;
     }
 
+    .or {
+        left: 34%;
+    }
+
+    .twelveplusfeedback {
+        position: absolute;
+        top: 80%;
+        left: -182%;
+        width: max-content;
+        transform: translate(-188%, 28%);
+    }
+
 
 
 }
@@ -100,6 +148,16 @@
         width: 80%;
     }
 }
+
+@media only screen and (max-width: 667px) {
+
+    .twelveplusfeedback {
+        top: 80%;
+        left: 130%;
+        transform: translate(-30%, 28%);
+    }
+}
+
 
 @media only screen and (max-width: 576px) {
 
@@ -159,5 +217,27 @@
 
     footer .nav-item {
         grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    }
+
+    .twelveplusfeedback {
+        top: 80%;
+        left: -104%;
+        transform: translate(-30%, 28%);
+    }
+}
+
+@media only screen and (max-width: 320px) {
+
+    .twelveplusfeedback {
+        left: 60%;
+        transform: translate(-4%, 28%);
+    }
+}
+
+@media only screen and (max-width: 280px) {
+
+    .twelveplusfeedback {
+        left: -60%;
+        transform: translate(-4%, 28%);
     }
 }

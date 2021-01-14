@@ -1,4 +1,12 @@
 console.log('Script started!');
+
+// window.onerror = function (msg, url, lineNo, columnNo, error) {
+//   var message = ['Message: ' + msg, 'URL: ' + url, 'Line: ' + lineNo, 'Column: ' + columnNo, 'Error object: ' + JSON.stringify(error)].join(' - ');
+
+//   alert(message);
+//   return false;
+// };
+
 const elements = {
   app: document.querySelector('.app'),
   popUpMessage: document.getElementById('popUpMessage'),
@@ -12,6 +20,52 @@ const elements = {
   loaderTrigger: document.getElementById('loader'),
   app: document.getElementById('app'),
 };
+
+///*
+(function () {
+  'use strict';
+  var submitSuccess = document.querySelector('.submit-success');
+  var submitError = document.querySelector('.submit-error');
+
+  window.addEventListener(
+    'load',
+    function () {
+      // var submitSuccess = document.querySelector('.submit-success');
+      // var submitError = document.querySelector('.submit-error');
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener(
+          'submit',
+          function (event) {
+            // if (form.checkValidity() === true) {
+            //   console.log('submitSuccess');
+            //   submitSuccess.classList.add('alert');
+            //   submitSuccess.classList.add('show');
+            // } else {
+            //   console.log('an error occurred');
+            //   submitError.classList.add('alert');
+            //   submitError.classList.add('show');
+            //   event.preventDefault();
+            //   event.stopPropagation();
+            // }
+            // form.classList.add('was-validated');
+
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          },
+          false
+        );
+      });
+    },
+    false
+  );
+})();
+//*/
 
 $(function () {
   $('[data-toggle="popover"]').popover();
@@ -42,7 +96,7 @@ window.addEventListener('scroll', scrollThrottle);
 {
   // Popup Message handler
   const popUpTimeout = [6, 12, 24];
-  const popUP = () => {
+  popUP = () => {
     if (elements.popUpTextInfo.textContent !== '') {
       $(elements.popUpMessage).modal('show');
     }
@@ -57,7 +111,7 @@ window.addEventListener('scroll', scrollThrottle);
       const currentTime = new Date().getTime();
       timeDifference = currentTime - timeUserClosedMsg;
       const timeout = timeDifference / 1000 / 60 / 60;
-      console.log(timeout);
+      //console.log(timeout);
       if (timeout >= popUpTimeout[2]) {
         localStorage.removeItem('timeUserClosedMsg');
         popUp();
@@ -161,7 +215,6 @@ window.addEventListener('scroll', scrollThrottle);
   elements.app.addEventListener('click', (e) => {
     const createBtn = e.target.closest('#loader');
     if (createBtn) {
-      console.log('createBtn clicked');
       setTimeout(() => {
         showLoadingSpinner();
       }, 1000);
@@ -186,9 +239,12 @@ window.addEventListener('scroll', scrollThrottle);
     }
   };
 
-  document.getElementById('switch-list-moreInfo').addEventListener('click', () => {
-    var firstNameValue = document.getElementById('firstname').value;
-    greeting(firstNameValue);
+  elements.app.addEventListener('click', (e) => {
+    const targetBtn = e.target.closest('#switch-list-moreInfo');
+    if (targetBtn) {
+      var firstNameValue = document.getElementById('firstname').value;
+      greeting(firstNameValue);
+    }
   });
 
   simulateClick = (idString) => {
@@ -209,23 +265,69 @@ window.addEventListener('scroll', scrollThrottle);
 
       if (targetLink.hasOwnProperty('length')) {
         const extraChar = targetLink.length - 7;
-        switchId = targetLink.slice(0, `-${extraChar}`); // "switch-"
-        // const switchId = targetLink.slice(0, `-${extraChar}`); // "switch-"
-        const remainingId = targetLink.slice(`-${extraChar}`);
+        //switchId = targetLink.slice(0, `-${extraChar}`); // "switch-"
+        //const remainingId = targetLink.slice(`-${extraChar}`);
+        var remainingId = targetLink.slice(`-${extraChar}`);
         //console.log(remainingId);
+
+        // console.log(remainingId);
+        var remainderzero = remainingId[0];
+        // console.log(remainderzero);
+
+        if (remainingId[0] === '2') {
+          //console.log(remainingId.slice(1));
+          var id = remainingId.slice(1);
+          var idString = id + '-list';
+          //console.log(idString);
+          if (idString[0] === 'l') {
+            simulateClick(idString);
+          }
+        } else {
+          var id = targetLink.slice(7);
+          var idString = id + '-list';
+          //console.log(idString);
+          if (idString[0] === 'l') {
+            simulateClick(idString);
+          }
+        }
       }
     }
-
+    /*
     if (switchId === 'switch-') {
-      const id = targetLink.slice(7);
-      const idString = id + '-list';
+      var id = targetLink.slice(7);
+      var idString = id + '-list';
       simulateClick(idString);
 
       // $(document).on('click', '#switch-list-moreInfo', function (event) {
       //   event.preventDefault();
       //   $('#list-moreInfo' + '-list').click();
       // });
+    } else if (remainderzero === 2) {
+      id = targetLink.slice(8);
+      idString = id + '-list';
+      simulateClick(idString);
     }
+    */
   });
 }
+
+{
+  // Go back to top
+  const top = document.querySelector('.app');
+  const backToTopBtn = document.getElementById('backToTop');
+  backToTopBtn.addEventListener('click', () => {
+    top.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  });
+
+  backToTop = () => {
+    var scrollY = window.scrollY;
+    var navTop = 116;
+    window.scrollY > navTop ? backToTopBtn.classList.add('show') : backToTopBtn.classList.remove('show');
+  };
+  window.addEventListener('scroll', backToTop);
+}
+
 console.log('end of script');

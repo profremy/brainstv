@@ -105,7 +105,7 @@ textarea:focus::-moz-placeholder {
 .bg-newclubmember {
     background-image: url(../images/landscape.png);
     background-size: cover;
-    background-attachment: fixed;
+    background-attachment: scroll;
 }
 
 .bg-yellow {
@@ -186,7 +186,7 @@ textarea:focus::-moz-placeholder {
     color: var(--red);
 }
 
-input[type="radio"]+span {
+/* input[type="radio"]+span {
     display: block;
     min-width: 4rem;
     text-align: center;
@@ -204,6 +204,7 @@ input[type="radio"]:checked+span {
     background: var(--bg-yellow);
     border: 2px solid var(--bg-yellow);
     color: #2e2e2e;
+    #28a745;
 }
 
 .radio_hidden {
@@ -218,3 +219,37 @@ input[type="radio"]:checked+span {
     background-color: rgb(150, 190, 228);
     transform: translateY(-1px);
     transition: transform all 1s;
+} */
+
+/* BackToTop Style */
+#backToTop {
+    visibility: hidden;
+    position: fixed;
+    right: 1rem;
+    bottom: 1.5rem;
+    opacity: 0;
+    z-index: 10005;
+    transition: all 1s ease-in;
+}
+
+#backToTop.show {
+    visibility: visible;
+    opacity: 1;
+
+}
+
+.submit-success,
+.submit-error {
+    display: none;
+    padding: 10px;
+}
+
+.submit-success.show,
+.submit-error.show {
+    display: block;
+}
+
+.noEmail {
+    cursor: pointer;
+    text-decoration: underline;
+}

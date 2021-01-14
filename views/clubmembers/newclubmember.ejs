@@ -3,8 +3,9 @@
             aria-hidden="true"></i><span>Cancel</span></a>
     <h4 class="border-radius-none page-heading bg-yellow">Brains Club Registration</h4>
     <hr class="my-1">
-    <form action="/clubmembers" method="POST">
+    <form class="needs-validation" novalidate action="/clubmembers" method="POST">
         <%- include('_form_fields') %>
     </form>
 
 </div>
+<script src="/javascript/checkboxvalidation.js" defer></script>
