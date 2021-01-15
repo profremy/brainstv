@@ -330,4 +330,95 @@ window.addEventListener('scroll', scrollThrottle);
   window.addEventListener('scroll', backToTop);
 }
 
+{
+  //Using Mutation observer to watch dynamically inserted elements
+  var observer = new MutationObserver(function (mutations) {
+    if ($('.new').length) {
+      console.log($('.new').length);
+      console.log('Exist, lets do something');
+      $('.new').css('color', 'red');
+      observer.disconnect(); // this.disconnect
+      //We can disconnect observer once the element exist if we dont want observe more changes in the DOM
+    }
+  });
+
+  // Start observing
+  observer.observe(document.body, {
+    //document.body is node target to observe
+    childList: true, //This is a must have for the observer with subtree
+    subtree: true, //Set to true if changes must also be observed in descendants.
+  });
+
+  $(document).ready(function () {
+    $('button').on('click', function () {
+      // $('div').remove();
+      setTimeout(function () {
+        $('#newContent').append('<div class="new">New div element</div>');
+      }, 2000);
+    });
+  });
+}
+
+{
+  var DOMStrings = {
+    appContainer: '.app',
+    searchBox: '.searchBox',
+    showNumber: '.showNumber',
+    jsServiceNumber: '.js__serviceNumber',
+    revealNumber: 'revealNumber',
+    serviceNumber: 'serviceNumber',
+    jsCloseGdpr: '#js__close__gdpr',
+    jsGdpr: '#js__gdpr',
+    gdpr: 'gdpr',
+    gdprRemove: 'gdprRemove',
+    siteFooter: '.siteFooter',
+  };
+}
+
+{
+  // Prevent display of Cookie and Privacy notice banner once user acknowledges it
+  if (localStorage.gdprAccepted) {
+    document.querySelector(DOMStrings.jsGdpr).classList.add('gdprRemove');
+    document.getElementById('jsCover').classList.add('gdprRemove');
+  }
+
+  var gdprNotice = 'User Closed Notification';
+  document.querySelector(DOMStrings.jsCloseGdpr).addEventListener('click', () => {
+    // Reverse Animate GDPR
+    const gdpr = document.querySelector('.gdpr');
+    var position = -2;
+    var callBackInterval = setInterval(animate, 10);
+
+    function animate() {
+      if (position === -235) {
+        clearInterval(callBackInterval);
+      } else {
+        position = position - 1; //position++;
+        gdpr.style.bottom = position + 'px';
+      }
+    }
+
+    setTimeout(() => {
+      document.querySelector(DOMStrings.jsGdpr).classList.remove('gdpr');
+      document.querySelector(DOMStrings.jsGdpr).classList.add('gdprRemove');
+      document.getElementById('jsCover').classList.add('gdprRemove');
+      localStorage.setItem('gdprAccepted', gdprNotice);
+    }, 1000);
+  });
+
+  // Animate GDPR
+  const gdpr = document.querySelector('.gdpr');
+  var position = -180;
+  var callBackInterval = setInterval(animate, 10);
+
+  function animate() {
+    if (position === -2) {
+      clearInterval(callBackInterval);
+    } else {
+      position = position + 1; //position++;
+      gdpr.style.bottom = position + 'px';
+    }
+  }
+}
+
 console.log('end of script');

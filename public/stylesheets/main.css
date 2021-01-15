@@ -253,3 +253,65 @@ input[type="radio"]:checked+span {
     cursor: pointer;
     text-decoration: underline;
 }
+
+/* Cookie Notice */
+.gdprRemove {
+    display: none;
+}
+
+.gdpr {
+    position: fixed !important;
+    border: 1px solid rgb(149, 149, 149) !important;
+    left: 10% !important;
+    width: 80% !important;
+    z-index: 2000 !important;
+    color: rgb(255, 255, 255) !important;
+    text-shadow: none !important;
+    background: rgb(0, 0, 0) none repeat scroll 0% 0% !important;
+    margin: 0px;
+    box-shadow: 0 0.1em 0.2em var(--box-shadow2) !important;
+    opacity: 0.9;
+}
+
+.overLay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1999;
+    cursor: pointer;
+}
+
+
+.gdpr p {
+    width: 95%;
+}
+
+.gdpr p,
+.gdpr h2 {
+    margin: 15px 35px 10px 35px !important;
+    text-align: left !important;
+    font: 10pt Verdana !important;
+
+}
+
+@media only screen and (max-width: 800px) {
+    .gdpr {
+        left: -1px !important;
+        width: 100% !important;
+    }
+
+    .gdpr p,
+    .gdpr h2 {
+        margin: 0 !important;
+        padding: 10px !important;
+    }
+}
+
+#js__close__gdpr {
+    cursor: pointer;
+}

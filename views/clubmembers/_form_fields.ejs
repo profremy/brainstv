@@ -18,14 +18,14 @@
                     <div class="card-header bg-yellow">
                         Basic Information
                         <small class="mobileScreen">Already a
-                            member?<a href="/login">
+                            member?<a href="/login" style="color: #002e5f;">
                                 Sign
                                 in
                                 here</a></small>
                     </div>
                     <div class="card-body">
                         <small class="desktopScreen" style="position: absolute; top: 15px; right: 15px;">Already a
-                            member?<a href="/login">
+                            member?<a href="/login" style="color: #002e5f;">
                                 Sign
                                 in
                                 here</a></small>
@@ -46,7 +46,7 @@
                         </ul>
                         <p>Fields marked with <span class="requiredfield">*</span> are required.</p>
 
-                        <h5 class="marginTopBottomSmall">Full Name <span class="requiredfield">*</span></h5>
+                        <h5 class="marginTopBottomSmall">What is your name? <span class="requiredfield">*</span></h5>
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
                                 <!-- <label for="firstname">First name</label> -->
@@ -63,7 +63,8 @@
                                 <div class="invalid-feedback">Please enter your last name.</div>
                             </div>
                         </div>
-                        <h5 class="marginTopBottomSmall">Email Address <span class="requiredfield">*</span></h5>
+                        <h5 class="marginTopBottomSmall">What is your email address? <span
+                                class="requiredfield">*</span></h5>
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="email" name="email" class="form-control" id="email"
@@ -158,7 +159,8 @@
                         Your Contact Details
                     </div>
                     <div class="card-body">
-                        <h5 class="marginTopBottomSmall">PHONE NUMBER <span class="requiredfield">*</span></h5>
+                        <h5 class="marginTopBottomSmall">What is your phone number? <span class="requiredfield">*</span>
+                        </h5>
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" name="phone" class="form-control" placeholder="Phone number"
@@ -194,13 +196,13 @@
                             You need to create a secret password to use with your email address when you sign in.</h5>
                         <h5 class="marginTopBottomSmall">CHOOSE YOUR PASSWORD <span class="requiredfield">*</span></h5>
                         <div class="form-group">
+                            <small id="passwordHelpInline" class="text-muted">
+                                <span class="requiredfield">Must be at least 6 characters long.</span>
+                            </small>
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control mx-sm-3"
                                     aria-describedby="passwordHelpInline" id="password"
                                     placeholder="Enter your password" required>
-                                <small id="passwordHelpInline" class="text-muted">
-                                    <span class="requiredfield">Must be at least6 characters long.</span>
-                                </small>
                             </div>
                         </div>
 
