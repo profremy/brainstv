@@ -1,11 +1,18 @@
 <div class="jumbotron container-fluid bg-newclubmember brainstv-msf">
-    <a href="/" class="btn btn-danger marginTopBottomSmall"><i class="fa fa-times-circle"
-            aria-hidden="true"></i><span>Cancel</span></a>
+    <a href="/" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+            aria-hidden="true"></i><span>Back</span></a>
     <h4 class="border-radius-none page-heading bg-yellow">Brains Club Registration</h4>
     <hr class="my-1">
-    <form class="needs-validation" novalidate action="/clubmembers" method="POST">
-        <%- include('_form_fields') %>
-    </form>
+    <div class="card">
+        <!-- <form class="needs-validation" novalidate action="/clubmembers" method="POST" enctype="multipart/form-data"> -->
+        <form action="/clubmembers" method="POST" class="needs-validation" novalidate>
+            <%- include('_form_fields') %>
+
+            <div class="bg-yellow switchIdButtons" style="text-align: right; padding: 0.5rem 1.2rem;">
+                <button type="submit" class="btn btn-success msf-submit-cta btncheck" id="loader">Submit</button>
+            </div>
+        </form>
+    </div>
 
 </div>
 <script src="/javascript/checkboxvalidation.js"></script>

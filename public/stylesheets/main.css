@@ -27,6 +27,18 @@ body {
 
 }
 
+input[type="date"]:before {
+    content: attr(placeholder) !important;
+    color: #929496;
+    margin-right: 0.5em;
+    font-style: italic
+}
+
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+    content: "";
+}
+
 .marginTopBottomSmall {
     margin: 0.5rem 0;
 }
@@ -302,7 +314,6 @@ input[type="radio"]:checked+span {
 @media only screen and (max-width: 800px) {
     .gdpr {
         left: 0 !important;
-        /* left: -1px !important; */
         width: 100% !important;
     }
 
@@ -315,4 +326,61 @@ input[type="radio"]:checked+span {
 
 #js__close__gdpr {
     cursor: pointer;
+}
+
+.editData,
+.view,
+.edit {
+    color: var(--success);
+}
+
+.deleteData,
+.delete {
+    color: var(--danger);
+}
+
+.editData,
+.deleteData {
+    cursor: pointer;
+}
+
+#recentImg {
+    position: relative;
+}
+
+.recentImgName {
+    position: absolute;
+    background-color: rgba(0, 0, 0, .8);
+    /* var(--color-background-dark); */
+    color: var(--light);
+    left: 0;
+    bottom: 0;
+    font-size: 10px;
+    font-style: italic;
+    padding: 0 0.5em;
+    width: 100%;
+    /* border: 1px solid rgba(0, 0, 0, .3) */
+}
+
+.recent-flex {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.recent_item {
+    flex-shrink: 0;
+    margin-bottom: 0.5rem;
+}
+
+.membersList {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.document-divider {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, .5);
 }

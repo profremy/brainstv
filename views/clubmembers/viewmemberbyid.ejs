@@ -1,0 +1,116 @@
+<div class="jumbotron container-fluid bg-newclubmember bsrainstv-msf">
+    <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+            aria-hidden="true"></i><span>Back</span></a>
+    <h4 class="border-radius-none page-heading bg-yellow">Club Member View</h4>
+    <hr class="my-1">
+
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Search Club Members by:</a>
+        <form action="/clubmembers/viewmemberbyid" method="GET" class="form-inline">
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                    <!-- <label for="firstname">First Name</label> -->
+                    <input type="text" class="form-control" name="firstname" value="<%= searchOptions.firstname %>"
+                        placeholder="First name" aria-label="Search">
+                </div>
+                <div class="col-auto my-1">
+                    <!-- <label>Registered After</label> -->
+                    <input type="date" class="form-control" name="registeredAfter"
+                        value="<%= searchOptions.registeredAfter %>" placeholder="Registered after">
+                </div>
+                <div class="col-auto my-1">
+                    <!-- <label>Registered Before</label> -->
+                    <input type="date" class="form-control" name="registeredBefore"
+                        value="<%= searchOptions.registeredBefore %>" placeholder="Registered before">
+                </div>
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-outline-success" id="loader">Search</button>
+                </div>
+            </div>
+
+        </form>
+    </nav>
+
+    <!-- Begin listing member -->
+    <div class="jumbotron container-fluid">
+        <p>Listing a total of <strong><%= clubmember.length %></strong> members</p>
+
+        <% clubmember.forEach(member => { %>
+        <div class="form-row">
+            <div class="col-auto mb-3">
+                <%# clubmember.forEach(member => { %>
+                <img height="150" width="150" src="<%= member.profileImagePath %>" alt="Profile Image">
+                <%# }); %>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="col-sm-4">
+                <label for="category">Learning Style/Category</label>
+                <% membercategories.forEach(category => { %>
+                <% if (category.id == member.memberCategory) { %>
+                <input type="text" class="form-control" value="<%= category.memberCategory %>" disabled>
+                <% } %>
+                <% }) %>
+            </div>
+        </div>
+
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4 mb-2">
+                <label for="firstname" class="mb-0">First name</label>
+                <input type="text" class="form-control" name="firstname" value="<%= member.firstname %>" disabled>
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="lastname" class="mb-0">Last name</label>
+                <input type="text" class="form-control" name="lastname" value="<%= member.lastname %>" disabled>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4 mb-0">
+                <label for="dateJoined" class="mb-0">Date Joined</label>
+                <input type="date" name="dateJoined" class="form-control"
+                    value="<%= member.dateJoined.toISOString().split('T')[0] %>" disabled>
+            </div>
+            <div class="form-group col-md-4 mb-0">
+                <label for="signedConsent" class="mb-0">Signed Consent</label>
+                <input type="text" name="signedConsent" class="form-control" value="<%= member.signedConsent %>"
+                    disabled>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4 mb-2">
+                <label for="gender" class="mb-0">Gender</label>
+                <input type="text" class="form-control" name="gender" value="<%= member.gender %>" disabled>
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="dob" class="mb-0">Date of birth</label>
+                <input type="date" name="dob" class="form-control"
+                    value="<%= member.dob == null ? '' : member.dob.toISOString().split('T')[0] %>" disabled>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4 mb-2">
+                <label for="class" class="mb-0">Class</label>
+                <input type="text" class="form-control" name="class" value="<%= member.class %>" disabled>
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="email" class="mb-0">Email</label>
+                <input type="email" class="form-control" name="email" value="<%= member.email %>" disabled>
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4 mb-2">
+                <label for="phone" class="mb-0">Phone</label>
+                <input type="phone" class="form-control" name="phone" value="<%= member.phone %>" disabled>
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="city" class="mb-0">City/Town</label>
+                <input type="city" class="form-control" name="city" value="<%= member.city %>" disabled>
+            </div>
+        </div>
+        <hr class="document-divider">
+        </hr>
+        <% }) %>
+
+    </div>
+
+</div>

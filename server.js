@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
 const brainstvadminRouter = require('./routes/brainstvadmins');
@@ -15,6 +16,7 @@ const loginRouter = require('./routes/login');
 const tvScheduleRouter = require('./routes/tvSchedule');
 const brainstvRouter = require('./routes/brainstv');
 const clubMemberRouter = require('./routes/clubmembers');
+const categoryRouter = require('./routes/categories');
 
 const app = express();
 
@@ -27,6 +29,7 @@ app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 
 app.use(expressLayouts);
+app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 
@@ -48,6 +51,7 @@ app.use('/login', loginRouter);
 app.use('/tvSchedule', tvScheduleRouter);
 app.use('/brainstv', brainstvRouter);
 app.use('/clubmembers', clubMemberRouter);
+app.use('/categories', categoryRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);

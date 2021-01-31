@@ -1,23 +1,34 @@
 const mongoose = require('mongoose');
+const path = require('path');
+
+// const profileImageBasePath = 'uploads/profileImages';
 
 const clubmemberSchema = new mongoose.Schema({
-  firstName: {
+  firstname: {
     type: String,
     required: true,
   },
-  lastName: {
+  lastname: {
     type: String,
     required: true,
   },
-  emailAddress: {
+  email: {
     type: String,
+    required: true,
+    index: {
+      unique: true,
+      dropDups: true,
+    },
+  },
+  dob: {
+    type: Date,
     required: true,
   },
   gender: {
     type: String,
     required: true,
   },
-  age: {
+  class: {
     type: String,
     required: true,
   },
@@ -25,11 +36,15 @@ const clubmemberSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  country: {
+  city: {
     type: String,
     required: true,
   },
   password: {
+    type: String,
+    required: true,
+  },
+  confirmPassword: {
     type: String,
     required: true,
   },
@@ -38,7 +53,26 @@ const clubmemberSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  profilePicture: {
+  memberCategory: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Membercategory',
+  },
+  // pointsEarned: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   required: false,
+  //   default: 1,
+  //   ref: 'Membercategory',
+  // },
+  // profileImageName: {
+  //   type: String,
+  //   required: false,
+  // },
+  profileImage: {
+    type: Buffer,
+    required: false,
+  },
+  profileImageType: {
     type: String,
     required: false,
   },
@@ -48,4 +82,19 @@ const clubmemberSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Clubmember', clubmemberSchema); //User is the name of the table
+// Creat a virtual variable to obtain the path to the coverImage on file system
+// clubmemberSchema.virtual('profileImagePath').get(function () {
+//   if (this.profileImageName !== null) {
+//     return path.join('/', profileImageBasePath, this.profileImageName);
+//   }
+// });
+clubmemberSchema.virtual('profileImagePath').get(function () {
+  if (this.profileImage != null && this.profileImageType != null) {
+    return `data:${this.profileImageType}; charset=utf-8; base64, ${this.profileImage.toString('base64')}`;
+  }
+});
+
+module.exports = mongoose.model('Clubmember', clubmemberSchema); //clubmembers is the name of the table
+
+//export not as default but as a named variable
+// module.exports.profileImageBasePath = profileImageBasePath;

@@ -2,4 +2,33 @@
   Welcome - This is the homepage of BrainsTV!
   <button>New content</button>
   <div id="newContent"></div>
+
+
+  <div class="recentlyRegistered bg-yellow mb-2">
+    <h2 class="text-center bg-dark text-light">Recently Joined</h2>
+    <div class="recent-flex">
+      <% recentMembers.forEach(member => { %>
+      <div class="card recent_item" style="width: 100px;">
+        <% if (member.profileImagePath != null) { %>
+        <img height="100" width="100" src="<%= member.profileImagePath %>" class="card-img-top" alt="Profile Image"
+          class="recentImg">
+        <% } else if (member.gender != 'Female') { %>
+        <img height="100" width="100" src="/images/male_avatar.png" class="card-img-top" alt="Profile Image"
+          class="recentImg">
+        <% } else { %>
+        <img height="100" width="100" src="/images/female_avatar.png" class="card-img-top" alt="Profile Image"
+          class="recentImg">
+        <% } %>
+        <div class="recentImgName">
+          <p class="card-text">Joined <%= member.dateJoined.toISOString().split('T')[0] %></p>
+        </div>
+      </div>
+      <% }) %>
+
+    </div>
+
+  </div>
+
+
+
 </div>

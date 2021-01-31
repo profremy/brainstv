@@ -21,7 +21,7 @@ const elements = {
   app: document.getElementById('app'),
 };
 
-///*
+/*
 (function () {
   'use strict';
   var submitSuccess = document.querySelector('.submit-success');
@@ -65,7 +65,7 @@ const elements = {
     false
   );
 })();
-//*/
+*/
 
 $(function () {
   $('[data-toggle="popover"]').popover();
@@ -420,5 +420,4 @@ window.addEventListener('scroll', scrollThrottle);
     }
   }
 }
-
 console.log('end of script');

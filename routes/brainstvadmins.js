@@ -19,7 +19,10 @@ router.get('/viewAdmin', async (req, res) => {
   try {
     // const admins = await Admin.find({ $text: { $search: searchOptions.userName } });
     const admins = await Admin.find(searchOptions);
-    res.render('brainstvadmins/viewAdmin', { admins: admins, searchOptions: req.query });
+    res.render('brainstvadmins/viewAdmin', {
+      admins: admins,
+      searchOptions: req.query,
+    });
   } catch (err) {
     console.log(err);
     res.redirect('brainstvadmins');
@@ -43,8 +46,10 @@ router.post('/', async (req, res) => {
   try {
     const newAdmin = await admin.save();
     // res.redirect(`brainstvadmin/${newAdminUser.id}`);
-    res.redirect('brainstvadmins');
-    // { successMessage: `Admin user with role ${req.body.adminRole} was create.` };
+    res.redirect('brainstvadmins/new', {
+      admin: admin,
+      successMessage: `Admin user with role ${req.body.adminRole} was created.`,
+    });
   } catch {
     res.render('brainstvadmins/new', {
       admin: admin,
