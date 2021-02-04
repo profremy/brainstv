@@ -1,0 +1,114 @@
+<div class="jumbotron container-fluid">
+    <div class="card border-dark rounded-sm">
+        <div class="card-header bg-warning">
+            Data Card
+        </div>
+        <div class="card-body bg-light">
+            <div class="media">
+                <img height="250" width="250" src="<%= clubmember.profileImagePath %>"
+                    class="align-self-start mr-3 mobile-320-img" alt="Profile Image">
+                <div class="media-body ml-4">
+                    <div class="form-row align-items-center">
+                        <!-- <div class="form-group col-md-4 mb-2">
+                            <small for="category" class="text-info mb-0">Learning Style/Category</small>
+                            <input type="text" name="memberCategory" class="form-control"
+                                value="<%#= clubmember.memberCategory.memberCategory %>" disabled>
+                        </div> -->
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="category" class="text-info mb-0">Learning Style/Category</small>
+                            <input type="text" class="form-control" name="memberCategory"
+                                value="<%= clubmember.memberCategory.memberCategory %>" disabled>
+
+                        </div>
+                        <!-- <select class="custom-select" name="memberCategory" id="category">
+                            <%# membercategories.forEach(category => { %>
+                            <%# if (category.id == clubmember.memberCategory) { %>
+                            <option selected label="<%#= category.memberCategory %>" value="<%#= category.id %>">
+                            </option>
+                            <%# } else { %>
+                            <option label="<%#= category.memberCategory %>" value="<%#= category.id %>">
+                            </option>
+                            <%# } %>
+
+                            <%# }) %>
+                        </select> -->
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="firstname" class="text-info mb-0">Points Earned</small>
+                            <input type="number" min="1" class="form-control" name="pointsEarned"
+                                value="<%= clubmember.pointsEarned %>">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="firstname" class="text-info mb-0">First name</small>
+                            <input type="text" class="form-control" name="firstname" value="<%= clubmember.firstname %>"
+                                disabled>
+                        </div>
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="lastname" class="text-info mb-0">Last name</small>
+                            <input type="text" class="form-control" name="lastname" value="<%= clubmember.lastname %>"
+                                disabled>
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-md-4 mb-0">
+                            <small for="dateJoined" class="text-info mb-0">Date Joined</small>
+                            <input type="date" name="dateJoined" class="form-control"
+                                value="<%= clubmember.dateJoined.toISOString().split('T')[0] %>" disabled>
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                            <small for="signedConsent" class="text-info mb-0">Signed Consent</small>
+                            <input type="text" name="signedConsent" class="form-control"
+                                value="<%= clubmember.signedConsent %>" disabled>
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="gender" class="text-info mb-0">Gender</small>
+                            <input type="text" class="form-control" name="gender" value="<%= clubmember.gender %>"
+                                disabled>
+                        </div>
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="dob" class="text-info mb-0">Date of birth</small>
+                            <input type="date" name="dob" class="form-control"
+                                value="<%= clubmember.dob == null ? '' : clubmember.dob.toISOString().split('T')[0] %>"
+                                disabled>
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="class" class="text-info mb-0">Class</small>
+                            <input type="text" class="form-control" name="class" value="<%= clubmember.class %>"
+                                disabled>
+                        </div>
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="email" class="text-info mb-0">Email</small>
+                            <input type="email" class="form-control" name="email" value="<%= clubmember.email %>"
+                                disabled>
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="phone" class="text-info mb-0">Phone</small>
+                            <input type="phone" class="form-control" name="phone" value="<%= clubmember.phone %>"
+                                disabled>
+                        </div>
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="city" class="text-info mb-0">City/Town</small>
+                            <input type="city" class="form-control" name="city" value="<%= clubmember.city %>" disabled>
+                        </div>
+                    </div>
+                    <hr class="document-divider">
+                    </hr>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-success" id="loader"><i class="fa fa-cloud"
+                                    aria-hidden="true"></i><span>Update</span></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

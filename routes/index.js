@@ -5,7 +5,6 @@ const router = express.Router();
 const ClubMember = require('../models/clubmember');
 
 router.get('/', async (req, res) => {
-  let totalMembers;
   let recentMembers;
   try {
     recentMembers = await ClubMember.find().sort({ dateJoined: 'desc' }).limit(10).exec();

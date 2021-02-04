@@ -227,25 +227,35 @@
         grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
     }
 
-    .twelveplusfeedback {
+    .mobile-320-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* .twelveplusfeedback {
         top: 80%;
         left: -104%;
         transform: translate(-30%, 28%);
-    }
+    } */
 }
 
 @media only screen and (max-width: 320px) {
+    html {
+        font-size: 9px !important;
+    }
 
-    .twelveplusfeedback {
+
+
+    /* .twelveplusfeedback {
         left: 60%;
         transform: translate(-4%, 28%);
-    }
+    } */
 }
 
 @media only screen and (max-width: 280px) {
 
-    .twelveplusfeedback {
+    /* .twelveplusfeedback {
         left: -60%;
         transform: translate(-4%, 28%);
-    }
+    } */
 }

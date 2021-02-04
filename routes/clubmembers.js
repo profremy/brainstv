@@ -21,25 +21,7 @@ const imageMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
 //View All Club members Route
 router.get('/', async (req, res) => {
   // only admin users can view this router
-  let searchOptions = {};
-  if (req.query.firstname != null && req.query.firstname !== '') {
-    searchOptions.firstname = new RegExp(req.query.firstname, 'i');
-  }
-  try {
-    const clubmembers = await ClubMember.find(searchOptions);
-    res.render('clubmembers/viewmembers', {
-      clubmembers: clubmembers,
-      searchOptions: req.query,
-    });
-    //res.send('All Clubmembers');
-  } catch {
-    res.redirect('/');
-  }
-});
 
-// View Club members by ids
-// router.get('/viewmember/:id', async (req, res) => {});
-router.get('/viewmemberbyid', async (req, res) => {
   let query = ClubMember.find();
   if (req.query.firstname != null && req.query.firstname != '') {
     query = query.regex('firstname', new RegExp(req.query.firstname, 'i'));
@@ -54,11 +36,11 @@ router.get('/viewmemberbyid', async (req, res) => {
   }
 
   try {
-    // const clubmember = await ClubMember.find({});
-    const clubmember = await query.exec();
+    // const clubmember = await ClubMember.find({}); //
+    const clubmembers = await query.exec();
     const membercategories = await Membercategory.find({});
-    res.render('clubmembers/viewmemberbyid', {
-      clubmember: clubmember,
+    res.render('clubmembers/viewmembers', {
+      clubmembers: clubmembers,
       searchOptions: req.query,
       membercategories: membercategories,
     });
@@ -66,10 +48,55 @@ router.get('/viewmemberbyid', async (req, res) => {
   } catch {
     res.redirect('/');
   }
+
+  /*
+  let searchOptions = {};
+  if (req.query.firstname != null && req.query.firstname !== '') {
+    searchOptions.firstname = new RegExp(req.query.firstname, 'i');
+  }
+  try {
+    const clubmembers = await ClubMember.find(searchOptions);
+    res.render('clubmembers/viewmembers', {
+      clubmembers: clubmembers,
+      searchOptions: req.query,
+    });
+    //res.send('All Clubmembers');
+  } catch {
+    res.redirect('/');
+  }
+  */
 });
 
-// Delete Club members by id
-router.delete('/deletemember/:id', async (req, res) => {});
+// View Club members by ids
+// router.get('/viewmember/:id', async (req, res) => {});
+// router.get('/viewmemberbyid', async (req, res) => {
+//   let query = ClubMember.find();
+//   if (req.query.firstname != null && req.query.firstname != '') {
+//     query = query.regex('firstname', new RegExp(req.query.firstname, 'i'));
+//   }
+
+//   if (req.query.registeredBefore != null && req.query.registeredBefore != '') {
+//     query = query.lte('dateJoined', req.query.registeredBefore);
+//   }
+
+//   if (req.query.registeredAfter != null && req.query.registeredAfter != '') {
+//     query = query.gte('dateJoined', req.query.registeredAfter);
+//   }
+
+//   try {
+//     // const clubmember = await ClubMember.find({});
+//     const clubmember = await query.exec();
+//     const membercategories = await Membercategory.find({});
+//     res.render('clubmembers/viewmemberbyid', {
+//       clubmember: clubmember,
+//       searchOptions: req.query,
+//       membercategories: membercategories,
+//     });
+//     //console.log(searchOptions);
+//   } catch {
+//     res.redirect('/');
+//   }
+// });
 
 //New Club member Route
 router.get('/newClubMember', async (req, res) => {
@@ -119,6 +146,81 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Show clubmember by id
+router.get('/:id', async (req, res) => {
+  try {
+    const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory').exec();
+    res.render('clubmembers/show', {
+      clubmember: clubmember,
+    });
+  } catch (error) {
+    console.log(error);
+    res.redirect('/clubmembers');
+  }
+});
+
+// Edit clubmember by id
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory').exec();
+    renderEditMember(res, clubmember);
+  } catch {
+    redirect('/clubmembers');
+  }
+});
+
+// Update Club member by id
+router.put('/:id', async (req, res) => {
+  let clubmember;
+
+  try {
+    clubmember = await ClubMember.findById(req.params.id).populate('memberCategory').exec();
+    clubmember.pointsEarned = req.body.pointsEarned;
+    // clubmember.memberCategory = req.body.memberCategory;
+    // clubmember.firstname = req.body.firstname;
+    // clubmember.firstname = req.body.firstname;
+    // clubmember.lastname = req.body.lastname;
+    // clubmember.dateJoined = new Date(req.body.dateJoined);
+    // clubmember.gender = req.body.gender;
+    // clubmember.dob = new Date(req.body.dob);
+    // clubmember.class = req.body.class;
+    // clubmember.email = req.body.email;
+    // clubmember.phone = req.body.phone;
+    // clubmember.city = req.body.city;
+    if (req.body.profilePhoto != null && req.body.profilePhoto !== '') {
+      saveProfilePhoto(clubmember, req.body.profilePhoto);
+    }
+    await clubmember.save();
+    res.redirect(`/clubmembers/${clubmember.id}`);
+  } catch (err) {
+    console.log(err);
+    if (clubmember != null) {
+      renderEditMember(res, clubmember, true);
+    } else {
+      redirect('/clubmembers');
+    }
+  }
+});
+
+// Delete clubmember by id
+router.delete('/:id', async (req, res) => {
+  let clubmember;
+  try {
+    clubmember = await ClubMember.findById(req.params.id);
+    await clubmember.remove();
+    res.redirect('/clubmembers');
+  } catch {
+    if (clubmember != null) {
+      res.render('clubmember/show', {
+        clubmember: clubmember,
+        errorMessage: 'Could not remove clubmember',
+      });
+    } else {
+      res.redirect('/clumbmembers');
+    }
+  }
+});
+
 // function removeClubmemberPhoto(filename) {
 //   fs.unlink(path.join(uploadPath, filename), (err) => {
 //     if (err) console.error(err);
@@ -126,18 +228,59 @@ router.post('/', async (req, res) => {
 // }
 
 async function renderNewMember(res, clubmember, hasError = false) {
+  // try {
+  //   const membercategories = await Membercategory.find({});
+  //   const params = {
+  //     membercategories: membercategories,
+  //     clubmember: clubmember,
+  //   };
+
+  //   if (hasError) params.errorMessage = 'An error occurred while processing form. Try again!';
+  //   res.render('clubmembers/newclubmember', params);
+  // } catch {
+  //   res.redirect('clubmembers/newClubmember', {
+  //     errorMessage: 'There was an error trying to register member.',
+  //   });
+  // }
+  renderFormPage(res, clubmember, 'newclubmember', hasError);
+}
+
+async function renderEditMember(res, clubmember, hasError = false) {
+  // try {
+  //   const membercategories = await Membercategory.find({});
+  //   const params = {
+  //     membercategories: membercategories,
+  //     clubmember: clubmember,
+  //   };
+
+  //   if (hasError) params.errorMessage = 'An error occurred while processing form. Try again!';
+  //   res.render('clubmembers/edit', params);
+  // } catch {
+  //   res.redirect('clubmembers/edit', {
+  //     errorMessage: 'There was an error trying to update member.',
+  //   });
+  // }
+  renderFormPage(res, clubmember, 'edit', hasError);
+}
+
+async function renderFormPage(res, clubmember, form, hasError = false) {
   try {
     const membercategories = await Membercategory.find({});
     const params = {
       membercategories: membercategories,
       clubmember: clubmember,
     };
-
-    if (hasError) params.errorMessage = 'An error occurred while processing form. Try again!';
-    res.render('clubmembers/newclubmember', params);
+    if (hasError) {
+      if (form == 'edit') {
+        params.errorMessage = 'An error occurred while updating member. Try again!';
+      } else {
+        params.errorMessage = 'An error occurred while creating member. Try again!';
+      }
+    }
+    res.render(`clubmembers/${form}`, params);
   } catch {
-    res.redirect('clubmembers/newClubmember', {
-      errorMessage: 'There was an error trying to register member.',
+    res.redirect('/clubmembers', {
+      errorMessage: 'There was an error trying to create/update member.',
     });
   }
 }

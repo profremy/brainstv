@@ -1,0 +1,41 @@
+<div class="jumbotron container-fluid">
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <a href="/brainstvadmins" class="btn btn-info"><i class="fa fa-arrow-circle-left"
+                    aria-hidden="true"></i><span>Back</span></a>
+        </div>
+    </div>
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Upload New Site Logo</a>
+    </nav>
+    <hr class="my-3 document-divider">
+    <div class="row">
+        <div class="form-group col-md-4 mb-2">
+            <form action="/sitelogos/<%= sitelogo.id %>?_method=PUT" method="POST">
+                <div class=" form-group row">
+                    <div class="col-sm-5 my-2">
+                        <input type="file" name="sitelogo" class="filepond" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <a href="/brainstvadmins" class="btn btn-danger"><i class="fa fa-times-circle"
+                                aria-hidden="true"></i><span>Cancel</span></a>
+                        <button type="submit" class="btn btn-success" id="loader"><i class="fa fa-cloud"
+                                aria-hidden="true"></i><span>Update</span></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="form-group col-md-5 mb-2">
+            <label for="siteLogo" class="bg-warning text-dark p-1">Current Site Logo</label>
+            <div class="form-group frow">
+                <div class="col-sm-4 my-2">
+                    <img width="200" height="150" src="<%= sitelogo.sitelogoPath %>" alt="Current site logo">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

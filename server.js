@@ -17,6 +17,7 @@ const tvScheduleRouter = require('./routes/tvSchedule');
 const brainstvRouter = require('./routes/brainstv');
 const clubMemberRouter = require('./routes/clubmembers');
 const categoryRouter = require('./routes/categories');
+const sitelogoRouter = require('./routes/sitelogos');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use('/tvSchedule', tvScheduleRouter);
 app.use('/brainstv', brainstvRouter);
 app.use('/clubmembers', clubMemberRouter);
 app.use('/categories', categoryRouter);
+app.use('/sitelogos', sitelogoRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);

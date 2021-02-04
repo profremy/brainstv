@@ -58,12 +58,11 @@ const clubmemberSchema = new mongoose.Schema({
     required: true,
     ref: 'Membercategory',
   },
-  // pointsEarned: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   required: false,
-  //   default: 1,
-  //   ref: 'Membercategory',
-  // },
+  pointsEarned: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
   // profileImageName: {
   //   type: String,
   //   required: false,

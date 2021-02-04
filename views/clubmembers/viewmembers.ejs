@@ -2,20 +2,46 @@
     <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
             aria-hidden="true"></i><span>Back</span></a>
     <h4 class="border-radius-none page-heading bg-yellow">Search View and Delete Club Members</h4>
-    <hr class="my-1">
+    <hr class="my-1 document-divider">
     <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Search Club Members by</a>
+        <form action="/clubmembers" method="GET" class="form-inline">
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                    <!-- <label for="firstname">First Name</label> -->
+                    <input type="search" class="form-control" name="firstname" value="<%= searchOptions.firstname %>"
+                        placeholder="First name" aria-label="Search">
+                </div>
+                <div class="col-auto my-1">
+                    <!-- <label>Registered After</label> -->
+                    <input type="date" class="form-control" name="registeredAfter"
+                        value="<%= searchOptions.registeredAfter %>" placeholder="Registered after">
+                </div>
+                <div class="col-auto my-1">
+                    <!-- <label>Registered Before</label> -->
+                    <input type="date" class="form-control" name="registeredBefore"
+                        value="<%= searchOptions.registeredBefore %>" placeholder="Registered before">
+                </div>
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-outline-success" id="loader">Search</button>
+                </div>
+            </div>
+
+        </form>
+    </nav>
+    <!-- <nav class="navbar navbar-light bg-info">
         <a class="navbar-brand">Search by First name</a>
         <form action="/clubmembers" method="GET" class="form-inline my-2 my-lg-0 searchForm">
-            <input class="form-control mr-sm-2" type="search" name="firstname" value="<%= searchOptions.firstname %>"
+            <input class="form-control mr-sm-2" type="search" name="firstname" value="<%#= searchOptions.firstname %>"
                 placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0 searchBtn" type="submit" id="loader">Search</button>
 
         </form>
-    </nav>
+    </nav> -->
 
     <!-- Begin listing members -->
     <div class="jumbotron container-fluid">
-        <h4>Brains Club Members</h4>
+        <p>Listing a total of <strong><%= clubmembers.length %></strong> members</p>
         <div></div>
         <div class="table-responsive-sm">
             <table class="table table-striped">

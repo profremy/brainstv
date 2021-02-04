@@ -328,7 +328,7 @@ input[type="radio"]:checked+span {
     cursor: pointer;
 }
 
-.editData,
+/* .editData,
 .view,
 .edit {
     color: var(--success);
@@ -342,7 +342,7 @@ input[type="radio"]:checked+span {
 .editData,
 .deleteData {
     cursor: pointer;
-}
+} */
 
 #recentImg {
     position: relative;
@@ -362,13 +362,15 @@ input[type="radio"]:checked+span {
     /* border: 1px solid rgba(0, 0, 0, .3) */
 }
 
-.recent-flex {
+.recent-flex,
+.main-flex {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
-.recent_item {
+.recent_item,
+.flex-item {
     flex-shrink: 0;
     margin-bottom: 0.5rem;
 }
@@ -381,6 +383,6 @@ input[type="radio"]:checked+span {
 .document-divider {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    border: 0;
+    /* border: 0; */
     border-top: 1px solid rgba(0, 0, 0, .5);
 }

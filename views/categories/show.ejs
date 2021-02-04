@@ -1,14 +1,10 @@
 <div class="jumbotron container-fluid">
-    <hr class="my-1" />
     <a href="/categories" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
             aria-hidden="true"></i><span>Back</span></a>
 
     <a href="/categories/newcategory" class="btn btn-success">Create/Add New</a>
-    <hr class="my-1" />
     <nav class="navbar navbar-light bg-info">
-        <a class="navbar-brand">
-            <h2><%= membercategory.memberCategory %> CATEGORY</h2>
-        </a>
+        <a class="navbar-brand"> <%= membercategory.memberCategory %> CATEGORY</a>
         <a href="/categories/<%= membercategory.id %>/edit" class="btn btn-warning text-dark" title="Edit Category"><i
                 class="fa fa-pencil" aria-hidden="true"></i>Edit
         </a>
@@ -16,6 +12,7 @@
 
         <%- include('../partials/deleteForm', { url: `/categories/${membercategory.id}`}) %>
     </nav>
+    <hr class="my-1 document-divider" />
 
     <% if (assignedMembers.length > 0) { %>
     <p>Listing a total of <strong><%= assignedMembers.length %></strong> members assigned to this category</p>

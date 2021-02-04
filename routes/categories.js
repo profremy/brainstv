@@ -53,7 +53,7 @@ router.get('/:id', async (req, res) => {
   // res.send('Show Category ' + req.params.id);
   try {
     const membercategory = await Membercategory.findById(req.params.id);
-    const clubmembers = await ClubMember.find({ memberCategory: membercategory.id }).limit(6).exec();
+    const clubmembers = await ClubMember.find({ memberCategory: membercategory.id }).limit(20).exec();
     res.render('categories/show', {
       membercategory: membercategory,
       assignedMembers: clubmembers,

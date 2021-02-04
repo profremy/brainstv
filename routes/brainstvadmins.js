@@ -58,28 +58,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-//New Site Logo Route
-router.get('/uploadsitelogo', (req, res) => {
-  res.render('brainstvadmins/uploadsitelogo', { logo: new SiteLogo() });
-});
-
-// Upload site logo
-router.post('/', async (req, res) => {
-  const logo = new SiteLogo({
-    siteLogoImage: req.body.siteLogoImage,
-  });
-
-  try {
-    const newSiteLogo = await logo.save();
-    // res.redirect(`brainstvadmin/${newAdminUser.id}`);
-    res.redirect('brainstvadmins');
-    // { successMessage: `Admin user with role ${req.body.adminRole} was create.` };
-  } catch {
-    res.render('brainstvadmins/uploadsitelogo', {
-      admin: admin,
-      errorMessage: 'Error uploading site logo image',
-    });
-  }
-});
-
 module.exports = router;
