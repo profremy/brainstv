@@ -27,7 +27,11 @@
     <div class="nav-menu-buttons">
       <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <a class="navbar-brand" href="/">
+          <% if (loadSiteLogo != null) { %>
+          <img src="<%= loadSiteLogo %>" class="d-inline-block align-top" id="logo" alt="BrainsTV Logo">
+          <% } else { %>
           <img src="/images/transparentlogo.png" class="d-inline-block align-top" id="logo" alt="BrainsTV Logo">
+          <% } %>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,12 +60,12 @@
                   aria-hidden="true"></i><span>Take Part</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link menuItems" href="/brainstv/eclassroom"><i class="fa fa-edge fa-lg eClassRoom"
+              <a class="nav-link menuItems" href="/brainstv/eclassroom"><i class="fa fa-house fa-lg eClassRoom"
                   aria-hidden="true"></i><span>E-Classroom</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link menuItems" href="/brainstv/newsroom"><i class="fa fa-newspaper-o fa-lg newsRoom"
-                  aria-hidden="true"></i><span>Newsroom</span></a>
+              <a class="nav-link menuItems" href="/brainstv/newsupdate"><i class="fa fa-newspaper-o fa-lg newsRoom"
+                  aria-hidden="true"></i><span>NewsUpdate</span></a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link menuItems dropdown-toggle" data-toggle="dropdown" href="#" role="button"
@@ -86,6 +90,10 @@
 
   </nav>
   <div class="informationFlash">
-    <h3>Next time you hear about this, try not to scroll and be sure to avoid collision with others in the room... </h3>
+    <% if (loadSiteFlashInfo != null) { %>
+    <h3><%= loadSiteFlashInfo %> </h3>
+    <% } else { %>
+    <h3>NO FLASH INFORMATION AVAILABLE</h3>
+    <% } %>
   </div>
 </header>

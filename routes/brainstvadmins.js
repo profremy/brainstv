@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Admin = require('../models/brainstvadmin');
-const SiteLogo = require('../models/brainstvlogo');
 
 //Admin User Page Route
 router.get('/', (req, res) => {
@@ -45,17 +44,84 @@ router.post('/', async (req, res) => {
 
   try {
     const newAdmin = await admin.save();
-    // res.redirect(`brainstvadmin/${newAdminUser.id}`);
-    res.redirect('brainstvadmins/new', {
-      admin: admin,
-      successMessage: `Admin user with role ${req.body.adminRole} was created.`,
-    });
+    res.redirect(`/brainstvadmins/viewAdmin`);
   } catch {
     res.render('brainstvadmins/new', {
       admin: admin,
-      errorMessage: 'Error creating Admin User',
+      errorMessage: 'Error creating admin user or admin user already exist!',
     });
   }
 });
+
+// Edit Admin by id //
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    res.render('brainstvadmins/edit', {
+      admin: admin,
+    });
+  } catch {
+    res.redirect('/brainstivadmins/viewAdmin');
+  }
+});
+
+// Update Admin by id //
+router.put('/:id', async (req, res) => {
+  let admin;
+
+  try {
+    admin = await Admin.findById(req.params.id);
+    admin.userName = req.body.userName;
+    admin.userEmail = req.body.userEmail;
+    admin.adminRole = req.body.adminRole;
+
+    if (req.body.userPassword === '' && admin.userPassword != null) {
+      admin.userPassword = admin.userPassword;
+    } else {
+      admin.userPassword = req.body.userPassword;
+    }
+
+    await admin.save();
+    //res.redirect(`/brainstvadmins/${admin.id}`);
+    res.redirect('/brainstvadmins/viewAdmin');
+  } catch (error) {
+    console.log(error);
+    if (admin == null) {
+      res.redirect('/brainstvadmins/viewAdmin');
+    } else {
+      res.render('brainstvadmins/edit', {
+        admin: admin,
+        errorMessage: 'Error updating admin member. Try again!',
+      });
+    }
+  }
+});
+
+// Delete Admin by id
+router.delete('/:id', async (req, res) => {
+  let admin;
+  try {
+    admin = await Admin.findById(req.params.id);
+    if (admin.adminRole != 'superAdmin') {
+      await admin.remove();
+    }
+    res.redirect('/brainstvadmins/viewAdmin');
+  } catch {
+    if (admin == null) {
+      res.redirect('/brainstvadmins/viewAdmin');
+    } else {
+      res.redirect('/brainstvadmins/viewAdmin');
+    }
+  }
+});
+
+// async function auth(req, res, next) {
+//   if (req.query.admin === 'true') {
+//     next();
+//   } else {
+//     res.send('Not Authenticated');
+//   }
+//   next();
+// }
 
 module.exports = router;

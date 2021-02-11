@@ -8,6 +8,7 @@ const adminSchema = new mongoose.Schema({
   userEmail: {
     type: String,
     required: true,
+    index: { unique: true },
   },
   adminRole: {
     type: String,

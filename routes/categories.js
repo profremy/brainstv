@@ -69,13 +69,17 @@ router.get('/:id/edit', async (req, res) => {
   // res.send('Edit Category ' + req.params.id);
   try {
     const membercategory = await Membercategory.findById(req.params.id);
-    if (membercategory.memberCategory != 'STARTER | POINT: 1') {
-      res.render('categories/edit', {
-        membercategory: membercategory,
-      });
-    } else {
-      res.redirect('/categories');
-    }
+    // if (membercategory.memberCategory != 'STARTER | POINT: 1') {
+    //   res.render('categories/edit', {
+    //     membercategory: membercategory,
+    //   });
+    // } else {
+    //   res.redirect('/categories');
+    // }
+    res.render('categories/edit', {
+      membercategory: membercategory,
+    });
+    //res.redirect('/categories');
   } catch {
     res.redirect('/categories');
   }

@@ -120,6 +120,12 @@ textarea:focus::-moz-placeholder {
     background-attachment: scroll;
 }
 
+.bg-login-page {
+    background-image: url(../images/areacharts.png);
+    background-size: cover;
+    background-attachment: scroll;
+}
+
 .bg-yellow {
     background-color: var(--bg-yellow);
     color: #2e2e2e !important;
@@ -385,4 +391,13 @@ input[type="radio"]:checked+span {
     margin-bottom: 1rem;
     /* border: 0; */
     border-top: 1px solid rgba(0, 0, 0, .5);
+}
+
+.dark-blue-gradient-background {
+    background-color: var(--color-background-light);
+    color: var(--light);
+}
+
+.flashinfo_input {
+    width: 700px;
 }

@@ -36,8 +36,9 @@ router.get('/', async (req, res) => {
   }
 
   try {
+    let clubmembers;
     // const clubmember = await ClubMember.find({}); //
-    const clubmembers = await query.exec();
+    clubmembers = await query.exec();
     const membercategories = await Membercategory.find({});
     res.render('clubmembers/viewmembers', {
       clubmembers: clubmembers,

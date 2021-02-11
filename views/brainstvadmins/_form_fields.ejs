@@ -1,13 +1,13 @@
 <div class="form-group row">
   <label for="userName" class="col-sm-2 col-form-label">User Name</label>
-  <div class="col-sm-10">
+  <div class="col-sm-6">
     <input type="text" name="userName" value="<%= admin.userName %>" class="form-control" id="userName"
       placeholder="User name">
   </div>
 </div>
 <div class="form-group row">
   <label for="userEmail" class="col-sm-2 col-form-label">Email</label>
-  <div class="col-sm-10">
+  <div class="col-sm-6">
     <input type="email" name="userEmail" class="form-control" id="userEmail" placeholder="User email address"
       value="<%= admin.userEmail %>">
   </div>
@@ -18,7 +18,7 @@
         data-content="Super Admin Role passes CRUD (create, retrieve, update, delete) privileges to the user. Default is 'basicAdmin' unless you select 'superAdmin'. Beware!"><i
           class="fa fa-question-circle-o" aria-hidden="true"></i></button></span></label>
   <select name="adminRole" class="custom-select" id="adminRole">
-    <option selected disabled value="">-- Select Admin Role --</option>
+    <option selected disabled>-- Select Admin Role</option>
     <option name="superAdmin" value="superAdmin">Super Admin</option>
     <option name="basicAdmin" value="basicAdmin">Basic Admin</option>
   </select>
@@ -26,8 +26,7 @@
 
 <div class="form-group row">
   <label for="userPassword" class="col-sm-2 col-form-label">Password</label>
-  <div class="col-sm-10">
-    <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Password"
-      value="<%= admin.userPassword %>">
+  <div class="col-sm-6">
+    <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Password">
   </div>
 </div>

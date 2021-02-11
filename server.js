@@ -18,6 +18,14 @@ const brainstvRouter = require('./routes/brainstv');
 const clubMemberRouter = require('./routes/clubmembers');
 const categoryRouter = require('./routes/categories');
 const sitelogoRouter = require('./routes/sitelogos');
+const flashinfoRouter = require('./routes/flashinfos');
+
+// Import model to expose local variables to all routes
+// Then use app.locals.<variable name> = <variable> in app.use(function) below
+const Sitelogo = require('./models/sitelogo');
+const Flashinfo = require('./models/flashinfo');
+const ClubMember = require('./models/clubmember');
+const Membercategory = require('./models/category');
 
 const app = express();
 
@@ -28,6 +36,27 @@ const DB = process.env.DB_CONN_STRING.replace('<password>', process.env.DB_CONN_
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
+
+// Set up middleware for app
+
+app.use(async (req, res, next) => {
+  let sitelogo, flashinfo;
+  try {
+    app.locals.clubmembers = await ClubMember.find({}).sort({ dateJoined: -1 });
+    app.locals.membercategories = await Membercategory.find({});
+
+    sitelogo = await Sitelogo.findOne({});
+    flashinfo = await Flashinfo.findOne({}).sort({ createdAt: -1 });
+
+    if (sitelogo || flashinfo) {
+      res.locals.loadSiteLogo = sitelogo.sitelogoPath;
+      res.locals.loadSiteFlashInfo = flashinfo.flashInfoText;
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.use(expressLayouts);
 app.use(methodOverride('_method'));
@@ -54,6 +83,7 @@ app.use('/brainstv', brainstvRouter);
 app.use('/clubmembers', clubMemberRouter);
 app.use('/categories', categoryRouter);
 app.use('/sitelogos', sitelogoRouter);
+app.use('/flashinfos', flashinfoRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);

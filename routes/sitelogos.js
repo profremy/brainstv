@@ -65,7 +65,7 @@ router.get('/:id/edit', async (req, res) => {
     const sitelogo = await Sitelogo.findById(req.params.id);
     renderEditLogo(res, sitelogo);
   } catch {
-    redirect('/brainstvadmins');
+    res.redirect('/brainstvadmins');
   }
 });
 
@@ -89,7 +89,7 @@ router.put('/:id', async (req, res) => {
     if (logoimage != null) {
       renderEditLogo(res, logoimage, true);
     } else {
-      redirect('/sitelogos');
+      res.redirect('/sitelogos');
     }
   }
 });

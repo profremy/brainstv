@@ -1,0 +1,34 @@
+<div class="jumbotron container-fluid">
+    <a href="/flashinfos" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+            aria-hidden="true"></i><span>Back</span></a>
+
+    <a href="/flashinfos/new" class="btn btn-success">Create/Add New</a>
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Flash Information</a>
+        <a href="/flashinfos/<%= flashinfo.id %>/edit" class="btn btn-warning text-dark" title="Edit FlashInfo"><i
+                class="fa fa-pencil" aria-hidden="true"></i>Edit
+        </a>
+
+
+        <%- include('../partials/deleteForm', { url: `/flashinfos/${flashinfo.id}`}) %>
+    </nav>
+    <hr class="my-1 document-divider" />
+    <div class="table-responsive-sm">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Flash Information</th>
+                    <th scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><%= flashinfo.flashInfoText %></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

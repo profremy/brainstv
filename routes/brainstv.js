@@ -32,8 +32,8 @@ router.get('/eclassroom', (req, res) => {
 });
 
 //Newsroom
-router.get('/newsroom', (req, res) => {
-  res.render('brainstv/newsroom');
+router.get('/newsupdate', (req, res) => {
+  res.render('brainstv/newsupdate');
 });
 
 //Privacy Policy
