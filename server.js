@@ -87,24 +87,16 @@ app.use(async (req, res, next) => {
 //*/
 
 // Connect to live database
-mongoose
-  .connect(DB, {
-    //Arguments used to deal with application warnings
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
-  .then((con) => {
-    //console.log(con.connections);
-    console.log('Local db Connection to Mongoose Successful!');
-  });
-
-/*
+mongoose.connect(DB, {
+  //Arguments used to deal with application warnings
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Live db Connection to Mongoose Successful!'));
-*/
 
 app.use('/', indexRouter);
 app.use('/brainstvadmins', brainstvadminRouter);
