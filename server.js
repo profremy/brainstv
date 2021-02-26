@@ -37,10 +37,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 //For Production server only
-//const DB = process.env.DB_CONN_STRING.replace('<password>', process.env.DB_CONN_PW);
+const DB = process.env.DB_CONN_STRING.replace('<password>', process.env.DB_CONN_PW);
 
 // For local server use
-const DB = process.env.DB_LOCAL_CONN_STRING;
+//const DB = process.env.DB_LOCAL_CONN_STRING;
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
