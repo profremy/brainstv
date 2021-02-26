@@ -28,10 +28,10 @@ const clubmemberSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  class: {
-    type: String,
-    required: true,
-  },
+  // class: {
+  //   type: String,
+  //   required: true,
+  // },
   phone: {
     type: String,
     required: true,
@@ -43,6 +43,7 @@ const clubmemberSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    minLength: [6, 'Password must be at least 6 characters'],
   },
   confirmPassword: {
     type: String,
@@ -78,6 +79,11 @@ const clubmemberSchema = new mongoose.Schema({
   signedConsent: {
     type: String,
     required: true,
+  },
+  className: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'ClassName ',
   },
 });
 

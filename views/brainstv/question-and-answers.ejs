@@ -1,17 +1,18 @@
 <div class="jumbotron container-fluid">
-    <div class="mpq transparentWhiteBlock">
-        <h1>Most Popular Questions</h1>
-        <ul class="mpqGroup">
-          <li class="mpq__list">
-            <div class="question">
-              <p>Is there a Beachbody On Demand app?</p>
-              <ion-icon name="add-circle-outline" class="icon__btn"></ion-icon>
-            </div>
-            <div class="answer">
-              <p>Yes, there is a free app for Apple® and Android™ devices.</p>
-            </div>
-          </li>
-          <li class="mpq__list">
+  <div class="mpq transparentWhiteBlock">
+    <h1>Frequently Asked Questions</h1>
+    <ul class="mpqGroup">
+      <% faq.forEach(qna => { %>
+      <li class="mpq__list">
+        <div class="question">
+          <p><%= qna.question %></p>
+          <ion-icon name="add-circle-outline" class="icon__btn"></ion-icon>
+        </div>
+        <div class="answer rounded">
+          <p><%= qna.answer %></p>
+        </div>
+      </li>
+      <!-- <li class="mpq__list">
             <div class="question">
               <p>Can I download workouts to watch them offline?</p>
               <ion-icon name="add-circle-outline" class="icon__btn"></ion-icon>
@@ -63,13 +64,14 @@
               <p>Beachbody On Demand works with Apple Watch® and Wahoo® heart rate monitors.
               </p>
             </div>
-          </li>
-        </ul>
-        <div class="viewMore">
+          </li> -->
+      <% }) %>
+    </ul>
+    <!-- <div class="viewMore">
           <p class="viewMoreText">View More</p>
           <span class="viewMore__btn">
             <ion-icon name="add-circle" class="viewMore__btn__icon"></ion-icon>
           </span>
-        </div>
-      </div>
+        </div> -->
+  </div>
 </div>

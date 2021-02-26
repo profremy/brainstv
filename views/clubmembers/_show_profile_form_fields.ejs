@@ -5,8 +5,18 @@
         </div>
         <div class="card-body bg-light">
             <div class="media">
+                <% if (clubmember.profileImagePath != null) { %>
                 <img height="250" width="250" src="<%= clubmember.profileImagePath %>"
                     class="align-self-start mr-3 mobile-320-img" alt="Profile Image">
+                <% } else if (clubmember.gender != 'Female') { %>
+                <img height="250" width="250" src="/images/male_avatar.png" class="align-self-start mr-3 mobile-320-img"
+                    alt="Profile Image">
+                <% } else { %>
+                <img height="250" width="250" src="/images/female_avatar.png"
+                    class="align-self-start mr-3 mobile-320-img" alt="Profile Image">
+                <% } %>
+
+
                 <div class="media-body ml-4">
                     <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
@@ -60,8 +70,8 @@
                     <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
                             <small for="class" class="text-info mb-0">Class</small>
-                            <input type="text" class="form-control" name="class" value="<%= clubmember.class %>"
-                                disabled>
+                            <input type="text" class="form-control" name="class"
+                                value="<%= clubmember.className.className %>" disabled>
                         </div>
                         <div class="form-group col-md-4 mb-2">
                             <small for="email" class="text-info mb-0">Email</small>

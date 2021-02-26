@@ -1,7 +1,21 @@
-
 /* Most popular question style starts here */
+.mpq__list:nth-of-type(odd) {
+    background-color: rgba(222, 226, 230, 0.4);
+}
+
+.mpq__list:hover {
+    background-color: #dee2e6;
+}
+
+.answer {
+    display: none;
+}
+
 .js__view {
     display: block;
+    background-color: var(--color-background-light);
+    color: var(--light);
+    padding: .5rem;
 }
 
 .js__hide {
@@ -45,10 +59,6 @@
 
 }
 
-.answer {
-    display: none;
-}
-
 .viewMore {
     display: flex;
     align-items: center;
@@ -66,7 +76,7 @@ ion-icon {
     --ionicon-stroke-width: 32px;
     vertical-align: top;
     fill: var(--color-background-light);
-    
+
 }
 
 /* Most popular question style ends here */

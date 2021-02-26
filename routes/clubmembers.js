@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const ClubMember = require('../models/clubmember');
 const Membercategory = require('../models/category');
+const ClassName = require('../models/class');
 
 // const uploadPath = path.join('public', ClubMember.profileImageBasePath);
 const imageMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
@@ -40,64 +41,18 @@ router.get('/', async (req, res) => {
     // const clubmember = await ClubMember.find({}); //
     clubmembers = await query.exec();
     const membercategories = await Membercategory.find({});
+    const eclass = await ClassName.find({});
     res.render('clubmembers/viewmembers', {
       clubmembers: clubmembers,
       searchOptions: req.query,
       membercategories: membercategories,
+      eclass: eclass,
     });
     //console.log(searchOptions);
   } catch {
     res.redirect('/');
   }
-
-  /*
-  let searchOptions = {};
-  if (req.query.firstname != null && req.query.firstname !== '') {
-    searchOptions.firstname = new RegExp(req.query.firstname, 'i');
-  }
-  try {
-    const clubmembers = await ClubMember.find(searchOptions);
-    res.render('clubmembers/viewmembers', {
-      clubmembers: clubmembers,
-      searchOptions: req.query,
-    });
-    //res.send('All Clubmembers');
-  } catch {
-    res.redirect('/');
-  }
-  */
 });
-
-// View Club members by ids
-// router.get('/viewmember/:id', async (req, res) => {});
-// router.get('/viewmemberbyid', async (req, res) => {
-//   let query = ClubMember.find();
-//   if (req.query.firstname != null && req.query.firstname != '') {
-//     query = query.regex('firstname', new RegExp(req.query.firstname, 'i'));
-//   }
-
-//   if (req.query.registeredBefore != null && req.query.registeredBefore != '') {
-//     query = query.lte('dateJoined', req.query.registeredBefore);
-//   }
-
-//   if (req.query.registeredAfter != null && req.query.registeredAfter != '') {
-//     query = query.gte('dateJoined', req.query.registeredAfter);
-//   }
-
-//   try {
-//     // const clubmember = await ClubMember.find({});
-//     const clubmember = await query.exec();
-//     const membercategories = await Membercategory.find({});
-//     res.render('clubmembers/viewmemberbyid', {
-//       clubmember: clubmember,
-//       searchOptions: req.query,
-//       membercategories: membercategories,
-//     });
-//     //console.log(searchOptions);
-//   } catch {
-//     res.redirect('/');
-//   }
-// });
 
 //New Club member Route
 router.get('/newClubMember', async (req, res) => {
@@ -118,11 +73,12 @@ router.post('/', async (req, res) => {
   const clubmember = new ClubMember({
     //dateJoined: req.body.dateJoined,
     memberCategory: req.body.memberCategory,
+    className: req.body.className,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
     gender: req.body.gender,
-    class: req.body.class,
+    // class: req.body.class,
     dob: req.body.dob,
     phone: req.body.phone,
     city: req.body.city,
@@ -132,7 +88,10 @@ router.post('/', async (req, res) => {
     signedConsent: req.body.signedConsent,
   });
 
-  saveProfilePhoto(clubmember, req.body.profilePhoto); //profilePhoto is the name attr for input type 'file' in form
+  if (req.body.profilePhoto != null && req.body.profilePhoto !== '') {
+    saveProfilePhoto(clubmember, req.body.profilePhoto); //profilePhoto is the name attr for input type 'file' in form
+  }
+  //saveProfilePhoto(clubmember, req.body.profilePhoto); //profilePhoto is the name attr for input type 'file' in form
 
   try {
     const newClubmember = await clubmember.save();
@@ -150,12 +109,12 @@ router.post('/', async (req, res) => {
 // Show clubmember by id
 router.get('/:id', async (req, res) => {
   try {
-    const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory').exec();
+    const clubmember = await ClubMember.findById(req.params.id).populate({ path: 'memberCategory' }).populate({ path: 'className', model: ClassName }).exec();
+    //const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory className').exec();
     res.render('clubmembers/show', {
       clubmember: clubmember,
     });
-  } catch (error) {
-    console.log(error);
+  } catch {
     res.redirect('/clubmembers');
   }
 });
@@ -163,10 +122,11 @@ router.get('/:id', async (req, res) => {
 // Edit clubmember by id
 router.get('/:id/edit', async (req, res) => {
   try {
-    const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory').exec();
+    const clubmember = await ClubMember.findById(req.params.id).populate({ path: 'memberCategory' }).populate({ path: 'className', model: ClassName }).exec();
+    // const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory className').exec();
     renderEditMember(res, clubmember);
   } catch {
-    redirect('/clubmembers');
+    res.redirect('/clubmembers');
   }
 });
 
@@ -175,7 +135,7 @@ router.put('/:id', async (req, res) => {
   let clubmember;
 
   try {
-    clubmember = await ClubMember.findById(req.params.id).populate('memberCategory').exec();
+    clubmember = await ClubMember.findById(req.params.id).populate({ path: 'memberCategory' }).populate({ path: 'className', model: ClassName }).exec();
     clubmember.pointsEarned = req.body.pointsEarned;
     // clubmember.memberCategory = req.body.memberCategory;
     // clubmember.firstname = req.body.firstname;
@@ -286,12 +246,21 @@ async function renderFormPage(res, clubmember, form, hasError = false) {
   }
 }
 
+// function saveProfilePhoto(clubmember, profilePhotoEncoded) {
+//   if (profilePhotoEncoded == null) return;
+//   const profilePhoto = JSON.parse(profilePhotoEncoded);
+//   if (profilePhoto != null && imageMimeTypes.includes(profilePhoto.type)) {
+//     clubmember.profileImage = new Buffer.from(profilePhoto.data, 'base64');
+//     clubmember.profileImageType = profilePhoto.type;
+//   }
+// }
 function saveProfilePhoto(clubmember, profilePhotoEncoded) {
-  if (profilePhotoEncoded == null) return;
-  const profilePhoto = JSON.parse(profilePhotoEncoded);
-  if (profilePhoto != null && imageMimeTypes.includes(profilePhoto.type)) {
-    clubmember.profileImage = new Buffer.from(profilePhoto.data, 'base64');
-    clubmember.profileImageType = profilePhoto.type;
+  if (profilePhotoEncoded != null) {
+    const profilePhoto = JSON.parse(profilePhotoEncoded);
+    if (profilePhoto != null && imageMimeTypes.includes(profilePhoto.type)) {
+      clubmember.profileImage = new Buffer.from(profilePhoto.data, 'base64');
+      clubmember.profileImageType = profilePhoto.type;
+    }
   }
 }
 

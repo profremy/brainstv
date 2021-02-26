@@ -1,0 +1,16 @@
+<div class="jumbotron container-fluid">
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <a href="/" class="btn btn-info"><i class="fa fa-arrow-circle-left"
+                    aria-hidden="true"></i><span>Back</span></a>
+        </div>
+    </div>
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Edit Profile</a>
+    </nav>
+    <hr class="my-1 document-divider">
+    <form action="/clubmembers/profile/<%= clubmember.id %>?_method=PUT" method="POST">
+        <%- include('_member_profile_form_fields') %>
+    </form>
+
+</div>

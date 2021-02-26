@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Admin = require('../models/brainstvadmin');
+const ClassName = require('../models/class');
+const Faq = require('../models/faq');
 
 //Admin User Page Route
 router.get('/', (req, res) => {
@@ -9,7 +11,43 @@ router.get('/', (req, res) => {
   res.render('brainstvadmins/index');
 });
 
-//View All Admin Users Route
+//Classes Page Route
+router.get('/classes', async (req, res) => {
+  // Only admin users can view this route
+  let searchOptions = {};
+  if (req.query.className != null && req.query.className !== '') {
+    searchOptions.className = new RegExp(req.query.className, 'i');
+  }
+  try {
+    const eclass = await ClassName.find(searchOptions);
+    res.render('brainstvadmins/classes/index', {
+      eclass: eclass,
+      searchOptions: req.query,
+    });
+  } catch {
+    res.redirect('brainstvadmins');
+  }
+});
+
+// FAQs Page Route
+router.get('/faqs', async (req, res) => {
+  // Only admin users can view this route
+  let searchOptions = {};
+  if (req.query.question != null && req.query.question !== '') {
+    searchOptions.question = new RegExp(req.query.question, 'i');
+  }
+  try {
+    const faq = await Faq.find(searchOptions);
+    res.render('brainstvadmins/faqs/index', {
+      faq: faq,
+      searchOptions: req.query,
+    });
+  } catch {
+    res.redirect('brainstvadmins');
+  }
+});
+
+// View All Admin Users Route
 router.get('/viewAdmin', async (req, res) => {
   let searchOptions = {};
   if (req.query.userName != null && req.query.userName !== '') {
@@ -53,6 +91,51 @@ router.post('/', async (req, res) => {
   }
 });
 
+//New Class Route
+router.get('/classes/new', (req, res) => {
+  res.render('brainstvadmins/classes/new', { eclass: new ClassName() });
+});
+
+//Create New class
+router.post('/classes', async (req, res) => {
+  const eclass = new ClassName({
+    className: req.body.className,
+  });
+
+  try {
+    const newClass = await eclass.save();
+    res.redirect(`/brainstvadmins/classes`);
+  } catch {
+    res.render('brainstvadmins/classes/new', {
+      eclass: eclass,
+      errorMessage: 'Error creating class or class already exist!',
+    });
+  }
+});
+
+//New FAQs Route
+router.get('/faqs/new', (req, res) => {
+  res.render('brainstvadmins/faqs/new', { faq: new Faq() });
+});
+
+//Create New FAQ
+router.post('/faqs', async (req, res) => {
+  const faq = new Faq({
+    question: req.body.question,
+    answer: req.body.answer,
+  });
+
+  try {
+    const newFaq = await faq.save();
+    res.redirect(`/brainstvadmins/faqs`);
+  } catch {
+    res.render('brainstvadmins/faqs/new', {
+      faq: faq,
+      errorMessage: 'Error creating FAQs or FAQs already exist!',
+    });
+  }
+});
+
 // Edit Admin by id //
 router.get('/:id/edit', async (req, res) => {
   try {
@@ -62,6 +145,30 @@ router.get('/:id/edit', async (req, res) => {
     });
   } catch {
     res.redirect('/brainstivadmins/viewAdmin');
+  }
+});
+
+// Edit Class by id //
+router.get('/classes/:id/edit', async (req, res) => {
+  try {
+    const eclass = await ClassName.findById(req.params.id);
+    res.render('brainstvadmins/classes/edit', {
+      eclass: eclass,
+    });
+  } catch {
+    res.redirect('/brainstivadmins/viewAdmin');
+  }
+});
+
+// Edit Faqs by id //
+router.get('/faqs/:id/edit', async (req, res) => {
+  try {
+    const faq = await Faq.findById(req.params.id);
+    res.render('brainstvadmins/faqs/edit', {
+      faq: faq,
+    });
+  } catch {
+    res.redirect('/brainstivadmins/faqs');
   }
 });
 
@@ -97,6 +204,44 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Update Class by id //
+router.put('/classes/:id', async (req, res) => {
+  let eclass;
+
+  try {
+    eclass = await ClassName.findById(req.params.id);
+    eclass.className = req.body.className;
+
+    await eclass.save();
+    //res.redirect(`/brainstvadmins/${admin.id}`);
+    res.redirect('/brainstvadmins/classes');
+  } catch {
+    res.render('brainstvadmins/classes/edit', {
+      eclass: eclass,
+      errorMessage: 'Error updating class name. Try again!',
+    });
+  }
+});
+
+// Update Faqs by id //
+router.put('/faqs/:id', async (req, res) => {
+  let faq;
+
+  try {
+    faq = await Faq.findById(req.params.id);
+    faq.question = req.body.question;
+    faq.answer = req.body.answer;
+
+    await faq.save();
+    res.redirect('/brainstvadmins/faqs');
+  } catch {
+    res.render('brainstvadmins/faqs/edit', {
+      faq: faq,
+      errorMessage: 'Error updating FAQ. Try again!',
+    });
+  }
+});
+
 // Delete Admin by id
 router.delete('/:id', async (req, res) => {
   let admin;
@@ -111,6 +256,40 @@ router.delete('/:id', async (req, res) => {
       res.redirect('/brainstvadmins/viewAdmin');
     } else {
       res.redirect('/brainstvadmins/viewAdmin');
+    }
+  }
+});
+
+// Delete Class by id
+router.delete('/classes/:id', async (req, res) => {
+  let eclass;
+
+  try {
+    eclass = await ClassName.findById(req.params.id);
+    await eclass.remove();
+    res.redirect('/brainstvadmins/classes');
+  } catch {
+    if (eclass == null) {
+      res.redirect('/brainstvadmins/viewAdmin');
+    } else {
+      res.redirect('/brainstvadmins/classes');
+    }
+  }
+});
+
+// Delete FAQs by id
+router.delete('/faqs/:id', async (req, res) => {
+  let faq;
+
+  try {
+    faq = await Faq.findById(req.params.id);
+    await faq.remove();
+    res.redirect('/brainstvadmins/faqs');
+  } catch {
+    if (faq == null) {
+      res.redirect('/brainstvadmins/viewAdmin');
+    } else {
+      res.redirect('/brainstvadmins/faqs');
     }
   }
 });

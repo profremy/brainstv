@@ -1,0 +1,16 @@
+<div class="jumbotron container-fluid">
+    <a href="/" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+            aria-hidden="true"></i><span>Back</span></a>
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Your Profile </a>
+        <a href="/clubmembers/profile/<%= clubmember.id %>/edit" class="btn btn-warning text-dark"
+            title="Edit club member"><i class="fa fa-pencil" aria-hidden="true"></i>Edit
+        </a>
+
+
+        <%- include('../partials/deleteForm', { url: `/clubmembers/profile/${clubmember.id}`}) %>
+    </nav>
+    <hr class="my-1 document-divider" />
+    <%- include('_member_profile_form_fields') %>
+
+</div>

@@ -14,16 +14,15 @@ const eclassroomSchema = new mongoose.Schema({
   },
   streamUrl: {
     type: String,
-    required: true,
   },
-  class: {
+  className: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Class',
+    ref: 'ClassName',
   },
   comments: [
     {
-      liveComment: String,
+      text: String,
       postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Clubmember',

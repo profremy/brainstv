@@ -1,4 +1,5 @@
 const express = require('express');
+const Faq = require('../models/faq');
 const router = express.Router();
 
 //Shows
@@ -46,8 +47,14 @@ router.get('/our-terms', (req, res) => {
   res.render('brainstv/our-terms');
 });
 //Questions and Answers
-router.get('/question-and-answers', (req, res) => {
-  res.render('brainstv/question-and-answers');
+router.get('/question-and-answers', async (req, res) => {
+  let faq;
+  try {
+    faq = await Faq.find({});
+    res.render('brainstv/question-and-answers', { faq: faq });
+  } catch {
+    res.redirect('/');
+  }
 });
 
 //Contact Us

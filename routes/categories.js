@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Membercategory = require('../models/category');
 const ClubMember = require('../models/clubmember');
+const ClassName = require('../models/class');
 
 //All Users Route
 router.get('/', async (req, res) => {
@@ -30,7 +31,7 @@ router.get('/newcategory', (req, res) => {
   res.render('categories/newcategory', { membercategory: new Membercategory() });
 });
 
-//Create Admin User Route
+//Create category Route
 router.post('/', async (req, res) => {
   const membercategory = new Membercategory({
     memberCategory: req.body.memberCategory.toUpperCase(),
@@ -53,13 +54,15 @@ router.get('/:id', async (req, res) => {
   // res.send('Show Category ' + req.params.id);
   try {
     const membercategory = await Membercategory.findById(req.params.id);
-    const clubmembers = await ClubMember.find({ memberCategory: membercategory.id }).limit(20).exec();
+    //const className = await ClassName.find({});
+    const clubmembers = await ClubMember.find({ memberCategory: membercategory.id }).populate({ path: 'className', model: ClassName }).limit(20).exec();
     res.render('categories/show', {
       membercategory: membercategory,
       assignedMembers: clubmembers,
     });
   } catch (error) {
     console.log(error);
+    console.log(' from categories');
     res.redirect('/categories');
   }
 });

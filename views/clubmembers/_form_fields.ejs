@@ -49,7 +49,6 @@
                             <div class="col-sm-6 my-2">
                                 <input type="file" name="profilePhoto" class="filepond">
                             </div>
-                            <!-- <input type="file" name="profilePhoto" class="filepond"> -->
                         </div>
 
                         <!-- space for category -->
@@ -142,11 +141,25 @@
 
                         <h5 class="marginTopBottomSmall">Class <i><small>(Example: Year 6)</small></i> <span
                                 class="requiredfield">*</span></h5>
-                        <div class="form-group">
-                            <div class="input-group">
+                        <div class="form-row">
+                            <!-- <div class="input-group">
                                 <input type="text" name="class" class="form-control" placeholder="Your class">
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">Class is required.</div>
+                            </div> -->
+                            <div class="col-md-6 mb-2">
+                                <select class="custom-select" name="className" id="className">
+                                    <% classes.forEach(c => { %>
+                                    <% if (c.id == clubmember.className) { %>
+                                    <option selected label="<%= c.className %>" value="<%= c.id %>">
+                                    </option>
+                                    <% } else { %>
+                                    <option label="<%= c.className %>" value="<%= c.id %>">
+                                    </option>
+                                    <% } %>
+
+                                    <% }) %>
+                                </select>
                             </div>
                         </div>
                         <div class="marginTopBottomSmall"></div>

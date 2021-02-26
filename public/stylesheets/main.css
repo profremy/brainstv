@@ -401,3 +401,20 @@ input[type="radio"]:checked+span {
 .flashinfo_input {
     width: 700px;
 }
+
+.popup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+}
+
+.popup-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.popupBackground img {
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+}

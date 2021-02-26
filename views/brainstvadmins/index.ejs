@@ -24,14 +24,32 @@
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade admin-tab-pane show active" id="nav-adminusers" role="tabpanel"
       aria-labelledby="nav-users-tab">
-      <h4 class="section-sub-heading">Admin Users Management Console</h4>
+      <h4 class="section-sub-heading">Admin Users And E-Class Management Console</h4>
       <div class="row">
         <div class="auto-grid">
           <a href="/brainstvadmins/new" class="btn btn-lg btn-success">Create New Admin User</a>
-          <a href="/brainstvadmins/viewAdmin" class="btn btn-lg btn-primary">View Admin Users</a>
+          <a href="/brainstvadmins/viewAdmin" class="btn btn-lg btn-primary">View/Modify Admin Users</a>
+          <a href="/brainstvadmins/classes/new" class="btn btn-lg btn-success">Create New eClass Name</a>
+          <a href="/brainstvadmins/classes" class="btn btn-lg btn-primary">View/Modify eClass Name</a>
+          <a href="/brainstvadmins/faqs/new" class="btn btn-lg btn-success">Create New FAQ</a>
+          <a href="/brainstvadmins/faqs" class="btn btn-lg btn-primary">View/Modify FAQs</a>
         </div>
       </div>
 
+    </div>
+
+    <div class="tab-pane fade admin-tab-pane" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+      <h4 class="section-sub-heading">View and Modify Club Members</h4>
+      <div class="row">
+        <div class="auto-grid">
+          <a href="/clubmembers" class="btn btn-lg btn-primary">View Or Modify Club Member</a>
+          <a href="/clubmembers/viewmemberbyid" class="btn btn-lg btn-primary">View Member by id test form</a>
+          <a href="/categories/newcategory" class="btn btn-lg btn-success">Create/Add New Learner Style/Category</a>
+          <a href="/categories" class="btn btn-lg btn-primary">View/Modify Learner Style/Category</a>
+          <!-- <a href="/clubmembers" class="btn btn-lg btn-danger">Delete Club Member</a> -->
+
+        </div>
+      </div>
     </div>
 
     <div class="tab-pane fade admin-tab-pane" id="nav-logo" role="tabpanel" aria-labelledby="nav-logo-tab">
@@ -49,31 +67,23 @@
       <h4 class="section-sub-heading">Flash Information Management</h4>
       <div class="rrow">
         <div class="auto-grid">
-          <a href="/flashinfos/new" class="btn btn-lg btn-primary">Create/Add</a>
-          <a href="/flashinfos" class="btn btn-lg btn-success">View/Edit/Delete</a>
+          <a href="/flashinfos/new" class="btn btn-lg btn-success">Create/Add</a>
+          <a href="/flashinfos" class="btn btn-lg btn-primary">View/Edit/Delete</a>
         </div>
       </div>
     </div>
     <div class="tab-pane fade admin-tab-pane" id="nav-popUpInfo" role="tabpanel" aria-labelledby="nav-popUpInfo-tab">
-      Post/Edit/Update/Delete PopUpInfo
+      <h4 class="section-sub-heading">Popup Window Management</h4>
+      <div class="auto-grid">
+        <a href="/popups/new" class="btn btn-lg btn-success">Create/Add</a>
+        <a href="/popups" class="btn btn-lg btn-primary">View/Edit/Delete</a>
+      </div>
     </div>
     <div class="tab-pane fade admin-tab-pane" id="nav-shows" role="tabpanel" aria-labelledby="nav-shows-tab">ON NOW,
       NEXT, LATER</div>
     <div class="tab-pane fade admin-tab-pane" id="nav-newsroom" role="tabpanel" aria-labelledby="nav-newsroom-tab">
       Post/Edit/Update/Delete News</div>
-    <div class="tab-pane fade admin-tab-pane" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
-      <h4 class="section-sub-heading">View and Modify Club Members</h4>
-      <div class="row">
-        <div class="auto-grid">
-          <a href="/clubmembers" class="btn btn-lg btn-primary">View Or Modify Club Member</a>
-          <a href="/clubmembers/viewmemberbyid" class="btn btn-lg btn-primary">View Member by id test form</a>
-          <a href="/categories/newcategory" class="btn btn-lg btn-success">Create/Add New Learner Style/Category</a>
-          <a href="/categories" class="btn btn-lg btn-warning">Edit/Delete Learner Style/Category</a>
-          <!-- <a href="/clubmembers" class="btn btn-lg btn-danger">Delete Club Member</a> -->
 
-        </div>
-      </div>
-    </div>
 
   </div>
 </div>
