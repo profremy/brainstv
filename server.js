@@ -60,9 +60,16 @@ app.use(async (req, res, next) => {
   sitelogo = await Sitelogo.findOne({});
   flashinfo = await Flashinfo.findOne({}).sort({ createdAt: -1 });
 
-  if (sitelogo != null && flashinfo != null) {
-    res.locals.loadSiteLogo = sitelogo.sitelogoPath;
+  if (flashinfo != null) {
     res.locals.loadSiteFlashInfo = flashinfo.flashInfoText;
+  } else {
+    res.locals.loadSiteFlashInfo = '';
+  }
+
+  if (sitelogo != null) {
+    res.locals.loadSiteLogo = sitelogo.sitelogoPath;
+  } else {
+    res.locals.loadSiteLogo = '';
   }
   app.locals.clubmembers = await ClubMember.find({}).populate({ path: 'className', model: ClassName }).sort({ dateJoined: -1 });
   app.locals.popups = await Popup.findOne({});
@@ -94,6 +101,12 @@ mongoose.connect(DB, {
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
+/* 
+.then((con) => {
+    //console.log(con.connections);
+    console.log('Local db Connection to Mongoose Successful!');
+  });
+*/
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Live db Connection to Mongoose Successful!'));

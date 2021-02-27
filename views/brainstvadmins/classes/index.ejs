@@ -27,14 +27,15 @@
             </thead>
             <tbody>
                 <% var assignedClassArray = []  %>
-
+                <% if (clubmembers.length != 0) { %>
                 <% clubmembers.forEach(member => { %>
-
                 <% if (member.className._id != null) { %>
                 <% assignedClassArray.push(member.className._id)  %>
                 <% } %>
                 <% }) %>
+                <% } %>
                 <% var assignedClassString = assignedClassArray.map(function(assigned) { return "" + assigned + ""}) %>
+
 
                 <% eclass.forEach(c => { %>
                 <% var classID = '' %>

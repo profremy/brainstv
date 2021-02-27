@@ -60,6 +60,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div> -->
+                        <% if (popups != null) { %>
                         <div class="modal-body p-0">
                             <div class="popup-grid">
                                 <div class="popupBackground">
@@ -89,6 +90,37 @@
                                 </div>
                             </div>
                         </div>
+                        <% } else { %>
+                        <div class="modal-body p-0">
+                            <div class="popup-grid">
+                                <div class="popupBackground">
+                                    <img src="/images/show.jpg" alt="Popup Background">
+                                </div>
+                                <div class="popup-flex text-center pl-2 pr-2">
+                                    <div>
+                                        <h2 class="modal-title" id="popUpMessageLabel">Your title here
+                                        </h2>
+                                    </div>
+                                    <div class="popUpTextInfo">
+                                        <p>Your subtitle here</p>
+                                    </div>
+                                    <div class="cta">
+                                        <a href="/clubmembers/newclubmember"
+                                            class="btn btn-warning btn-lg text-dark">Create Free
+                                            Account
+                                            Now!</a>
+                                    </div>
+                                    <div class="popup-footer mt-2 mb-2">
+                                        <small>Your footer here</small>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light popupMsgClose text-dark"
+                                            data-dismiss="modal">NO THANKS</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
                         <!-- <div class="modal-footer">
                             <button type="button" class="btn btn-danger popupMsgClose"
                                 data-dismiss="modal">Close</button>

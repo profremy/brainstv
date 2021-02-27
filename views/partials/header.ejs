@@ -27,7 +27,7 @@
     <div class="nav-menu-buttons">
       <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <a class="navbar-brand" href="/">
-          <% if (loadSiteLogo != null) { %>
+          <% if (loadSiteLogo != null && loadSiteLogo != '') { %>
           <img src="<%= loadSiteLogo %>" class="d-inline-block align-top" id="logo" alt="BrainsTV Logo">
           <% } else { %>
           <img src="/images/transparentlogo.png" class="d-inline-block align-top" id="logo" alt="BrainsTV Logo">
@@ -90,7 +90,7 @@
 
   </nav>
   <div class="informationFlash">
-    <% if (loadSiteFlashInfo != null) { %>
+    <% if (loadSiteFlashInfo != null && loadSiteFlashInfo != '') { %>
     <h3><%= loadSiteFlashInfo %> </h3>
     <% } else { %>
     <h3>NO FLASH INFORMATION AVAILABLE</h3>

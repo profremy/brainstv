@@ -48,7 +48,6 @@ router.get('/', async (req, res) => {
       membercategories: membercategories,
       eclass: eclass,
     });
-    //console.log(searchOptions);
   } catch {
     res.redirect('/');
   }
@@ -153,8 +152,7 @@ router.put('/:id', async (req, res) => {
     }
     await clubmember.save();
     res.redirect(`/clubmembers/${clubmember.id}`);
-  } catch (err) {
-    console.log(err);
+  } catch {
     if (clubmember != null) {
       renderEditMember(res, clubmember, true);
     } else {
