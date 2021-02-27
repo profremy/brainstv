@@ -118,6 +118,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Show clubmember profile by id
+router.get('/profile/:id', async (req, res) => {
+  try {
+    const clubmember = await ClubMember.findById(req.params.id).populate({ path: 'memberCategory', model: Membercategory }).populate({ path: 'className', model: ClassName }).exec();
+    //const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory className').exec();
+    res.render('clubmembers/profile/', {
+      clubmember: clubmember,
+    });
+  } catch {
+    res.redirect('/');
+  }
+});
+
 // Edit clubmember by id
 router.get('/:id/edit', async (req, res) => {
   try {
@@ -126,6 +139,17 @@ router.get('/:id/edit', async (req, res) => {
     renderEditMember(res, clubmember);
   } catch {
     res.redirect('/clubmembers');
+  }
+});
+
+// Edit clubmember profile by id
+router.get('/profile/:id/edit', async (req, res) => {
+  try {
+    const clubmember = await ClubMember.findById(req.params.id).populate({ path: 'memberCategory' }).populate({ path: 'className', model: ClassName }).exec();
+    // const clubmember = await ClubMember.findById(req.params.id).populate('memberCategory className').exec();
+    renderEditMemberProfile(res, clubmember);
+  } catch {
+    res.redirect('/');
   }
 });
 
@@ -158,6 +182,46 @@ router.put('/:id', async (req, res) => {
     } else {
       redirect('/clubmembers');
     }
+  }
+});
+
+// Update Clubmember Profile by id
+router.put('/profile/:id', async (req, res) => {
+  let clubmember;
+
+  try {
+    clubmember = await ClubMember.findById(req.params.id).populate({ path: 'memberCategory' }).populate({ path: 'className', model: ClassName }).exec();
+    //clubmember.pointsEarned = req.body.pointsEarned;
+    clubmember.memberCategory.memberCategory = req.body.memberCategory;
+    clubmember.firstname = req.body.firstname;
+    clubmember.lastname = req.body.lastname;
+    //clubmember.signedConsent = req.body.signedConsent;
+    //clubmember.dateJoined = new Date(req.body.dateJoined);
+    clubmember.gender = req.body.gender;
+    clubmember.dob = new Date(req.body.dob);
+    clubmember.className.ClassName = req.body.className;
+    clubmember.email = req.body.email;
+    clubmember.phone = req.body.phone;
+    clubmember.city = req.body.city;
+
+    if (req.body.password === '' && clubmember.password != null) {
+      clubmember.password = clubmember.password;
+    } else {
+      clubmember.password = req.body.password;
+    }
+
+    if (req.body.profilePhoto != null && req.body.profilePhoto !== '') {
+      saveProfilePhoto(clubmember, req.body.profilePhoto);
+    }
+    await clubmember.save();
+    res.redirect(`/clubmembers/profile/${clubmember.id}`);
+  } catch (error) {
+    console.log(error);
+    // if (clubmember != null) {
+    //   renderEditMemberProfile(res, clubmember, true);
+    // } else {
+    //   redirect('/');
+    // }
   }
 });
 
@@ -222,6 +286,10 @@ async function renderEditMember(res, clubmember, hasError = false) {
   renderFormPage(res, clubmember, 'edit', hasError);
 }
 
+async function renderEditMemberProfile(res, clubmember, hasError = false) {
+  renderFormProfilePage(res, clubmember, 'edit', hasError);
+}
+
 async function renderFormPage(res, clubmember, form, hasError = false) {
   try {
     const membercategories = await Membercategory.find({});
@@ -241,6 +309,26 @@ async function renderFormPage(res, clubmember, form, hasError = false) {
     res.redirect('/clubmembers', {
       errorMessage: 'There was an error trying to create/update member.',
     });
+  }
+}
+
+async function renderFormProfilePage(res, clubmember, form, hasError = false) {
+  try {
+    const membercategories = await Membercategory.find({});
+    const params = {
+      membercategories: membercategories,
+      clubmember: clubmember,
+    };
+    if (hasError) {
+      if (form == 'edit') {
+        params.errorMessage = 'An error occurred while updating Profile. Try again!';
+      } else {
+        params.errorMessage = 'An error occurred while creating Profile. Try again!';
+      }
+    }
+    res.render(`clubmembers/profile/${form}`, params);
+  } catch {
+    res.redirect('/');
   }
 }
 

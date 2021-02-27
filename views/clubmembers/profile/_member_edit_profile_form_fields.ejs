@@ -6,56 +6,60 @@
         <div class="card-body bg-light">
             <div class="media">
                 <% if (clubmember.profileImagePath != null) { %>
-                <img height="250" width="250" src="<%= clubmember.profileImagePath %>"
+                <img height="195" width="195" src="<%= clubmember.profileImagePath %>"
                     class="align-self-start mr-3 mobile-320-img" alt="Profile Image">
                 <% } else if (clubmember.gender != 'Female') { %>
-                <img height="250" width="250" src="/images/male_avatar.png" class="align-self-start mr-3 mobile-320-img"
+                <img height="195" width="195" src="/images/male_avatar.png" class="align-self-start mr-3 mobile-320-img"
                     alt="Profile Image">
                 <% } else { %>
-                <img height="250" width="250" src="/images/female_avatar.png"
+                <img height="195" width="195" src="/images/female_avatar.png"
                     class="align-self-start mr-3 mobile-320-img" alt="Profile Image">
                 <% } %>
+
+
                 <div class="media-body ml-4">
                     <div class="form-row align-items-center">
-                        <!-- <div class="form-group col-md-4 mb-2">
-                            <small for="category" class="text-info mb-0">Learning Style/Category</small>
-                            <input type="text" name="memberCategory" class="form-control"
-                                value="<%#= clubmember.memberCategory.memberCategory %>" disabled>
-                        </div> -->
+                        <div class="form-row">
+                            <label for="profilePhoto">Change Profile Photo:</label>
+                            <div class="col-sm-10 my-2">
+                                <input type="file" name="profilePhoto" class="filepond">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
                             <small for="category" class="text-info mb-0">Learning Style/Category</small>
-                            <input type="text" class="form-control" name="memberCategory"
-                                value="<%= clubmember.memberCategory.memberCategory %>" disabled>
+                            <!-- <input type="text" class="form-control" name="memberCategory"
+                                value="<%#= clubmember.memberCategory.memberCategory %>"> -->
 
+                            <select class="custom-select" name="memberCategory" id="category">
+                                <% membercategories.forEach(category => { %>
+                                <% if (category.id == clubmember.memberCategory) { %>
+                                <option selected label="<%= category.memberCategory %>" value="<%= category.id %>">
+                                </option>
+                                <% } else { %>
+                                <option label="<%= category.memberCategory %>" value="<%= category.id %>">
+                                </option>
+                                <% } %>
+
+                                <% }) %>
+                            </select>
                         </div>
-                        <!-- <select class="custom-select" name="memberCategory" id="category">
-                            <%# membercategories.forEach(category => { %>
-                            <%# if (category.id == clubmember.memberCategory) { %>
-                            <option selected label="<%#= category.memberCategory %>" value="<%#= category.id %>">
-                            </option>
-                            <%# } else { %>
-                            <option label="<%#= category.memberCategory %>" value="<%#= category.id %>">
-                            </option>
-                            <%# } %>
-
-                            <%# }) %>
-                        </select> -->
                         <div class="form-group col-md-4 mb-2">
                             <small for="firstname" class="text-info mb-0">Points Earned</small>
                             <input type="number" min="1" class="form-control" name="pointsEarned"
-                                value="<%= clubmember.pointsEarned %>">
+                                value="<%= clubmember.pointsEarned %>" disabled>
                         </div>
                     </div>
                     <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
                             <small for="firstname" class="text-info mb-0">First name</small>
-                            <input type="text" class="form-control" name="firstname" value="<%= clubmember.firstname %>"
-                                disabled>
+                            <input type="text" class="form-control" name="firstname"
+                                value="<%= clubmember.firstname %>">
                         </div>
                         <div class="form-group col-md-4 mb-2">
                             <small for="lastname" class="text-info mb-0">Last name</small>
-                            <input type="text" class="form-control" name="lastname" value="<%= clubmember.lastname %>"
-                                disabled>
+                            <input type="text" class="form-control" name="lastname" value="<%= clubmember.lastname %>">
                         </div>
                     </div>
                     <div class="form-row align-items-center">
@@ -73,39 +77,58 @@
                     <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
                             <small for="gender" class="text-info mb-0">Gender</small>
-                            <input type="text" class="form-control" name="gender" value="<%= clubmember.gender %>"
-                                disabled>
+                            <input type="text" class="form-control" name="gender" value="<%= clubmember.gender %>">
                         </div>
                         <div class="form-group col-md-4 mb-2">
                             <small for="dob" class="text-info mb-0">Date of birth</small>
                             <input type="date" name="dob" class="form-control"
-                                value="<%= clubmember.dob == null ? '' : clubmember.dob.toISOString().split('T')[0] %>"
-                                disabled>
+                                value="<%= clubmember.dob == null ? '' : clubmember.dob.toISOString().split('T')[0] %>">
                         </div>
                     </div>
                     <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
                             <small for="class" class="text-info mb-0">Class</small>
-                            <input type="text" class="form-control" name="class"
-                                value="<%= clubmember.className.className %>" disabled>
-                            <!-- <input type="text" class="form-control" name="class" value="<%= clubmember.class %>"
-                                disabled> -->
+
+                            <select class="custom-select" name="className" id="className">
+                                <% classes.forEach(c => { %>
+                                <% if (c.id == clubmember.className) { %>
+                                <option selected label="<%= c.className %>" value="<%= c.id %>">
+                                </option>
+                                <% } else { %>
+                                <option label="<%= c.className %>" value="<%= c.id %>">
+                                </option>
+                                <% } %>
+
+                                <% }) %>
+                            </select>
+                            <!-- <input type="text" class="form-control" name="class"
+                                value="<%#= clubmember.className.className %>"> -->
+                            <!-- <input type="text" class="form-control" name="class" value="<%#= clubmember.class %>"
+                                > -->
                         </div>
                         <div class="form-group col-md-4 mb-2">
                             <small for="email" class="text-info mb-0">Email</small>
-                            <input type="email" class="form-control" name="email" value="<%= clubmember.email %>"
-                                disabled>
+                            <input type="email" class="form-control" name="email" value="<%= clubmember.email %>">
                         </div>
                     </div>
                     <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
                             <small for="phone" class="text-info mb-0">Phone</small>
-                            <input type="phone" class="form-control" name="phone" value="<%= clubmember.phone %>"
-                                disabled>
+                            <input type="phone" class="form-control" name="phone" value="<%= clubmember.phone %>">
                         </div>
                         <div class="form-group col-md-4 mb-2">
                             <small for="city" class="text-info mb-0">City/Town</small>
-                            <input type="city" class="form-control" name="city" value="<%= clubmember.city %>" disabled>
+                            <input type="city" class="form-control" name="city" value="<%= clubmember.city %>">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-md-4 mb-2">
+                            <small for="password" class="text-info mb-0">Password</small> <span class="role"> <button
+                                    type="button" class="btn btn-sm btn-warning" data-toggle="popover"
+                                    data-trigger="focus" title="Password"
+                                    data-content="Do not type inside this box if you do not want to change your existing password."><i
+                                        class="fa fa-question-circle-o" aria-hidden="true"></i></button></span>
+                            <input type="password" class="form-control" name="password">
                         </div>
                     </div>
                     <hr class="document-divider">
