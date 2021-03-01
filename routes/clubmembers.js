@@ -215,13 +215,12 @@ router.put('/profile/:id', async (req, res) => {
     }
     await clubmember.save();
     res.redirect(`/clubmembers/profile/${clubmember.id}`);
-  } catch (error) {
-    console.log(error);
-    // if (clubmember != null) {
-    //   renderEditMemberProfile(res, clubmember, true);
-    // } else {
-    //   redirect('/');
-    // }
+  } catch {
+    if (clubmember != null) {
+      renderEditMemberProfile(res, clubmember, true);
+    } else {
+      redirect('/');
+    }
   }
 });
 

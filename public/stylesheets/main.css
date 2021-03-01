@@ -120,11 +120,11 @@ textarea:focus::-moz-placeholder {
     background-attachment: scroll;
 }
 
-.bg-login-page {
+/* .bg-login-page {
     background-image: url(../images/areacharts.png);
     background-size: cover;
     background-attachment: scroll;
-}
+} */
 
 .bg-yellow {
     background-color: var(--bg-yellow);
@@ -417,4 +417,8 @@ input[type="radio"]:checked+span {
     width: 100%;
     background-position: center;
     background-size: cover;
+}
+
+.mobileLogin {
+    background-color: var(--color-background);
 }
