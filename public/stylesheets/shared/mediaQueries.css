@@ -1,4 +1,45 @@
 @media only screen and (max-width: 2560px) {
+    #userOptions {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #userOptions,
+    .logout {
+        cursor: pointer;
+    }
+
+    .userOptions {
+        position: absolute;
+        display: none;
+        background-color: #003148;
+        opacity: 0.99;
+        font-size: 0.8em;
+        border-top: 1px solid var(--light);
+        border-radius: 0 0 3px 3px;
+        top: 70px;
+        z-index: 1;
+    }
+
+    .userOptions:before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid var(--light);
+        left: 70px;
+        top: -8px;
+    }
+
+    .showUserOptions {
+        display: block;
+    }
+
     .mobileScreen {
         display: none;
     }

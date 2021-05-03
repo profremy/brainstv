@@ -9,15 +9,20 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.js"></script>
+    <!-- <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script> -->
+    <!-- <script nomodule="" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20160511/json2.min.js"
+        integrity="sha512-uWk2ZXl3GVrq6DZsrL5dSg1S/F3MNQ9VaDFigqXOoKUnWG58UxOuJGfTrzh5KjpoBvPiFniL2PahU2HUTFMJXw=="
+        crossorigin="anonymous"></script>
     <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
     <script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
     <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <link rel="stylesheet" href="/stylesheets/main.css">
-    <link rel="shortcut icon" href="/favicon.ico?v=2"" type=" image/x-icon"> <title>BrainsTv</title>
+    <link rel="shortcut icon" href="/favicon.png?v=2"" type=" image/x-icon"> <title><%= pageTitle %> </title>
     <script defer src="/javascript/fileUpload.js"></script>
+
+
 </head>
 
 <body oncontextmenu="return false;">
@@ -28,6 +33,7 @@
         </div>
         <div class="app">
             <%- include('../partials/header.ejs') %>
+            <div class="clientSideAlerts"></div>
             <% if (locals.errorMessage != null) { %>
             <div class="alert alert-warning alert-dismissible fade show" id="catchErrors" role="alert">
                 <strong><%- include('../partials/errorMessage.ejs') %></strong>
@@ -105,7 +111,7 @@
                                         <p>Your subtitle here</p>
                                     </div>
                                     <div class="cta">
-                                        <a href="/clubmembers/newclubmember"
+                                        <a href="/api/v1/clubmembers/newclubmember"
                                             class="btn btn-warning btn-lg text-dark">Create Free
                                             Account
                                             Now!</a>
@@ -160,9 +166,11 @@
         </div>
         <!-- This is the end of cookies notice -->
     </div>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
     <script src="/javascript/jquery.min.js"></script>
     <script src="/javascript/bootstrap.bundle.min.js"></script>
-    <script src="/javascript/script.js"></script>
+    <!-- <script src="/javascript/script.js"></script> -->
+    <script src="/javascript/bundle.js"></script>
 
 </body>
 

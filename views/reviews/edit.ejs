@@ -1,0 +1,32 @@
+<div class="jumbotron container-fluid">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <form action="/reviews/<%= review.id %>?_method=PUT" method="POST">
+                <div class="form-row align-items-center mt-1">
+                    <div class="col-sm-8">
+                        <label for="review" class="col-sm-6 col-form-label">Comment</label>
+                        <div class="col-sm-12">
+                            <textarea class="form-control reviewInput" name="review"><%= review.review %></textarea>
+                        </div>
+                    </div>
+                    <div class=" col-sm-4">
+                        <label for="rating" class="col-sm-6 col-form-label">Rating</label>
+                        <div class="col-md-4 mb-2">
+                            <input type="number" min="1" max="5" class="form-control reviewRating" name="rating"
+                                value="<%= review.rating %>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-10 marginTopBottomSmall">
+                    <a href="/brainstv/shows" class="btn btn-danger"><i class="fa fa-times-circle"
+                            aria-hidden="true"></i><span>Cancel</span></a>
+                    <button type="submit" class="btn btn-success" id="loader"><i class="fa fa-cloud"
+                            aria-hidden="true"></i><span>Update</span></button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>

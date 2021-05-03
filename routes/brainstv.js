@@ -1,75 +1,64 @@
 const express = require('express');
-const Faq = require('../models/faq');
-const router = express.Router();
+const brainstvController = require('./../controllers/brainstvController');
+const authController = require('./../controllers/authController');
+const reviewController = require('./../controllers/reviewController');
 
-//Shows
-router.get('/shows', (req, res) => {
-  res.render('brainstv/shows');
-});
+const router = express.Router();
+const reviewRouter = require('./reviewRoutes');
+
+router.use(authController.isLoggedIn); // throwing error on all routes
+
+// All Shows
+router.route('/shows').get(brainstvController.getAllShows);
+
+// Get Show by slug
+router.get('/show/:slug', brainstvController.getShowBySlug);
+
+// The parameters for this route come from the reviewController's createReview
+/*
+router.route('/shows/:showId/reviews').post(authController.protect, authController.restrictTo('clubMember'), reviewController.createReview);
+*/
+// This type of Code can be remedied by {MergeParams} in reviewRouter but by first
+// mounting reviewRouter with require and router.use as above and below.
+router.use('/shows/:showId/reviews', reviewRouter);
+
+// TV Schecule
+router.get('/tvschedule', brainstvController.getTvSchedule);
 
 //Games
-router.get('/games', (req, res) => {
-  res.render('brainstv/games');
-});
+router.route('/games').get(authController.protect, brainstvController.getAllGames);
 
 //Videos
-router.get('/videos', (req, res) => {
-  res.render('brainstv/videos');
-});
+router.route('/videos').get(brainstvController.getAllVideos);
 
 //Activities
-router.get('/activities', (req, res) => {
-  res.render('brainstv/activities');
-});
+router.route('/activities').get(brainstvController.getAllActivities);
 
 //Take Part
-router.get('/takepart', (req, res) => {
-  res.render('brainstv/takepart');
-});
+router.route('/takePart').get(brainstvController.getAllTakePart);
 
 //E-classroom
-router.get('/eclassroom', (req, res) => {
-  res.render('brainstv/eclassroom');
-});
+router.route('/eclassroom').get(brainstvController.getAllClassroom);
 
 //Newsroom
-router.get('/newsupdate', (req, res) => {
-  res.render('brainstv/newsupdate');
-});
+router.route('/newsupdate').get(brainstvController.getAllNewsUpdate);
 
 //Privacy Policy
-router.get('/privacy-policy', (req, res) => {
-  res.render('brainstv/privacy-policy');
-});
+router.route('/privacy-policy').get(brainstvController.getAllPrivacyPolicy);
 
 //Our Terms
-router.get('/our-terms', (req, res) => {
-  res.render('brainstv/our-terms');
-});
+router.route('/our-terms').get(brainstvController.getOurTerms);
+
 //Questions and Answers
-router.get('/question-and-answers', async (req, res) => {
-  let faq;
-  try {
-    faq = await Faq.find({});
-    res.render('brainstv/question-and-answers', { faq: faq });
-  } catch {
-    res.redirect('/');
-  }
-});
+router.route('/question-and-answers').get(brainstvController.getAllFaqs);
 
 //Contact Us
-router.get('/contact-us', (req, res) => {
-  res.render('brainstv/contact-us');
-});
+router.route('/contact-us').get(brainstvController.getContactUs);
 
 //Advertise
-router.get('/advertise', (req, res) => {
-  res.render('brainstv/advertise');
-});
+router.route('/advertise').get(brainstvController.getAdverts);
 
 //Shop
-router.get('/shop', (req, res) => {
-  res.render('brainstv/shop');
-});
+router.route('/shop').get(brainstvController.getShop);
 
 module.exports = router;

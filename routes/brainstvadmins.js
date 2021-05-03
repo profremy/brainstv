@@ -1,306 +1,100 @@
 const express = require('express');
+const brainstvadminsController = require('./../controllers/brainstvadminsController');
+const authController = require('./../controllers/authController');
+
 const router = express.Router();
-const Admin = require('../models/brainstvadmin');
-const ClassName = require('../models/class');
-const Faq = require('../models/faq');
+router.use(authController.isLoggedIn);
 
 //Admin User Page Route
-router.get('/', (req, res) => {
-  // Only admin users can view this route
-
-  res.render('brainstvadmins/index');
-});
-
-//Classes Page Route
-router.get('/classes', async (req, res) => {
-  // Only admin users can view this route
-  let searchOptions = {};
-  if (req.query.className != null && req.query.className !== '') {
-    searchOptions.className = new RegExp(req.query.className, 'i');
-  }
-  try {
-    const eclass = await ClassName.find(searchOptions);
-    res.render('brainstvadmins/classes/index', {
-      eclass: eclass,
-      searchOptions: req.query,
-    });
-  } catch {
-    res.redirect('brainstvadmins');
-  }
-});
-
-// FAQs Page Route
-router.get('/faqs', async (req, res) => {
-  // Only admin users can view this route
-  let searchOptions = {};
-  if (req.query.question != null && req.query.question !== '') {
-    searchOptions.question = new RegExp(req.query.question, 'i');
-  }
-  try {
-    const faq = await Faq.find(searchOptions);
-    res.render('brainstvadmins/faqs/index', {
-      faq: faq,
-      searchOptions: req.query,
-    });
-  } catch {
-    res.redirect('brainstvadmins');
-  }
-});
+router.route('/').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getAdminPanel);
 
 // View All Admin Users Route
-router.get('/viewAdmin', async (req, res) => {
-  let searchOptions = {};
-  if (req.query.userName != null && req.query.userName !== '') {
-    searchOptions.userName = new RegExp(req.query.userName, 'i');
-  }
-  try {
-    // const admins = await Admin.find({ $text: { $search: searchOptions.userName } });
-    const admins = await Admin.find(searchOptions);
-    res.render('brainstvadmins/viewAdmin', {
-      admins: admins,
-      searchOptions: req.query,
-    });
-  } catch (err) {
-    console.log(err);
-    res.redirect('brainstvadmins');
-  }
-});
+router.route('/viewAdmin').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getAdminUsers);
 
 //New Admin User Route
-router.get('/new', (req, res) => {
-  res.render('brainstvadmins/new', { admin: new Admin() });
-});
+router.route('/new').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.newAdminUser);
 
 //Create Admin User Route
-router.post('/', async (req, res) => {
-  const admin = new Admin({
-    userName: req.body.userName,
-    userEmail: req.body.userEmail,
-    adminRole: req.body.adminRole,
-    userPassword: req.body.userPassword,
-  });
+//router.route('/').post(authController.protect, brainstvadminsController.createAdminUser);
+//router.route('/join').post(brainstvadminsController.createAdminUser);
+router.post('/createNewAdminUser', authController.protect, authController.restrictTo('superAdmin'), authController.createNewAdminUser);
 
-  try {
-    const newAdmin = await admin.save();
-    res.redirect(`/brainstvadmins/viewAdmin`);
-  } catch {
-    res.render('brainstvadmins/new', {
-      admin: admin,
-      errorMessage: 'Error creating admin user or admin user already exist!',
-    });
-  }
-});
+//Classes Page Route
+router.route('/classes').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), authController.protect, brainstvadminsController.getClasses);
 
 //New Class Route
-router.get('/classes/new', (req, res) => {
-  res.render('brainstvadmins/classes/new', { eclass: new ClassName() });
-});
+router.route('/classes/new').get(authController.protect, authController.restrictTo('superAdmin'), authController.protect, brainstvadminsController.newClass);
 
 //Create New class
-router.post('/classes', async (req, res) => {
-  const eclass = new ClassName({
-    className: req.body.className,
-  });
+router.route('/classes').post(authController.protect, brainstvadminsController.createClass);
 
-  try {
-    const newClass = await eclass.save();
-    res.redirect(`/brainstvadmins/classes`);
-  } catch {
-    res.render('brainstvadmins/classes/new', {
-      eclass: eclass,
-      errorMessage: 'Error creating class or class already exist!',
-    });
-  }
-});
+// FAQs Page Route
+router.route('/faqs').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getFaqs);
 
 //New FAQs Route
-router.get('/faqs/new', (req, res) => {
-  res.render('brainstvadmins/faqs/new', { faq: new Faq() });
-});
+router.route('/faqs/new').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.newFaqs);
 
 //Create New FAQ
-router.post('/faqs', async (req, res) => {
-  const faq = new Faq({
-    question: req.body.question,
-    answer: req.body.answer,
-  });
+router.route('/faqs').post(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.createFaqs);
 
-  try {
-    const newFaq = await faq.save();
-    res.redirect(`/brainstvadmins/faqs`);
-  } catch {
-    res.render('brainstvadmins/faqs/new', {
-      faq: faq,
-      errorMessage: 'Error creating FAQs or FAQs already exist!',
-    });
-  }
-});
+// Show Page Route
+router.route('/shows').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getShows);
+
+//New Show Route
+router.route('/shows/new').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.newShow);
+
+//Create New Show
+router.route('/shows').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.createShow);
+
+//TV Schedule
+//Get TV Schedule
+router.route('/tvschedule').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getTVSchedule);
+// New Schedule
+router.route('/tvschedule/new').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.newTVSchedule);
+//Create TVSchedule
+router.route('/tvschedule').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.createNewTVSchedule);
+
+// Edit Update TV Schedule by id
+router.route('/tvschedule/:id/edit').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.editTVSchedule);
+router.route('/tvschedule/:id').put(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.updateTVSchedule);
 
 // Edit Admin by id //
-router.get('/:id/edit', async (req, res) => {
-  try {
-    const admin = await Admin.findById(req.params.id);
-    res.render('brainstvadmins/edit', {
-      admin: admin,
-    });
-  } catch {
-    res.redirect('/brainstivadmins/viewAdmin');
-  }
-});
+router.route('/:id/edit').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.editAdminUser);
 
 // Edit Class by id //
-router.get('/classes/:id/edit', async (req, res) => {
-  try {
-    const eclass = await ClassName.findById(req.params.id);
-    res.render('brainstvadmins/classes/edit', {
-      eclass: eclass,
-    });
-  } catch {
-    res.redirect('/brainstivadmins/viewAdmin');
-  }
-});
+router.route('/classes/:id/edit').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.editClass);
 
 // Edit Faqs by id //
-router.get('/faqs/:id/edit', async (req, res) => {
-  try {
-    const faq = await Faq.findById(req.params.id);
-    res.render('brainstvadmins/faqs/edit', {
-      faq: faq,
-    });
-  } catch {
-    res.redirect('/brainstivadmins/faqs');
-  }
-});
+router.route('/faqs/:id/edit').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.editFaqs);
+
+// Edit Show by id
+router.route('/shows/:id/edit').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.editShow);
 
 // Update Admin by id //
-router.put('/:id', async (req, res) => {
-  let admin;
-
-  try {
-    admin = await Admin.findById(req.params.id);
-    admin.userName = req.body.userName;
-    admin.userEmail = req.body.userEmail;
-    admin.adminRole = req.body.adminRole;
-
-    if (req.body.userPassword === '' && admin.userPassword != null) {
-      admin.userPassword = admin.userPassword;
-    } else {
-      admin.userPassword = req.body.userPassword;
-    }
-
-    await admin.save();
-    //res.redirect(`/brainstvadmins/${admin.id}`);
-    res.redirect('/brainstvadmins/viewAdmin');
-  } catch (error) {
-    console.log(error);
-    if (admin == null) {
-      res.redirect('/brainstvadmins/viewAdmin');
-    } else {
-      res.render('brainstvadmins/edit', {
-        admin: admin,
-        errorMessage: 'Error updating admin member. Try again!',
-      });
-    }
-  }
-});
+router.route('/:id').put(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.updateAdminUser);
 
 // Update Class by id //
-router.put('/classes/:id', async (req, res) => {
-  let eclass;
-
-  try {
-    eclass = await ClassName.findById(req.params.id);
-    eclass.className = req.body.className;
-
-    await eclass.save();
-    //res.redirect(`/brainstvadmins/${admin.id}`);
-    res.redirect('/brainstvadmins/classes');
-  } catch {
-    res.render('brainstvadmins/classes/edit', {
-      eclass: eclass,
-      errorMessage: 'Error updating class name. Try again!',
-    });
-  }
-});
+router.route('/classes/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateClass);
 
 // Update Faqs by id //
-router.put('/faqs/:id', async (req, res) => {
-  let faq;
+router.route('/faqs/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateFaqs);
 
-  try {
-    faq = await Faq.findById(req.params.id);
-    faq.question = req.body.question;
-    faq.answer = req.body.answer;
-
-    await faq.save();
-    res.redirect('/brainstvadmins/faqs');
-  } catch {
-    res.render('brainstvadmins/faqs/edit', {
-      faq: faq,
-      errorMessage: 'Error updating FAQ. Try again!',
-    });
-  }
-});
+// Update Shows by id //
+router.route('/shows/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateShow);
 
 // Delete Admin by id
-router.delete('/:id', async (req, res) => {
-  let admin;
-  try {
-    admin = await Admin.findById(req.params.id);
-    if (admin.adminRole != 'superAdmin') {
-      await admin.remove();
-    }
-    res.redirect('/brainstvadmins/viewAdmin');
-  } catch {
-    if (admin == null) {
-      res.redirect('/brainstvadmins/viewAdmin');
-    } else {
-      res.redirect('/brainstvadmins/viewAdmin');
-    }
-  }
-});
+router.route('/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteAdminUser);
 
 // Delete Class by id
-router.delete('/classes/:id', async (req, res) => {
-  let eclass;
-
-  try {
-    eclass = await ClassName.findById(req.params.id);
-    await eclass.remove();
-    res.redirect('/brainstvadmins/classes');
-  } catch {
-    if (eclass == null) {
-      res.redirect('/brainstvadmins/viewAdmin');
-    } else {
-      res.redirect('/brainstvadmins/classes');
-    }
-  }
-});
+router.route('/classes/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteClass);
 
 // Delete FAQs by id
-router.delete('/faqs/:id', async (req, res) => {
-  let faq;
+router.route('/faqs/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteFaqs);
 
-  try {
-    faq = await Faq.findById(req.params.id);
-    await faq.remove();
-    res.redirect('/brainstvadmins/faqs');
-  } catch {
-    if (faq == null) {
-      res.redirect('/brainstvadmins/viewAdmin');
-    } else {
-      res.redirect('/brainstvadmins/faqs');
-    }
-  }
-});
+// Delete Show by id
+router.route('/shows/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteShow);
 
-// async function auth(req, res, next) {
-//   if (req.query.admin === 'true') {
-//     next();
-//   } else {
-//     res.send('Not Authenticated');
-//   }
-//   next();
-// }
+// Delete TV Schedule by id
+router.route('/tvschedule/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteTVSchedule);
 
 module.exports = router;

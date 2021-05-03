@@ -7,18 +7,18 @@
     border-radius: 0;
     padding-top: 10px;
     margin-bottom: 0;
-    min-height: 87vh;
+    min-height: 100vh;
 
 }
 
 /* Buttons */
 .btn-outline-success {
-    color:var(--white);
+    color: var(--white);
     border-color: var(--white);
 }
 
 .btn-outline-success:hover {
     color: var(--dark);
-    background-color:var(--light);
+    background-color: var(--light);
     border-color: var(--light);
 }

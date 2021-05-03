@@ -1,0 +1,21 @@
+<div class="jumbotron container-fluid">
+  <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+      aria-hidden="true"></i><span>Back</span></a>
+
+  <h4>New TVSchedule <small>(Please allow a minimum of 1 hour before live TV)</small></h4>
+  <hr class="my-1 document-divider">
+
+  <!-- <form action="/brainstvadmins" method="POST"> -->
+  <form action="/brainstvadmins/tvschedule" method="POST">
+    <%- include('_new_form_fields') %>
+    <div class="row">
+      <div class="col-md-5 mx-auto mb-2">
+        <a href="/brainstvadmins" class="btn btn-danger"><i class="fa fa-times-circle"
+            aria-hidden="true"></i><span>Cancel</span></a>
+        <button type="submit" class="btn btn-success" id="loader"><i class="fa fa-cloud"
+            aria-hidden="true"></i><span>Save TVSchedule</span></button>
+      </div>
+    </div>
+  </form>
+
+</div>

@@ -27,9 +27,9 @@
             </thead>
             <tbody>
                 <% var assignedClassArray = []  %>
-                <% if (clubmembers.length != 0) { %>
+                <% if (clubmembers.length != 0 ) { %>
                 <% clubmembers.forEach(member => { %>
-                <% if (member.className._id != null) { %>
+                <% if (member.role === 'clubMember' && member.className._id != null ) { %>
                 <% assignedClassArray.push(member.className._id)  %>
                 <% } %>
                 <% }) %>

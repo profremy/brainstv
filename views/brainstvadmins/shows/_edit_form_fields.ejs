@@ -1,0 +1,60 @@
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="showTitle">Show Title</label> <span class="requiredfield">*</span>
+        <input type="text" class="form-control" name="showTitle" value="<%= show.showTitle%>"
+            placeholder="Enter show title">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="showType">Show Type</label> <span class="requiredfield">*</span>
+        <small>[ Video, Game, Activity, Take Part or E-Classroom ]</small>
+        <input type="text" class="form-control" name="showType" value="<%= show.showType%>"
+            placeholder="Enter show type">
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="showId">Show ID</label> <small>(Require for Youtube Videos)</small> <span
+            class="requiredfield">*</span>
+        <input type="text" class="form-control" name="showId" value="<%= show.showId%>" placeholder="Enter show ID">
+    </div>
+    <!-- <div class="col-md-5 mb-2">
+        <label for="showThumbnail">Show Thumbnail ID</label> <small>(Require for Youtube Videos)</small> <span
+            class="requiredfield">*</span>
+        <input type="text" class="form-control" name="showThumbnail" value="<%#= show.showThumbnail%>"
+            placeholder="Enter show showThumbnail or Image ID">
+    </div> -->
+
+    <div class="col-md-5 mb-2">
+        <label for="className">Class Level</label>
+        <select class="custom-select" name="className" id="className">
+            <% classes.forEach(c => { %>
+            <% if (c.id == show.className.id) { %>
+            <option selected label="<%= c.className %>" value="<%= c.id %>">
+            </option>
+            <% } else { %>
+            <option label="<%= c.className %>" value="<%= c.id %>">
+            </option>
+            <% } %>
+
+            <% }) %>
+        </select>
+    </div>
+</div>
+
+<!-- <div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="className">Class Level</label>
+        <select class="custom-select" name="className" id="className">
+            <%# classes.forEach(c => { %>
+            <%# if (c.id == show.className.id) { %>
+            <option selected label="<%#= c.className %>" value="<%#= c.id %>">
+            </option>
+            <%# } else { %>
+            <option label="<%#= c.className %>" value="<%#= c.id %>">
+            </option>
+            <%# } %>
+
+            <%# }) %>
+        </select>
+    </div>
+</div> -->

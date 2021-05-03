@@ -32,7 +32,13 @@
 
     <!-- Begin listing members -->
     <div class="jumbotron container-fluid">
-        <p>Listing a total of <strong><%= clubmembers.length %></strong> members</p>
+        <% let registeredMembers = [] %>
+        <% clubmembers.forEach(registration => { %>
+        <% if(registration.role === 'clubMember') { %>
+        <% registeredMembers.push(registration)%>
+        <% } %>
+        <% }) %>
+        <p>Listing a total of <strong><%= registeredMembers.length %></strong> members</p>
         <div></div>
         <div class="table-responsive-sm">
             <table class="table table-striped">
@@ -51,6 +57,7 @@
                 </thead>
                 <tbody>
                     <% clubmembers.forEach(member => { %>
+                    <% if (member.role === 'clubMember') { %>
                     <tr>
                         <th scope="row"><a href="/clubmembers/<%= member.id %>" class="viewProfileData text-info"
                                 title="Show Member"><i class="fa fa-eye" aria-hidden="true"></i></a>
@@ -74,6 +81,7 @@
                             <%- include('../partials/deleteForm', { url: `/clubmembers/${member.id}` }) %>
                         </td>
                     </tr>
+                    <% } %>
                     <% }) %>
                 </tbody>
             </table>

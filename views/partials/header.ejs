@@ -1,13 +1,19 @@
 <header>
   <nav class="navbar top-header">
     <div class="navbar">
-      <a class="nav-link" href="/tvSchedule">TV SCHEDULE</a>
+      <a class="nav-link" href="/brainstv/tvSchedule">TV SCHEDULE</a>
     </div>
     <div class="social-icons">
-      <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
-      <i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i>
-      <i class="fa fa-instagram fa-lg" aria-hidden="true"></i>
-      <i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>
+      <a href="mailto:publicmail@brainstv.com"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a>
+      <a href="https://www.facebook.com/brainstelevision" target="_blank"><i class="fa fa-facebook-square fa-lg"
+          aria-hidden="true"></i></a>
+      <a href="https://www.instagram.com/brainstelevision/" target="_blank"><i class="fa fa-instagram fa-lg"
+          aria-hidden="true"></i></a>
+
+
+      <a href="https://twitter.com/BrainsTV" target="_blank"><i class="fa fa-twitter-square fa-lg"
+          aria-hidden="true"></i></a>
+
       <i class="fa fa-linkedin-square fa-lg" aria-hidden="true"></i>
     </div>
     <div class="search-bar">
@@ -17,9 +23,56 @@
       </form>
     </div>
     <div class="navbar" id="auth-link">
-      <a class="nav-link login" href="/login"><i class="fa fa-user" aria-hidden="true"></i>SIGN IN</a>
+      <% if (user) { %>
+      <div class="d-flex align-items-center">
+        <a id="userOptions" class="nav-link">
+          <div class="userCaretDown">
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </div>
+          <div class="flex-shrink-0">
+            <% if (user.profileImagePath != null) { %>
+            <img height="30" width="30" src="<%= user.profileImagePath %>" class="align-self-start mr-3 reviewerImg"
+              alt="Club member photo">
+
+            <% } else { %>
+            <img height="30" width="30" src="/images/blank-profile-picture.png"
+              class="align-self-start mr-3 reviewerImg" alt="Club member photo">
+            <% } %>
+          </div>
+          <div class="flex-grow-1 ms-3">
+            Hi <%= user.firstname %>
+          </div>
+        </a>
+        <% if (user.role === 'clubMember') { %>
+        <div class="userOptions">
+          <div class="drop-menu">
+            <a class="dropdown-item py-2" href="/clubmembers/profile/<%= user.id %> ">View your profile</a>
+            <div class="dropdown-divider m-0"></div>
+            <a class="dropdown-item py-2" href="/clubmembers/profile/<%= user.id %>/edit">Edit your profile</a>
+            <div class="dropdown-divider m-0"></div>
+            <a class="dropdown-item py-2" href="/brainstv/privacy-policy">Send us email</a>
+            <div class="dropdown-divider m-0"></div>
+            <a class="dropdown-item py-2" href="/private/account/security/details">Change your password</a>
+          </div>
+        </div>
+        <% } else { %>
+        <div class="userOptions">
+          <div class="drop-menu">
+            <a class="dropdown-item py-2" href="/brainstvadmins">Open Admin Panel</a>
+            <div class="dropdown-divider m-0"></div>
+            <a class="dropdown-item py-2" href="/private/account/security/details">Change your password</a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <a class="nav-link logout"><i class="fa fa-sign-out" aria-hidden="true"></i>SIGN
+        OUT</a>
+      <% } else { %>
+      <a class="nav-link login" href="/clubmembers/login"><i class="fa fa-user" aria-hidden="true"></i>SIGN
+        IN</a>
       <a class="nav-link register" href="/clubmembers/newclubmember"><i class="fa fa-user-plus"
           aria-hidden="true"></i>JOIN BRAINS CLUB</a>
+      <% } %>
     </div>
 
   </nav>

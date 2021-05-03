@@ -1,0 +1,245 @@
+<div class="jumbotron container-fluid _bg-show-details">
+    <hr class="my-1 document-divider">
+    <div class="show-details-container">
+
+        <div class="show-details">
+            <% if (show) { %>
+            <iframe class="responsive-iframe" width="560" height="315"
+                src="https://www.youtube-nocookie.com/embed/<%= show.showId %>?rel=0&modestbranding=1" frameborder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+
+            <% } %>
+
+        </div>
+
+    </div>
+    <div class="flexStart">
+        <div class="ShowTitle">
+            <button type="button" class="btn btn-info rounded-0 p-3">
+                <span><%= show.showTitle%> </span>
+            </button>
+        </div>
+
+        <div class="reviewDetails">
+            <% if (show.reviews.length === 0) { %>
+            <button type="button" class="btn btn-warning rounded-0 p-3">
+                No comment or rating found for this show!
+            </button>
+            <% } else { %>
+            <button type="button" class="btn btn-warning text-gray-dark rounded-0 p-3">
+                <span class="badge bg-info"><%= show.reviews.length %> </span>
+                <span class="visually-hidden"><% if (show.reviews.length === 1) { %> Comment <% } else { %> Comments
+                    <% } %></span> | <span class="visually-hidden">Average
+                    Rating </span><span class="badge bg-info"><%= show.ratingsAverage %> </span>
+                <% } %>
+            </button>
+        </div>
+    </div>
+    <form action="/brainstv/shows/<%= show.id %>/reviews" method="POST">
+        <div class="form-row align-items-center mt-1">
+            <div class="col-sm-7">
+                <label for="review" class="col-sm-12 col-form-label">Comment on <%= show.showTitle %> </label>
+                <div class="col-sm-12">
+                    <textarea class="form-control" name="review" placeholder="Enter a public comment here"
+                        id="review"><%#= review.review%></textarea>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <label for="rating" class="col-sm-6 col-form-label">Rate Video</label>
+                <div class="col-md-4 mb-2">
+                    <input type="number" min="1" max="5" class="form-control" name="rating"
+                        value="<%#= review.rating %>">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-10 marginTopBottomSmall">
+            <button type="submit" class="btn btn-success"><span>Send</span></button>
+        </div>
+    </form>
+    <hr class="my-1 document-divider">
+    <!-- Start Comment and Related Shows Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="input-group margin-bottom-sm">
+                    <span class="dark-blue-gradient-background px-3 mt-3">Member Comments</span>
+                </div>
+                <hr class="my-1 document-divider">
+                <div class="comments mt-4">
+                    <% show.reviews.forEach(review => { %>
+                    <% if (review.clubmember != null) { %>
+                    <div class="media">
+                        <% if (review.clubmember.profileImagePath != null) { %>
+                        <img height="40" width="40" src="<%= review.clubmember.profileImagePath %>"
+                            class="align-self-start mr-3 reviewerImg" alt="Club member photo">
+
+                        <% } else { %>
+                        <img height="40" width="40" src="/images/blank-profile-picture.png"
+                            class="align-self-start mr-3 reviewerImg" alt="Club member photo">
+                        <% } %>
+
+                        <div class="media-body">
+                            <span><strong><%= review.clubmember.firstname %>
+                                    <%= review.clubmember.lastname %></strong></span> |
+                            <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }%>
+                            <span><small><%= review.createdAt.toLocaleString('en-GB', options) %></small>
+                                <small><%= review.createdAt.toISOString().split('T')[1].split('.')[0] %></small></span>
+                            <p class="mb-0"> <%= review.review %></p>
+                            <% for (let r = 0; r < review.rating; r++) { %>
+                            <small><i class="fa fa-star activeStar text-warning" aria-hidden="true"></i></small>
+                            <% } %>
+                            <% if (review.rating < 5) { %>
+                            <% for (let r = 0; r < 5 - review.rating; r++) { %>
+                            <small><i class="fa fa-star-o inactiveStar text-secondary" aria-hidden="true"></i></small>
+                            <% } %>
+
+                            <% } %>
+
+                            <!-- Button trigger modal -->
+                            <div class="d-flex flex-row bd-highlight mb-3">
+                                <div class="p-2 bd-highlight">
+                                    <a href="/reviews/<%= review.id %>/edit" class="btn btn-info text-light"
+                                        title="Edit review"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <%- include('../../partials/deleteForm', { url: `/reviews/${review.id}` }) %>
+
+                                </div>
+                            </div>
+                            <!-- <div>
+                                <button type="button" title="Edit Review..." class="btn btn-info mt-0 mb-2 editMyReview"
+                                    data-toggle="modal" data-target="#editReview-<%#= review.id %>">
+                                    <small>Edit</small>
+                                </button>
+                                <button type="button" title="Delete Review..." class="btn btn-danger mt-0 mb-2"
+                                    data-toggle="modal" data-target="#deleteReview-<%#= review.id %>">
+                                    <small>Delete</small>
+                                </button>
+                            </div> -->
+
+                        </div>
+                        <!-- end of media body -->
+                    </div>
+                    <% } %>
+
+
+                    <!-- Modal -->
+                    <!-- <div class="modal reviewModal fade" id="editReview-<%#= review.id %>" tabindex="-1" role="dialog"
+                        aria-labelledby="editReviewTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-info">
+                                    <h5 class="modal-title" class="editReviewTitle">
+                                        <%#= review.clubmember.firstname.toUpperCase() %>, edit and save your
+                                        review
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/reviews/<%#= review.id %>" method="PUT"
+                                    <form class="update-review-form">
+                                        <div class="form-row align-items-center mt-1">
+                                            <div class="col-sm-8">
+                                                <label for="review" class="col-sm-6 col-form-label">Comment</label>
+                                                <div class="col-sm-12">
+                                                    <textarea class="form-control reviewInput"
+                                                        name="review"><%#= review.review %></textarea>
+                                                    <input class="reviewID hideElement" value="<%#= review.id %>">
+                                                    <input class="showSlug hideElement" value="<%#= show.slug %>">
+                                                    <input class="currentUserRole hideElement" value="<%#= user.role %>">
+                                                    <input class="form-control reviewerId lhideElement"
+                                                        name="reviewerId" value="<%#= review.clubmember.id %>">
+
+                                                    <%# if (user) { %>
+                                                    <input class="currentUserId hideElement" value="<%#= user.id %>">
+                                                    <%# } %>
+
+                                                    <%#= show.id%> <span>show id</span>
+                                                    <%#= review.clubmember.id%> <span>clubmember id</span>
+                                                    <%#= review.id%> <span>review id</span>
+                                                    <%# if (user) { %>
+                                                    <%#= user.id%> <span>user id</span>
+                                                    <%# } %>
+                                                </div>
+                                            </div>
+                                            <div class=" col-sm-4">
+                                                <label for="rating" class="col-sm-6 col-form-label">Rating</label>
+                                                <div class="col-md-4 mb-2">
+                                                    <input type="number" min="1" max="5"
+                                                        class="form-control reviewRating" name="rating"
+                                                        value="<%#= review.rating %>">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-10 marginTopBottomSmall">
+                                            <button type="submit" class="btn btn-success"><span>Save</span></button>
+                                        </div>
+                                        <div class="clientSideAlerts"></div>
+                                    </form>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- end of modal -->
+                    <% }) %>
+
+
+
+                    <%# console.log(show.reviews) %>
+                    <%# console.log(show) %>
+                    <%# console.log(show.className.className) %>
+                    <% let currentShowClass = show.className.className %>
+                    <% let currentShowId = show.id %>
+
+                </div>
+                <!-- End of comments Div -->
+
+            </div>
+            <div class="col-sm">
+                <div class="input-group margin-bottom-sm">
+                    <span class="dark-blue-gradient-background px-3 mt-3">Related Shows</span>
+                </div>
+
+                <hr class="my-1 document-divider">
+                <div class="main-flex">
+                    <% allShows.forEach(show => { %>
+                    <% if(currentShowClass === show.className.className && currentShowId != show.id) { %>
+                    <div class="col-sm-5 flex-item">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <a href="/brainstv/show/<%= show.slug %>">
+                                <div class="resourcesOverlay"></div>
+                            </a>
+                            <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
+                            <iframe width="560" height="315"
+                                src="https://www.youtube-nocookie.com/embed/<%= show.showId %>?rel=0&modestbranding=1"
+                                frameborder="0"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                            <!-- <img src="<%#= show.showThumbnail %>" class="img-fluid" alt="<%#= show.showTitle %>"> -->
+                            <% if (show.className.className.startsWith('Y')) { %>
+                            <div class="learningResourcesBottomTitle"><%= show.className.className.split('E')[0]%>
+                            </div>
+                            <% } else { %>
+                            <div class="learningResourcesBottomTitle"><%= show.className.className %> </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% }) %>
+                </div>
+            </div>
+            <!-- End of relatedShows -->
+
+        </div>
+    </div>
+
+    <!-- End Comment and Related Shows Section -->
+</div>

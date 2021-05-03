@@ -3,9 +3,14 @@ const router = express.Router();
 const Membercategory = require('../models/category');
 const ClubMember = require('../models/clubmember');
 const ClassName = require('../models/class');
+// const catchAsync = require('./../utils/catchAsync');
+// const AppError = require('./../utils/appError');
+const authController = require('../controllers/authController');
+
+router.use(authController.isLoggedIn, authController.protect);
 
 //All Users Route
-router.get('/', async (req, res) => {
+router.get('/', authController.restrictTo('superAdmin', 'basicAdmin'), async (req, res) => {
   // Only admin can access this route
   let searchOptions = {};
   if (req.query.memberCategory != null && req.query.memberCategory !== '') {
@@ -16,23 +21,25 @@ router.get('/', async (req, res) => {
     res.render('categories/index', {
       membercategory: membercategory,
       searchOptions: req.query,
+      pageTitle: 'All Categories',
     });
   } catch {
     res.redirect('categories', {
       membercategory: membercategory,
       errorMessage: 'There was an error listing categories.',
+      pageTitle: 'All Categories',
     });
   }
 });
 
 //New Category Route
-router.get('/newcategory', (req, res) => {
+router.get('/newcategory', authController.restrictTo('superAdmin'), (req, res) => {
   //   res.render('categories/newcategory');
-  res.render('categories/newcategory', { membercategory: new Membercategory() });
+  res.render('categories/newcategory', { membercategory: new Membercategory(), pageTitle: 'New Category' });
 });
 
 //Create category Route
-router.post('/', async (req, res) => {
+router.post('/', authController.restrictTo('superAdmin'), async (req, res) => {
   const membercategory = new Membercategory({
     memberCategory: req.body.memberCategory.toUpperCase(),
   });
@@ -45,12 +52,13 @@ router.post('/', async (req, res) => {
     res.render('categories/newcategory', {
       membercategory: membercategory,
       errorMessage: 'Error creating category or category already exist. Try again!',
+      pageTitle: 'New Category',
     });
   }
 });
 
 // Show category by id
-router.get('/:id', async (req, res) => {
+router.get('/:id', authController.restrictTo('superAdmin', 'basicAdmin'), async (req, res) => {
   // res.send('Show Category ' + req.params.id);
   try {
     const membercategory = await Membercategory.findById(req.params.id);
@@ -59,16 +67,15 @@ router.get('/:id', async (req, res) => {
     res.render('categories/show', {
       membercategory: membercategory,
       assignedMembers: clubmembers,
+      pageTitle: 'Category Details',
     });
-  } catch (error) {
-    console.log(error);
-    console.log(' from categories');
+  } catch {
     res.redirect('/categories');
   }
 });
 
 // Edit category by id //
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', authController.restrictTo('superAdmin'), async (req, res) => {
   // res.send('Edit Category ' + req.params.id);
   try {
     const membercategory = await Membercategory.findById(req.params.id);
@@ -81,6 +88,7 @@ router.get('/:id/edit', async (req, res) => {
     // }
     res.render('categories/edit', {
       membercategory: membercategory,
+      pageTitle: 'Edit Category',
     });
     //res.redirect('/categories');
   } catch {
@@ -89,7 +97,7 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 // Update category by id //
-router.put('/:id', async (req, res) => {
+router.put('/:id', authController.restrictTo('superAdmin'), async (req, res) => {
   // res.send('Update Category ' + req.params.id);
   let membercategory;
 
@@ -112,13 +120,14 @@ router.put('/:id', async (req, res) => {
       res.render('categories/edit', {
         membercategory: membercategory,
         errorMessage: 'Error updating category. Try again!',
+        pageTitle: 'Update Category',
       });
     }
   }
 });
 
 // Delete category by id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authController.restrictTo('superAdmin'), async (req, res) => {
   // res.send('Delete Category ' + req.params.id);
   let membercategory;
   try {

@@ -1,8 +1,9 @@
 header {
     box-shadow: var(--box-shadow);
-    background-color:var(--white);
+    background-color: var(--white);
 
 }
+
 .top-header {
     display: flex;
     justify-content: space-around;
@@ -15,8 +16,9 @@ header {
     color: var(--white);
     text-decoration: none;
 }
+
 .top-header a:hover {
-    background-color:var(--light);
+    background-color: var(--light);
     color: var(--dark);
 }
 
@@ -24,17 +26,19 @@ header {
     margin-right: 5px;
 }
 
-.social-icons i:hover {
+.social-icons a:hover {
     cursor: pointer;
+    text-decoration: none !important;
 }
 
 #searchBtn {
-    color:var(--white);
+    color: var(--white);
     border-color: var(--white);
 }
+
 #searchBtn:hover {
     color: var(--dark);
-    background-color:var(--light);
+    background-color: var(--light);
     border-color: var(--light);
 }
 
@@ -58,31 +62,38 @@ header {
     margin-right: 30px;
 }
 
-.nav-menu-buttons  {
+.nav-menu-buttons {
     margin: 0 auto;
 }
 
 .shows {
     color: var(--teal);
 }
+
 .games {
     color: var(--red);
 }
+
 .videos {
     color: var(--green);
 }
+
 .activities {
     color: var(--pink);
 }
+
 .takePart {
     color: var(--cyan);
 }
+
 .eClassRoom {
     color: var(--dark);
 }
+
 .newsRoom {
     color: var(--indigo);
 }
+
 .ellipsis {
     color: var(--primary);
 }
@@ -99,4 +110,3 @@ header {
 header.sticky {
     transition: all 8s ease;
 }
-

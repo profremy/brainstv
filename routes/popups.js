@@ -4,17 +4,27 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const Popup = require('../models/popup');
+const catchAsync = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
+const authController = require('./../controllers/authController');
 
 const imageMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+
+router.use(authController.isLoggedIn, authController.protect, authController.restrictTo('superAdmin'));
 
 // All Popups Route
 router.get('/', async (req, res) => {
   // Only admin users can view this route
-  const popup = await Popup.find({});
+  try {
+    const popup = await Popup.find({});
 
-  res.render('popups/index', {
-    popup: popup,
-  });
+    res.render('popups/index', {
+      popup: popup,
+      pageTitle: 'All popups',
+    });
+  } catch (err) {
+    res.status(200).render('brainstv/error');
+  }
 });
 
 // New site logo Route
@@ -25,7 +35,7 @@ router.get('/new', async (req, res) => {
     if (popup === null) {
       renderNewPopup(res, new Popup());
     } else {
-      res.render('popups/index', { popup: popup, errorMessage: 'Popup already uploaded. You may Edit popup!' });
+      res.render('popups/index', { popup: popup, errorMessage: 'Popup already uploaded. You may Edit popup!', pageTitle: 'New popup' });
     }
   } catch {
     res.redirect('/');
@@ -57,6 +67,7 @@ router.get('/:id', async (req, res) => {
     const popup = await Popup.findById(req.params.id);
     res.render('popups/show', {
       popup: popup,
+      pageTitle: 'Show popup',
     });
   } catch {
     res.redirect('/popups');
@@ -113,6 +124,7 @@ router.delete('/:id', async (req, res) => {
       res.render('popups/index', {
         popup: popup,
         errorMessage: 'Cannot delete popup. Edit popup instead!',
+        pageTitle: 'Delete error',
       });
     }
   } catch {
@@ -120,6 +132,7 @@ router.delete('/:id', async (req, res) => {
       res.render('popups/show', {
         popup: popup,
         errorMessage: 'Could not remove popup',
+        pageTitle: 'Delete error',
       });
     } else {
       res.redirect('/popups/index');
@@ -144,6 +157,7 @@ async function renderEditPopup(res, popup, hasError = false) {
   try {
     const params = {
       popup: popup,
+      pageTitle: 'Edit popup',
     };
 
     if (hasError) params.errorMessage = 'An error occurred while processing popup. Try again!';

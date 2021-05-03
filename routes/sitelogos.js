@@ -4,8 +4,11 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const Sitelogo = require('../models/sitelogo');
+const authController = require('./../controllers/authController');
 
 const imageMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+
+router.use(authController.isLoggedIn, authController.protect, authController.restrictTo('superAdmin'));
 
 // Site logo Page Route
 router.get('/', async (req, res) => {
@@ -14,6 +17,7 @@ router.get('/', async (req, res) => {
 
   res.render('sitelogos/index', {
     sitelogo: sitelogo,
+    pageTitle: 'Site Logo',
   });
 });
 
@@ -25,7 +29,7 @@ router.get('/new', async (req, res) => {
     if (sitelogo === null) {
       renderNewLogo(res, new Sitelogo());
     } else {
-      res.render('sitelogos/index', { sitelogo: sitelogo, errorMessage: 'Logo already uploaded. Click on Logo to Delete or Change!' });
+      res.render('sitelogos/index', { sitelogo: sitelogo, errorMessage: 'Logo already uploaded. Click on Logo to Delete or Change!', pageTitle: 'New Site Logo' });
     }
   } catch {
     res.redirect('/');
@@ -53,6 +57,7 @@ router.get('/:id', async (req, res) => {
     const sitelogo = await Sitelogo.findById(req.params.id);
     res.render('sitelogos/show', {
       sitelogo: sitelogo,
+      pageTitle: 'Site Logo',
     });
   } catch {
     res.redirect('/sitelogos');
@@ -106,6 +111,7 @@ router.delete('/:id', async (req, res) => {
       res.render('sitelogos/show', {
         sitelogo: sitelogo,
         errorMessage: 'Could not remove site logo',
+        pageTitle: 'Site logo error',
       });
     } else {
       res.redirect('/sitelogos/index');
@@ -131,6 +137,7 @@ async function renderEditLogo(res, sitelogo, hasError = false) {
   try {
     const params = {
       sitelogo: sitelogo,
+      pageTitle: 'Edit Site logo',
     };
 
     if (hasError) params.errorMessage = 'An error occurred while processing logo. Try again!';

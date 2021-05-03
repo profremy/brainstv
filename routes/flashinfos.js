@@ -3,6 +3,9 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const Flashinfo = require('../models/flashinfo');
+const authController = require('./../controllers/authController');
+
+router.use(authController.isLoggedIn, authController.protect, authController.restrictTo('superAdmin'));
 
 // Flash info page Route
 router.get('/', async (req, res) => {
@@ -16,12 +19,13 @@ router.get('/', async (req, res) => {
   res.render('flashinfos/index', {
     flashinfo: flashinfo,
     searchOptions: searchOptions,
+    pageTitle: 'All flash info',
   });
 });
 
 // New flash info page Route
 router.get('/new', async (req, res) => {
-  res.render('flashinfos/new', { flashinfo: new Flashinfo() });
+  res.render('flashinfos/new', { flashinfo: new Flashinfo(), pageTitle: 'New Flash Info' });
 });
 
 // Save New Flash info
@@ -37,6 +41,7 @@ router.post('/', async (req, res) => {
     res.render('flashinfos/new', {
       flashinfo: flashinfo,
       errorMessage: 'Error saving flash info',
+      pageTitle: 'Create New Flash',
     });
   }
 });
@@ -47,6 +52,7 @@ router.get('/:id', async (req, res) => {
     const flashinfo = await Flashinfo.findById(req.params.id);
     res.render('flashinfos/show', {
       flashinfo: flashinfo,
+      pageTitle: 'View Flash Info',
     });
   } catch {
     res.redirect('/flashinfos');
@@ -60,6 +66,7 @@ router.get('/:id/edit', async (req, res) => {
     if (flashinfo.flashInfoText != 'NO FLASH INFORMATION AVAILABLE') {
       res.render('flashinfos/edit', {
         flashinfo: flashinfo,
+        pageTitle: 'Edit flash info',
       });
     } else {
       res.redirect('/flashinfos/index');
@@ -98,6 +105,7 @@ router.delete('/:id', async (req, res) => {
       res.render('flashinfos/show', {
         flashinfo: flashinfo,
         errorMessage: `Cannot remove default "${flashinfo.flashInfoText}".`,
+        pageTitle: 'Flash info delete error',
       });
     }
   } catch {
@@ -105,6 +113,7 @@ router.delete('/:id', async (req, res) => {
       res.render('flashinfos/show', {
         flashinfo: flashinfo,
         errorMessage: 'Could not remove flash info',
+        pageTitle: 'Flash info delete error',
       });
     } else {
       res.redirect('/flashinfos/index');

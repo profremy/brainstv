@@ -1,4 +1,8 @@
 console.log('Script started!');
+import '@babel/polyfill';
+import { login, logout } from './login';
+import { updateSettings } from './userAccountSettings';
+import { showUserAlert } from './alerts';
 
 // window.onerror = function (msg, url, lineNo, columnNo, error) {
 //   var message = ['Message: ' + msg, 'URL: ' + url, 'Line: ' + lineNo, 'Column: ' + columnNo, 'Error object: ' + JSON.stringify(error)].join(' - ');
@@ -7,6 +11,7 @@ console.log('Script started!');
 //   return false;
 // };
 
+// DOM ELEMENTS
 const elements = {
   app: document.querySelector('.app'),
   popUpMessage: document.getElementById('popUpMessage'),
@@ -15,11 +20,233 @@ const elements = {
   logInLink: document.querySelector('.login'),
   logOutLink: document.querySelector('.logout'),
   pageHeader: document.querySelector('header'),
+  userOptionsId: document.getElementById('userOptions'),
+  userOptions: document.querySelector('.userOptions'),
   jumbotron: document.querySelector('.jumbotron'),
   loadingSpinner: document.getElementById('loadingSpinner'),
   loaderTrigger: document.getElementById('loader'),
   app: document.getElementById('app'),
+  btnCheck: document.querySelector('.btncheck'),
+  userCaretDown: document.querySelector('.userCaretDown'),
+  checkBox: document.getElementById('check'),
+  email: document.getElementById('email'),
+  password: document.getElementById('password'),
+  loginForm: document.getElementById('loginForm'),
+  logOutBtn: document.querySelector('.logout'),
+  userDataForm: document.querySelector('.form-user-data'),
+  userPasswordForm: document.querySelector('.form-user-password'),
+  updateReviewForm: document.querySelectorAll('.update-review-form'),
+  reviewModal: document.querySelectorAll('.reviewModal'),
+  editMyReviewBtn: document.querySelector('.editMyReview'),
+  reviewInput: document.querySelector('.reviewInput'),
+  reviewRating: document.querySelector('.reviewRating'),
 };
+
+{
+  // USER OPTIONS
+  // Execute this block only if user is logged in
+  if (elements.userOptionsId) {
+    elements.userOptionsId.addEventListener('click', (e) => {
+      const userOptionsId = e.target.closest('#userOptions');
+      if (userOptionsId) {
+        elements.userOptions.classList.add('showUserOptions');
+        elements.userCaretDown.classList.add('hideElement');
+      }
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      const userOptionsId = e.target.closest('#userOptions');
+      if (!userOptionsId) {
+        elements.userOptions.classList.remove('showUserOptions');
+        elements.userCaretDown.classList.remove('hideElement');
+      }
+    });
+  }
+}
+
+{
+  // LOGIN AND LOGOUT DELEGATION
+  if (elements.email && elements.password && elements.loginForm) {
+    elements.loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = elements.email.value;
+      const password = elements.password.value;
+      login(email, password);
+    });
+  }
+
+  if (elements.logOutBtn) elements.logOutBtn.addEventListener('click', logout);
+}
+
+{
+  // Using AXIOS TO SUBMIT AND UPDATE DATA
+  /*
+  // CHANGE USER DATA
+  
+  if (userDataForm)
+  userDataForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    updateSettings({ name, email }, 'data');
+  });
+
+  */
+
+  // CHANGE USER PASSWORD
+  if (elements.userPasswordForm)
+    elements.userPasswordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.querySelector('.btn--save-password').textContent = 'Updating...';
+
+      const currentPassword = document.getElementById('password-current').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('password-confirm').value;
+      await updateSettings({ currentPassword, password, confirmPassword }, 'password');
+
+      document.querySelector('.btn--save-password').textContent = 'Save password';
+      document.getElementById('password-current').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('password-confirm').value = '';
+    });
+}
+
+{
+  // UPDATE REVIEW
+  /*
+
+  elements.editMyReviewBtn.addEventListener('click', (event) => {
+    if (event) {
+      let reviewID = document.querySelector('.reviewID').innerHTML;
+      let showSlug = document.querySelector('.showSlug').innerHTML;
+      let reviewerId = document.querySelector('.reviewerId').innerHTML;
+      let currentUserId = document.querySelector('.currentUserId').innerHTML;
+      let currentUserRole = document.querySelector('.currentUserRole').innerHTML;
+
+      let dataArr = [];
+      dataArr.push(reviewerId.trim(), currentUserId.trim(), currentUserRole.trim(), reviewID.trim());
+      console.log(dataArr);
+
+      reviewerId = dataArr[0];
+      currentUserId = dataArr[1];
+      currentUserRole = dataArr[2];
+      reviewID = dataArr[3];
+
+      console.log(`ReviewerID: ${reviewerId}, CurrentUserID: ${currentUserId}, currentUserRole: ${currentUserRole}, ReviewID: ${reviewID}`);
+      console.log(reviewerId, currentUserId, currentUserRole, reviewID);
+      let message = 'You do not have permission to perform this action!';
+      showUserAlert('error', message);
+      console.log('Done');
+    }
+  });
+  */
+
+  let updateReviewFormArr = Array.from(elements.updateReviewForm);
+  let reviewModalArr = Array.from(elements.reviewModal);
+  //console.log(updateReviewFormArr);
+  //for (const cur of updateReviewFormArr) {
+  for (const cur of reviewModalArr) {
+    // if (cur) {
+    cur.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let dataArr = [];
+      let reviewID,
+        showSlug,
+        reviewerId,
+        currentUserId,
+        currentUserRole,
+        review,
+        rating = '';
+
+      // var allReviews = document.querySelectorAll('.reviewInput');
+      // var allReviewsArr = Array.from(allReviews);
+      // for (const cur of allReviewsArr) {
+      //   review = cur.value;
+      // }
+      review = document.querySelector('.reviewInput').value;
+      rating = document.querySelector('.reviewRating').value;
+
+      reviewID = document.querySelector('.reviewID').value;
+      showSlug = document.querySelector('.showSlug').value;
+      reviewerId = document.querySelector('.reviewerId').value;
+      currentUserId = document.querySelector('.currentUserId').value;
+      currentUserRole = document.querySelector('.currentUserRole').value;
+
+      dataArr.push(reviewerId.trim(), currentUserId.trim(), currentUserRole.trim(), reviewID.trim());
+      console.log(dataArr, review, rating);
+
+      reviewerId = dataArr[0];
+      currentUserId = dataArr[1];
+      currentUserRole = dataArr[2];
+      reviewID = dataArr[3];
+
+      // updateSettings({ review, rating }, 'review', reviewID);
+      // setTimeout(function () {
+      //   location.assign(`/brainstv/show/${showSlug}`);
+      // }, 1000);
+
+      console.log(`ReviewerID: ${reviewerId}, CurrentUserID: ${currentUserId}, currentUserRole: ${currentUserRole}, ReviewID: ${reviewID}`);
+      // console.log(reviewerId, currentUserId, currentUserRole, reviewID);
+      // let message = 'You do not have permission to perform this action!';
+      // showUserAlert('error', message);
+      console.log('Done');
+
+      /*
+        if (`${reviewerId}` != `${currentUserId}`) {
+          let message = 'You do not have permission to perform this action!';
+          setTimeout(function () {
+            location.assign(`/brainstv/show/${showSlug}`);
+          }, 1000);
+          setTimeout(function () {
+            showUserAlert('error', message);
+            console.log('You do not have permission to perform this action!');
+          }, 2000);
+        }
+        if (`${reviewerId}` === `${currentUserId}` || `${currentUserRole}` === 'superAdmin') {
+          let message = 'Review updated successfully!';
+          updateSettings({ review, rating }, 'review', reviewID);
+          setTimeout(function () {
+            location.assign(`/brainstv/show/${showSlug}`);
+          }, 1000);
+          setTimeout(function () {
+            showUserAlert('error', message);
+            console.log('Review updated successfully!');
+          }, 2000);
+        }
+  
+        */
+    });
+    // }
+  }
+}
+
+// $('.update-review-form').click(function () {
+//   var currentReview = $('.reviewInput').val();
+//   var currentRating = $('.reviewRating').val();
+//   console.log(currentReview, currentRating);
+// });
+
+{
+  // Disable form submit button
+  // DELEGATION
+  if (elements.btnCheck && elements.checkBox) {
+    window.addEventListener('load', function () {
+      // Enable or Disable form submit button
+      elements.btnCheck.disabled = true;
+      elements.checkBox.addEventListener('change', function () {
+        var checkboxCheck = this.checked;
+        if (checkboxCheck) {
+          elements.btnCheck.disabled = false;
+          //console.log('checked');
+        } else {
+          elements.btnCheck.disabled = true;
+          //console.log('unchecked');
+        }
+      });
+    });
+  }
+}
 
 /*
 (function () {
@@ -96,7 +323,7 @@ window.addEventListener('scroll', scrollThrottle);
 {
   // Popup Message handler
   const popUpTimeout = [6, 12, 24];
-  popUP = () => {
+  const popUP = () => {
     if (elements.popUpTextInfo.textContent !== '') {
       $(elements.popUpMessage).modal('show');
     }
@@ -121,7 +348,7 @@ window.addEventListener('scroll', scrollThrottle);
 
   const popupMsgCloseBtnArr = document.querySelectorAll('.popupMsgClose');
   const popupMsgCloseBtn = Array.from(popupMsgCloseBtnArr);
-  app.addEventListener('click', (e) => {
+  elements.app.addEventListener('click', (e) => {
     let closeBtn = e.target.closest('.popupMsgClose');
     if (closeBtn) {
       for (const cur of popupMsgCloseBtn) {
@@ -148,7 +375,7 @@ window.addEventListener('scroll', scrollThrottle);
 
 {
   //Display more or less most popular questions
-  updateButtonIcon = (btnIcon) => {
+  const updateButtonIcon = (btnIcon) => {
     let moreBtn = 'add-circle';
     let lessBtn = 'remove-circle';
     let viewMoreText = document.querySelector('.viewMoreText');
@@ -178,13 +405,17 @@ window.addEventListener('scroll', scrollThrottle);
 
 {
   // Display or Hide answer to a most popular question
-  updateIconBtn = (btn, attr) => {
-    let moreBtn = 'add-circle-outline';
-    let lessBtn = 'remove-circle-outline';
+  const updateIconBtn = (btn, attr) => {
+    let moreBtn = 'fa fa-plus-circle icon__btn';
+    // let moreBtn = 'add-circle-outline';
+    let lessBtn = 'fa fa-minus-circle icon__btn';
+    // let lessBtn = 'remove-circle-outline';
     if (attr === moreBtn) {
-      btn.setAttribute('name', lessBtn);
+      btn.setAttribute('class', lessBtn);
+      // btn.setAttribute('name', lessBtn);
     } else {
-      btn.setAttribute('name', moreBtn);
+      btn.setAttribute('class', moreBtn);
+      // btn.setAttribute('name', moreBtn);
     }
   };
 
@@ -195,7 +426,9 @@ window.addEventListener('scroll', scrollThrottle);
     // console.log(e.target.parentNode.parentNode.childNodes[3]);
     const targetBtn = e.target.closest('.icon__btn');
     if (targetBtn) {
-      const attribute = targetBtn.getAttribute('name');
+      const attribute = targetBtn.getAttribute('class');
+      //console.log(attribute);
+      // const attribute = targetBtn.getAttribute('name');
       const answer = targetBtn.parentNode.parentNode.childNodes[3];
       answer.classList.toggle('js__view');
       answer.classList.toggle('answer');
@@ -227,7 +460,7 @@ window.addEventListener('scroll', scrollThrottle);
   // Multi step form handler
   // Click simulation
   var fname = document.querySelector('.clubmember_firstname');
-  greeting = (firstname) => {
+  const greeting = (firstname) => {
     var date = new Date();
     var hours = date.getHours();
     var message = hours < 12 ? 'Good Morning' : hours < 18 ? 'Good Afternoon' : 'Good Evening';
@@ -247,7 +480,7 @@ window.addEventListener('scroll', scrollThrottle);
     }
   });
 
-  simulateClick = (idString) => {
+  const simulateClick = (idString) => {
     const event = new MouseEvent('click', {
       view: window,
       bubbles: true,
@@ -322,7 +555,7 @@ window.addEventListener('scroll', scrollThrottle);
     });
   });
 
-  backToTop = () => {
+  const backToTop = () => {
     var scrollY = window.scrollY;
     var navTop = 116;
     window.scrollY > navTop ? backToTopBtn.classList.add('show') : backToTopBtn.classList.remove('show');

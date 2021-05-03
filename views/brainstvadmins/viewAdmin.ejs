@@ -7,9 +7,9 @@
     <hr class="my-1 document-divider">
 
     <nav class="navbar navbar-light bg-info">
-        <a class="navbar-brand">Search User Name</a>
+        <a class="navbar-brand">Search First Name</a>
         <form action="/brainstvadmins/viewAdmin" method="GET" class="form-inline my-2 my-lg-0 searchForm">
-            <input class="form-control mr-sm-2" type="search" name="userName" value="<%= searchOptions.userName %>"
+            <input class="form-control mr-sm-2" type="search" name="firstname" value="<%= searchOptions.firstname %>"
                 placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0 searchBtn" type="submit" id="loader">Search</button>
 
@@ -20,7 +20,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">User Name</th>
+                    <th scope="col">First Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Admin Role</th>
                     <th scope="col"><span class="role"><button type="button" class="btn btn-sm btn-warning"
@@ -30,21 +30,23 @@
                 </tr>
             </thead>
             <tbody>
-                <% admins.forEach(admin => { %>
+                <% clubmembers.forEach(clubmember => { %>
+                <% if(clubmember.role == 'superAdmin' || clubmember.role == 'basicAdmin') { %>
                 <tr>
                     <th scope="row">
-                        <a href="/brainstvadmins/<%= admin.id %>/edit" class="viewProfileData text-success"
+                        <a href="/brainstvadmins/<%= clubmember.id %>/edit" class="viewProfileData text-success"
                             title="Edit Member"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </th>
-                    <td><%= admin.userName %></td>
-                    <td><%= admin.userEmail %></td>
-                    <td><%= admin.adminRole %></td>
+                    <td><%= clubmember.firstname %></td>
+                    <td><%= clubmember.email %></td>
+                    <td><%= clubmember.role %></td>
                     <td>
                         <!-- this is ejs rendering of delete form button in partials folder -->
-                        <%- include('../partials/deleteForm', { url: `/brainstvadmins/${admin.id}` }) %>
+                        <%- include('../partials/deleteForm', { url: `/brainstvadmins/${clubmember.id}` }) %>
 
                     </td>
                 </tr>
+                <% } %>
                 <% }) %>
             </tbody>
         </table>

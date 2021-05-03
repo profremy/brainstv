@@ -34,7 +34,7 @@
 
                             <select class="custom-select" name="memberCategory" id="category">
                                 <% membercategories.forEach(category => { %>
-                                <% if (category.id == clubmember.memberCategory) { %>
+                                <% if (category.id == clubmember.memberCategory.id) { %>
                                 <option selected label="<%= category.memberCategory %>" value="<%= category.id %>">
                                 </option>
                                 <% } else { %>
@@ -91,7 +91,7 @@
 
                             <select class="custom-select" name="className" id="className">
                                 <% classes.forEach(c => { %>
-                                <% if (c.id == clubmember.className) { %>
+                                <% if (c.id == clubmember.className.id) { %>
                                 <option selected label="<%= c.className %>" value="<%= c.id %>">
                                 </option>
                                 <% } else { %>
@@ -121,7 +121,7 @@
                             <input type="city" class="form-control" name="city" value="<%= clubmember.city %>">
                         </div>
                     </div>
-                    <div class="form-row align-items-center">
+                    <!-- <div class="form-row align-items-center">
                         <div class="form-group col-md-4 mb-2">
                             <small for="password" class="text-info mb-0">Password</small> <span class="role"> <button
                                     type="button" class="btn btn-sm btn-warning" data-toggle="popover"
@@ -130,7 +130,7 @@
                                         class="fa fa-question-circle-o" aria-hidden="true"></i></button></span>
                             <input type="password" class="form-control" name="password">
                         </div>
-                    </div>
+                    </div> -->
                     <hr class="document-divider">
                     </hr>
                     <div class="form-group row">

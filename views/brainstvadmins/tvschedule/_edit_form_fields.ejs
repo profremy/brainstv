@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-5 mx-auto mb-2">
+    <label for="startDateTime" class="text-info mb-0">Start Date/Time</label>
+    <input type="date" class="form-control form__input"
+      value="<%= tvschedule.startDateTime == null ? '' : tvschedule.startDateTime.toISOString().split('T')[0] %>"
+      name="startDateTime" required placeholder="Enter date">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5 mx-auto mb-2">
+    <label for="hourSchedule" class="text-info mb-0">In a 1 hour + Schedule</label>
+    <input type="number" class="form-control form__input" minlength="1" value="<%= tvschedule.hourSchedule %>"
+      name="hourSchedule" required placeholder="Enter hour schedule">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5 mx-auto mb-2">
+    <label for="showingName" class="text-info mb-0">Showing Name</label>
+    <input type="text" class="form-control form__input" value="<%= tvschedule.showingName %>" name="showingName"
+      required placeholder="Enter showing name">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5 mx-auto mb-2">
+    <label for="showPageLink" class="text-info mb-0">Show Page Link</label>
+    <input type="text" class="form-control form__input" value="<%= tvschedule.showPageLink %>" name="showPageLink"
+      required placeholder="Enter show page link">
+  </div>
+</div>
