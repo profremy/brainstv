@@ -220,7 +220,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await clubmember.save({ validateBeforeSave: false });
 
   // 3) Send it to user's email
-  const resetURL = `${req.protocol}://${req.get('host')}/api/v1/brainstv/clubmembers/resetPassword/${resetToken}`;
+  const resetURL = `${req.protocol}://${req.get('host')}/clubmembers/resetPassword/${resetToken}`;
 
   const message = `Forgot your password? Submit a PATCH request with your new password and password confirmation to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
 

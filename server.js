@@ -22,6 +22,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // const indexRouter = require('./routes/index');
 //const loginRouter = require('./routes/llogin');
@@ -62,6 +63,16 @@ app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 
 // Set up global middleware for app
+
+// Implement CORS
+app.use(cors()); // set header - Access-Control-All-Origin *
+
+//api.brainstv.com, front-end brainstv.com
+// app.use(cors({
+//   origin: 'https://www.brainstv.com'
+// }));
+
+app.options('*', cors()); // Allow pre flight state on all routes.
 
 //This is for setting HTTP security headers. Should be on top of middleware stack
 app.use(

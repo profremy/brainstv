@@ -5,6 +5,9 @@ const { patch } = require('./reviewRoutes');
 
 const router = express.Router();
 
+// Forgotten Password
+router.route('/forgotten').get(clubmemberController.getForgottenForm);
+
 router.use(authController.isLoggedIn);
 
 router.post('/login', authController.login);

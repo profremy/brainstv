@@ -114,6 +114,10 @@ exports.getLoginForm = (req, res) => {
   res.status(200).render('clubmembers/signin/index', { pageTitle: 'Log into your account' });
 };
 
+exports.getForgottenForm = (req, res) => {
+  res.status(200).render('clubmembers/signin/forgotten', { pageTitle: 'Forgotten Password' });
+};
+
 /*
 exports.createClubMember = catchAsync(async (req, res, next) => {
   const clubmember = new ClubMember({
