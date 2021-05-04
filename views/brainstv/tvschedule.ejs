@@ -1,14 +1,10 @@
 <div class="jumbotron container-fluid">
-    <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
-            aria-hidden="true"></i><span>Back</span></a>
-
     <h4>TV Schedule</h4>
-    <a href="/brainstvadmins/tvschedule/new" class="btn btn-success">Create/Add New</a>
     <hr class="my-1 document-divider">
 
     <nav class="navbar navbar-light bg-info">
         <a class="navbar-brand">Search Showing Name</a>
-        <form action="/brainstvadmins/tvschedule/index" method="GET" class="form-inline my-2 my-lg-0 searchForm">
+        <form action="/brainstv/tvschedule" method="GET" class="form-inline my-2 my-lg-0 searchForm">
             <input class="form-control mr-sm-2" type="search" name="showingName"
                 value="<%= searchOptions.showingName %>" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0 searchBtn" type="submit" id="loader">Search</button>
@@ -20,13 +16,9 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">CreatedAt</th>
                     <th scope="col">ShowingAt</th>
                     <th scope="col">Showing Name</th>
-                    <th scope="col">In Hour Schedule</th>
                     <th scope="col">Link to the show</th>
-                    <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,23 +26,13 @@
 
                 <% tvschedule.forEach(schedule => { %>
                 <tr>
-                    <th scope="row">
-                        <a href="/brainstvadmins/tvschedule/<%= schedule.id %>/edit" class="text-success"
-                            title="Edit Schedule"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    </th>
-                    <td><%= schedule.createdAt %></td>
                     <td><%= schedule.airTime %></td>
                     <td><%= schedule.showingName %></td>
-                    <td><%= schedule.hourSchedule %></td>
                     <td><a href="<%= schedule.showPageLink %>" target="_blank">
-                            <div class="btn btn-info" style="height:100%;width:100%">
+                            <div class="btn btn-warning" style="height:100%;width:100%">
                                 More...
                             </div>
-                        </a></td>
-                    <td>
-                        <!-- this is ejs rendering of delete form button in partials folder -->
-                        <%- include('../../partials/deleteForm', { url: `/brainstvadmins/tvschedule/${schedule.id}` }) %>
-
+                        </a>
                     </td>
                 </tr>
                 <% }) %>

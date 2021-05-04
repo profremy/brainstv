@@ -31,7 +31,7 @@ const tvScheduleSchema = new mongoose.Schema(
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
 tvScheduleSchema.pre('save', function (next) {
-  this.startDateTime = new Date().toLocaleString('en-GB', { timeZone: 'BST' });
+  this.startDateTime = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' });
   this.airTime = this.startDateTime.setHours(this.startDateTime.getHours() + this.hourSchedule);
   next();
 });

@@ -1,5 +1,6 @@
 const Faq = require('../models/faq');
 const Show = require('../models/show');
+const Tvschedule = require('../models/tvschedule');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
@@ -48,8 +49,24 @@ exports.getShow = factory.getOne(Show, { path: 'reviews' });
 //   });
 // });
 
+// exports.getTvSchedule = catchAsync(async (req, res, next) => {
+//   res.status(200).render('brainstv/tvSchedule', { pageTitle: 'Tv Schedule' });
+// });
 exports.getTvSchedule = catchAsync(async (req, res, next) => {
-  res.status(200).render('brainstv/tvSchedule/index', { pageTitle: 'Tv Schedule' });
+  let searchOptions = {};
+  if (req.query.showingName != null && req.query.showingName !== '') {
+    searchOptions.showingName = new RegExp(req.query.showingName, 'i');
+  }
+  try {
+    const tvschedule = await Tvschedule.find(searchOptions);
+    res.status(200).render('brainstv/tvschedule', {
+      tvschedule: tvschedule,
+      searchOptions: req.query,
+      pageTitle: 'TV Schedule',
+    });
+  } catch (err) {
+    res.redirect('/');
+  }
 });
 
 exports.getAllGames = catchAsync(async (req, res, next) => {
