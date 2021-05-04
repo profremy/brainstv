@@ -8507,7 +8507,8 @@ var login = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: 'POST',
-              url: 'http://localhost:5000/clubmembers/login',
+              url: '/clubmembers/login',
+              // url: 'http://localhost:5000/clubmembers/login',
               data: {
                 email: email,
                 password: password
@@ -8558,7 +8559,8 @@ var logout = /*#__PURE__*/function () {
             _context2.next = 3;
             return (0, _axios.default)({
               method: 'GET',
-              url: 'http://localhost:5000/clubmembers/logout'
+              url: '/clubmembers/logout' // url: 'http://localhost:5000/clubmembers/logout',
+
             });
 
           case 3:
@@ -8616,7 +8618,8 @@ var updateSettings = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            url = type === 'password' ? 'http://localhost:5000/clubmembers/updateMyPassword' : "http://localhost:5000/reviews/".concat(id);
+            url = type === 'password' ? '/clubmembers/updateMyPassword' : "/reviews/".concat(id); // const url = type === 'password' ? 'http://localhost:5000/clubmembers/updateMyPassword' : `http://localhost:5000/reviews/${id}`;
+
             _context.next = 4;
             return (0, _axios.default)({
               method: 'PATCH',
@@ -8663,7 +8666,8 @@ var createUserRecord = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            url = type === 'registration' ? 'http://localhost:5000/clubmembers/join' : "http://localhost:5000/brainstv/shows/".concat(review.id, "/reviews");
+            url = type === 'registration' ? '/clubmembers/join' : "/brainstv/shows/".concat(review.id, "/reviews"); // const url = type === 'registration' ? 'http://localhost:5000/clubmembers/join' : `http://localhost:5000/brainstv/shows/${review.id}/reviews`;
+
             _context2.next = 4;
             return (0, _axios.default)({
               method: 'POST',
@@ -9661,7 +9665,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60205" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53589" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -6,7 +6,8 @@ export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:5000/clubmembers/login',
+      url: '/clubmembers/login',
+      // url: 'http://localhost:5000/clubmembers/login',
       data: {
         email,
         password,
@@ -28,7 +29,8 @@ export const logout = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'http://localhost:5000/clubmembers/logout',
+      url: '/clubmembers/logout',
+      // url: 'http://localhost:5000/clubmembers/logout',
     });
     // if ((res.data.status = 'success')) location.reload(true);
     if ((res.data.status = 'success')) location.assign('/');
