@@ -41,7 +41,11 @@
                             <%= schedule.showingStatus %></div>
                     </td>
                     <% } else { %>
-                    <td><%= schedule.showingStatus %></td>
+                    <td>
+                        <div class="btn rounded-0 text-light"
+                            style="height:100%;width:100%;background-color: var(--gray);">
+                            <%= schedule.showingStatus %></div>
+                    </td>
                     <% } %>
                     <td><%= schedule.showingDate.toDateString() %>
                     </td>

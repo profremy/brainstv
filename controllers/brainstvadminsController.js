@@ -194,7 +194,7 @@ exports.getTVSchedule = catchAsync(async (req, res, next) => {
     searchOptions.showingName = new RegExp(req.query.showingName, 'i');
   }
   try {
-    const tvschedule = await Tvschedule.find(searchOptions);
+    const tvschedule = await Tvschedule.find(searchOptions).sort({ createdAt: -1 });
     res.render('brainstvadmins/tvschedule', {
       tvschedule: tvschedule,
       searchOptions: req.query,
