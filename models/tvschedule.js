@@ -3,16 +3,14 @@ const slugify = require('slugify');
 
 const tvScheduleSchema = new mongoose.Schema(
   {
-    startDateTime: {
-      type: Date,
-      //required: true,
-      //   default: Date.now,
-    },
-    hourSchedule: {
-      type: Number,
-      required: true,
-    },
-    airTime: { type: Date },
+    showingDate: { type: Date, required: true },
+    // hourSchedule: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // airTime: { type: Date },
+    showingTime: { type: String, required: true },
+    showingStatus: { type: String, required: true },
     showingName: {
       type: String,
       required: true,
@@ -30,11 +28,11 @@ const tvScheduleSchema = new mongoose.Schema(
 );
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
-tvScheduleSchema.pre('save', function (next) {
-  this.startDateTime = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' });
-  this.airTime = this.startDateTime.setHours(this.startDateTime.getHours() + this.hourSchedule);
-  next();
-});
+// tvScheduleSchema.pre('save', function (next) {
+//   this.startDateTime = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' });
+//   this.airTime = this.startDateTime.setHours(this.startDateTime.getHours() + this.hourSchedule);
+//   next();
+// });
 
 tvScheduleSchema.pre('save', function (next) {
   this.slug = slugify(this.showingName, { lower: true });

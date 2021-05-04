@@ -1,28 +1,48 @@
-<!-- <div class="row">
-  <div class="col-md-5 mx-auto mb-2">
-    <label for="startDateTime" class="text-info mb-0">Start Date/Time</label>
-    <input type="date" class="form-control form__input" value="<%#= tvschedule.startDateTime %>" name="startDateTime"
-      required placeholder="Enter date">
-  </div>
-</div> -->
 <div class="row">
   <div class="col-md-5 mx-auto mb-2">
-    <label for="hourSchedule" class="text-info mb-0">In a 1 hour + Schedule</label>
-    <input type="number" class="form-control form__input" minlength="1" value="<%= tvschedule.hourSchedule %>"
-      name="hourSchedule" required placeholder="Enter hour schedule">
+    <label for="showingDate" class="text-info mb-0 mt-2">Showing Date</label> <span class="requiredfield"> *</span>
+    <input type="date" class="form-control form__input" value="<%= tvschedule.showingDate %>" name="showingDate"
+      required placeholder="Enter date" required>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5 mx-auto mt-3 mb-2">
+    <label for="showingTime" class="text-info mb-0">Showing Time</label><span class="requiredfield"> *</span> <span
+      class="role"> <button type="button" data-toggle="popover" data-trigger="focus" title="Showing Time"
+        class="btn btn-sm btn-warning"
+        data-content="Showing time may be specified as 12 or 24 hr time. It is better to be consistent. Example 6:30 PM or 18:30 PM."><i
+          class="fa fa-question-circle-o"></i></button></span>
+    <input type="text" class="form-control form__input mt-2" value="<%= tvschedule.showingTime %>" name="showingTime"
+      required placeholder="Enter showing time" required>
   </div>
 </div>
 <div class="row">
   <div class="col-md-5 mx-auto mb-2">
-    <label for="showingName" class="text-info mb-0">Showing Name</label>
+    <label for="showingName" class="text-info mb-0">Showing Name</label> <span class="requiredfield"> *</span>
     <input type="text" class="form-control form__input" value="<%= tvschedule.showingName %>" name="showingName"
-      required placeholder="Enter showing name">
+      required placeholder="Enter showing name" required>
   </div>
 </div>
 <div class="row">
   <div class="col-md-5 mx-auto mb-2">
-    <label for="showPageLink" class="text-info mb-0">Show Page Link</label>
-    <input type="text" class="form-control form__input" value="<%= tvschedule.showPageLink %>" name="showPageLink"
-      required placeholder="Enter show page link">
+    <label for="showPageLink" class="text-info mb-0">Show Page Link</label> <span class="requiredfield"> *</span> <span
+      class="role"> <button type="button" data-toggle="popover" data-trigger="focus" title="Link to this resource"
+        class="btn btn-sm btn-warning"
+        data-content="If you have not created this resource already, then enter ' / ' without the single quotes."><i
+          class="fa fa-question-circle-o"></i></button></span>
+    <input type="text" class="form-control form__input mt-2" value="<%= tvschedule.showPageLink %>" name="showPageLink"
+      required placeholder="Copy paste the link to this resource" required>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5 mx-auto mb-2">
+    <label for="showingStatus" class="text-info mb-0">Show Status</label> <span class="requiredfield"> *</span>
+    <select class="custom-select" name="showingStatus" required>
+      <option selected label="-- Select Showing Status --"></option>
+      <option label="On Now" value="On Now"></option>
+      <option label="Next" value="Next"></option>
+      <option label="Aired" value="Aired"></option>
+      <option label="In Queue" value="In Queue"></option>
+    </select>
   </div>
 </div>

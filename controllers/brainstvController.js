@@ -58,7 +58,7 @@ exports.getTvSchedule = catchAsync(async (req, res, next) => {
     searchOptions.showingName = new RegExp(req.query.showingName, 'i');
   }
   try {
-    const tvschedule = await Tvschedule.find(searchOptions);
+    const tvschedule = await Tvschedule.find(searchOptions).sort({ showingStatus: -1 });
     res.status(200).render('brainstv/tvschedule', {
       tvschedule: tvschedule,
       searchOptions: req.query,

@@ -211,10 +211,11 @@ exports.newTVSchedule = catchAsync(async (req, res, next) => {
 
 exports.createNewTVSchedule = catchAsync(async (req, res, next) => {
   const tvschedule = new Tvschedule({
-    //startDateTime: req.body.startDateTime,
-    hourSchedule: req.body.hourSchedule,
+    showingDate: new Date(req.body.showingDate),
+    showingTime: req.body.showingTime,
     showingName: req.body.showingName,
     showPageLink: req.body.showPageLink,
+    showingStatus: req.body.showingStatus,
   });
 
   try {
@@ -248,10 +249,11 @@ exports.updateTVSchedule = catchAsync(async (req, res, next) => {
 
   try {
     tvschedule = await Tvschedule.findById(req.params.id);
-    //tvschedule.startDateTime = req.body.startDateTime;
-    tvschedule.hourSchedule = req.body.hourSchedule;
+    tvschedule.showingDate = new Date(req.body.showingDate);
+    tvschedule.showingTime = req.body.showingTime;
     tvschedule.showingName = req.body.showingName;
     tvschedule.showPageLink = req.body.showPageLink;
+    tvschedule.showingStatus = req.body.showingStatus;
 
     await tvschedule.save();
     res.redirect('/brainstvadmins/tvschedule');
