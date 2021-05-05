@@ -26,15 +26,16 @@ const createSendToken = (clubmember, statusCode, res) => {
   // Remove password from output
   clubmember.password = undefined;
 
-  res.status(200).render('clubmembers/registered', { pageTitle: 'Registeration Completed' });
+  // res.status(statusCode).render('clubmembers/registered', { status: 'success', token, pageTitle: 'Registeration Completed', data: { clubmember } });
+  // res.status(200).render('clubmembers/registered', { pageTitle: 'Registeration Completed' });
 
-  // res.status(statusCode).json({
-  //   status: 'success',
-  //   token,
-  //   data: {
-  //     clubmember,
-  //   },
-  // });
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      clubmember,
+    },
+  });
 };
 
 exports.createNewAdminUser = catchAsync(async (req, res, next) => {
@@ -43,7 +44,7 @@ exports.createNewAdminUser = catchAsync(async (req, res, next) => {
     lastname: req.body.lastname,
     email: req.body.email,
     role: req.body.role,
-    dob: req.body.dob,
+    dob: new Date(req.body.dob),
     phone: req.body.phone,
     city: req.body.city,
     gender: req.body.gender,
@@ -87,9 +88,6 @@ exports.login = catchAsync(async (req, res, next) => {
   // 1) Check if email and password exist
   if (!email || !password) {
     return next(new AppError('Please provide valid email and password', 400));
-    // return res.render('login/index', {
-    //   errorMessage: 'Please provide email and password',
-    // });
   }
 
   // 2) Check if member exists && password is correct. Password needed inclusion here
@@ -98,9 +96,6 @@ exports.login = catchAsync(async (req, res, next) => {
   // correct = await clubmemember.correctPassword(password, clubmemember.password);
   if (!clubmember || !(await clubmember.correctPassword(password, clubmember.password))) {
     return next(new AppError('Incorrect email or password', 401)); //Unauthorized
-    // return res.render('login/index', {
-    //   errorMessage: 'Incorrect email or password',
-    // });
   }
 
   // 3) If everything is ok, send token to client
@@ -129,9 +124,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(new AppError('You are not signed in! Please sign in to get access.', 401)); //Unauthorized
-    // return res.render('login/index', {
-    //   errorMessage: 'Please log in to access this resource!',
-    // });
   }
 
   // 2) Verify validity of the token
@@ -142,18 +134,12 @@ exports.protect = catchAsync(async (req, res, next) => {
   const currentMember = await ClubMember.findById(decoded.id); //check if member in the decoded payload exists.
   if (!currentMember) {
     return next(new AppError('The user assigned to this payload does not exist!', 401)); //Unauthorized
-    // return res.render('login/index', {
-    //   errorMessage: 'The user assigned to this payload does not exist!',
-    // });
   }
 
   // 4) Check if user changed password after the token was issued
   // iat - this is issued at
   if (currentMember.changePasswordAfter(decoded.iat)) {
     return next(new AppError('User recently changed password. Log in again!', 401)); //Unauthorized
-    // return res.render('login/index', {
-    //   errorMessage: 'User recently changed password. Log in again!',
-    // });
   }
 
   // Grant access to the requested route
@@ -202,9 +188,6 @@ exports.restrictTo = (...roles) => {
     // roles array ['superAdmin', 'basicAdmin']. role='clubMember'
     if (!roles.includes(req.clubmember.role)) {
       return next(new AppError('You do not have permission to perform this action', 403)); // Forbidden error
-      // return res.render('brainstv/index', {
-      //   errorMessage: 'You do not have permission to perform this action!',
-      // });
     }
     next();
   };

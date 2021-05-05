@@ -107,7 +107,7 @@ exports.showClubMemberProfile = async (req, res) => {
 };
 
 exports.registered = (req, res) => {
-  res.render('clubmembers/registered');
+  res.render('clubmembers/registered', { pageTitle: 'Registeration Completed' });
 };
 
 exports.getLoginForm = (req, res) => {
