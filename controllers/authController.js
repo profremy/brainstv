@@ -26,13 +26,15 @@ const createSendToken = (clubmember, statusCode, res) => {
   // Remove password from output
   clubmember.password = undefined;
 
-  res.status(statusCode).json({
-    status: 'success',
-    token,
-    data: {
-      clubmember,
-    },
-  });
+  res.status(200).render('clubmembers/registered', { pageTitle: 'Registeration Completed' });
+
+  // res.status(statusCode).json({
+  //   status: 'success',
+  //   token,
+  //   data: {
+  //     clubmember,
+  //   },
+  // });
 };
 
 exports.createNewAdminUser = catchAsync(async (req, res, next) => {
@@ -62,7 +64,7 @@ exports.join = catchAsync(async (req, res, next) => {
     lastname: req.body.lastname,
     email: req.body.email,
     role: req.body.role,
-    dob: req.body.dob,
+    dob: new Date(req.body.dob),
     phone: req.body.phone,
     city: req.body.city,
     gender: req.body.gender,
