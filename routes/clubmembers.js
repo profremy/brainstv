@@ -23,7 +23,7 @@ router.route('/registered').get(clubmemberController.registered);
 router.route('/login').get(clubmemberController.getLoginForm);
 
 //New Club member Route
-router.route('/newclubmember').get(clubmemberController.newMember);
+router.route('/joinbrainsclub').get(clubmemberController.newMember);
 
 // authController.protect is a  middleware function. Since middleware runs
 // runs in sequence, we can prevent repeating it for each route below

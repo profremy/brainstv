@@ -1,7 +1,7 @@
 console.log('Script started!');
 import '@babel/polyfill';
 import { login, logout } from './login';
-import { updateSettings } from './userAccountSettings';
+import { updateSettings, createUserRecord } from './userAccountSettings';
 import { showUserAlert } from './alerts';
 
 // window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -35,11 +35,13 @@ const elements = {
   logOutBtn: document.querySelector('.logout'),
   userDataForm: document.querySelector('.form-user-data'),
   userPasswordForm: document.querySelector('.form-user-password'),
-  updateReviewForm: document.querySelectorAll('.update-review-form'),
-  reviewModal: document.querySelectorAll('.reviewModal'),
-  editMyReviewBtn: document.querySelector('.editMyReview'),
-  reviewInput: document.querySelector('.reviewInput'),
-  reviewRating: document.querySelector('.reviewRating'),
+  joinbrainsclub: document.getElementById('joinbrainsclub'),
+  registeradmin: document.getElementById('registeradmin'),
+  // updateReviewForm: document.querySelectorAll('.update-review-form'),
+  // reviewModal: document.querySelectorAll('.reviewModal'),
+  // editMyReviewBtn: document.querySelector('.editMyReview'),
+  // reviewInput: document.querySelector('.reviewInput'),
+  // reviewRating: document.querySelector('.reviewRating'),
 };
 
 {
@@ -112,6 +114,93 @@ const elements = {
 }
 
 {
+  // Using AXIOS TO SUBMIT NEW REGISTRATION DATA
+  if (elements.joinbrainsclub) {
+    elements.joinbrainsclub.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.querySelector('.msf-submit-cta').textContent = 'Submitting...';
+
+      setTimeout(() => {
+        document.querySelector('.msf-submit-cta').textContent = 'Submit';
+      }, 3000);
+
+      const memberCategory = document.getElementById('category').value;
+      const className = document.getElementById('className').value;
+      const firstname = document.getElementById('firstname').value;
+      const lastname = document.getElementById('lastname').value;
+      const email = document.getElementById('email').value;
+      const dob = document.getElementById('dob').value;
+      const phone = document.getElementById('phone').value;
+      const city = document.getElementById('city').value;
+      const gender = document.querySelector('.gender').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const signedConsent = document.getElementById('check').value;
+
+      if (password != confirmPassword) {
+        document.getElementById('passwordError').classList.remove('hideElement');
+        return (document.getElementById('passwordError').textContent = 'Passwords do not match');
+      }
+
+      await createUserRecord({ memberCategory, className, firstname, lastname, email, dob, gender, phone, city, password, confirmPassword, signedConsent }, 'clubmember');
+
+      document.getElementById('category').value = '';
+      document.getElementById('className').value = '';
+      document.getElementById('firstname').value = '';
+      document.getElementById('lastname').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('dob').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('city').value = '';
+      document.querySelector('.gender').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('confirmPassword').value = '';
+      document.getElementById('check').value = '';
+    });
+  }
+}
+
+{
+  // Using AXIOS TO SUBMIT NEW ADMIN REGISTRATION DATA
+  if (elements.registeradmin) {
+    elements.registeradmin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.querySelector('.registeradmin__cta').textContent = 'Executing request...';
+
+      setTimeout(() => {
+        document.querySelector('.registeradmin__cta').textContent = 'Create';
+      }, 3000);
+
+      const firstname = document.getElementById('firstname').value;
+      const lastname = document.getElementById('lastname').value;
+      const email = document.getElementById('email').value;
+      const role = document.getElementById('role').value;
+      const dob = document.getElementById('dob').value;
+      const phone = document.getElementById('phone').value;
+      const city = document.getElementById('city').value;
+      const gender = document.querySelector('.gender').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const signedConsent = document.getElementById('check').value;
+
+      await createUserRecord({ firstname, lastname, email, role, dob, gender, phone, city, password, confirmPassword, signedConsent }, 'adminuser');
+
+      document.getElementById('firstname').value = '';
+      document.getElementById('lastname').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('role').value = '';
+      document.getElementById('dob').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('city').value = '';
+      document.querySelector('.gender').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('confirmPassword').value = '';
+      document.getElementById('check').value = '';
+    });
+  }
+}
+
+{
   // UPDATE REVIEW
   /*
 
@@ -140,92 +229,7 @@ const elements = {
     }
   });
   */
-
-  let updateReviewFormArr = Array.from(elements.updateReviewForm);
-  let reviewModalArr = Array.from(elements.reviewModal);
-  //console.log(updateReviewFormArr);
-  //for (const cur of updateReviewFormArr) {
-  for (const cur of reviewModalArr) {
-    // if (cur) {
-    cur.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      let dataArr = [];
-      let reviewID,
-        showSlug,
-        reviewerId,
-        currentUserId,
-        currentUserRole,
-        review,
-        rating = '';
-
-      // var allReviews = document.querySelectorAll('.reviewInput');
-      // var allReviewsArr = Array.from(allReviews);
-      // for (const cur of allReviewsArr) {
-      //   review = cur.value;
-      // }
-      review = document.querySelector('.reviewInput').value;
-      rating = document.querySelector('.reviewRating').value;
-
-      reviewID = document.querySelector('.reviewID').value;
-      showSlug = document.querySelector('.showSlug').value;
-      reviewerId = document.querySelector('.reviewerId').value;
-      currentUserId = document.querySelector('.currentUserId').value;
-      currentUserRole = document.querySelector('.currentUserRole').value;
-
-      dataArr.push(reviewerId.trim(), currentUserId.trim(), currentUserRole.trim(), reviewID.trim());
-      console.log(dataArr, review, rating);
-
-      reviewerId = dataArr[0];
-      currentUserId = dataArr[1];
-      currentUserRole = dataArr[2];
-      reviewID = dataArr[3];
-
-      // updateSettings({ review, rating }, 'review', reviewID);
-      // setTimeout(function () {
-      //   location.assign(`/brainstv/show/${showSlug}`);
-      // }, 1000);
-
-      console.log(`ReviewerID: ${reviewerId}, CurrentUserID: ${currentUserId}, currentUserRole: ${currentUserRole}, ReviewID: ${reviewID}`);
-      // console.log(reviewerId, currentUserId, currentUserRole, reviewID);
-      // let message = 'You do not have permission to perform this action!';
-      // showUserAlert('error', message);
-      console.log('Done');
-
-      /*
-        if (`${reviewerId}` != `${currentUserId}`) {
-          let message = 'You do not have permission to perform this action!';
-          setTimeout(function () {
-            location.assign(`/brainstv/show/${showSlug}`);
-          }, 1000);
-          setTimeout(function () {
-            showUserAlert('error', message);
-            console.log('You do not have permission to perform this action!');
-          }, 2000);
-        }
-        if (`${reviewerId}` === `${currentUserId}` || `${currentUserRole}` === 'superAdmin') {
-          let message = 'Review updated successfully!';
-          updateSettings({ review, rating }, 'review', reviewID);
-          setTimeout(function () {
-            location.assign(`/brainstv/show/${showSlug}`);
-          }, 1000);
-          setTimeout(function () {
-            showUserAlert('error', message);
-            console.log('Review updated successfully!');
-          }, 2000);
-        }
-  
-        */
-    });
-    // }
-  }
 }
-
-// $('.update-review-form').click(function () {
-//   var currentReview = $('.reviewInput').val();
-//   var currentRating = $('.reviewRating').val();
-//   console.log(currentReview, currentRating);
-// });
 
 {
   // Disable form submit button
@@ -247,52 +251,6 @@ const elements = {
     });
   }
 }
-
-/*
-(function () {
-  'use strict';
-  var submitSuccess = document.querySelector('.submit-success');
-  var submitError = document.querySelector('.submit-error');
-
-  window.addEventListener(
-    'load',
-    function () {
-      // var submitSuccess = document.querySelector('.submit-success');
-      // var submitError = document.querySelector('.submit-error');
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function (form) {
-        form.addEventListener(
-          'submit',
-          function (event) {
-            // if (form.checkValidity() === true) {
-            //   console.log('submitSuccess');
-            //   submitSuccess.classList.add('alert');
-            //   submitSuccess.classList.add('show');
-            // } else {
-            //   console.log('an error occurred');
-            //   submitError.classList.add('alert');
-            //   submitError.classList.add('show');
-            //   event.preventDefault();
-            //   event.stopPropagation();
-            // }
-            // form.classList.add('was-validated');
-
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-          },
-          false
-        );
-      });
-    },
-    false
-  );
-})();
-*/
 
 $(function () {
   $('[data-toggle="popover"]').popover();

@@ -44,12 +44,12 @@
                         <p>Fields marked with <span class="requiredfield">*</span> are required.</p>
 
                         <!-- <h5 class="marginTopBottomSmall">Your profile Photo:</h5> -->
-                        <label for="profilePhoto">Your profile Photo:</label>
+                        <!-- <label for="profilePhoto">Your profile Photo:</label>
                         <div class="__form-row">
                             <div class="col-sm-3 my-2">
-                                <input type="file" name="profilePhoto" class="filepond">
+                                <input type="file" name="profilePhoto" class="filepond" id="file">
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- space for category -->
                         <div class="form-row">
@@ -121,12 +121,13 @@
 
                         <h5 class="marginTopBottomSmall">Gender <span class="requiredfield">*</span></h5>
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input form__input" value="Male" id="boy"
+                            <input type="radio" class="custom-control-input form__input gender" value="Male" id="boy"
                                 name="gender">
                             <label class="custom-control-label" for="boy">Male</label>
                         </div>
                         <div class="custom-control custom-radio mb-3">
-                            <input type="radio" class="custom-control-input" value="Female" id="girl" name="gender">
+                            <input type="radio" class="custom-control-input gender" value="Female" id="girl"
+                                name="gender">
                             <label class="custom-control-label form__input" for="girl">Female</label>
                         </div>
 
@@ -173,8 +174,8 @@
                         </h5>
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" name="phone" class="form-control form__input"
-                                    placeholder="Phone number" required>
+                                <input type="number" name="phone" class="form-control form__input"
+                                    placeholder="Phone number" id="phone" required>
                             </div>
                         </div>
                         <h5 class="marginTopBottomSmall">City/Town where you live<span class="requiredfield">*</span>
@@ -216,11 +217,11 @@
                         <h5 class="marginTopBottomSmall">CONFIRM YOUR PASSWORD</h5>
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="password" name="confirmPassword" id="confirmPassword"
-                                    class="form-control mx-sm-3 form__input"
-                                    aria-describedby="confirmPasswordHelpInline" id="password"
+                                <input type="password" name="confirmPassword" class="form-control mx-sm-3 form__input"
+                                    aria-describedby="confirmPasswordHelpInline" id="confirmPassword"
                                     placeholder="Confirm your password" minLength="6" required>
                             </div>
+                            <div id="passwordError" class="form-field-error hideElement"></div>
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">

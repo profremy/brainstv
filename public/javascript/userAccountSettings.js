@@ -24,10 +24,10 @@ export const updateSettings = async (data, type, id) => {
   }
 };
 
-// type is either 'registration', or 'review'
+// type is either 'clubmember', or 'adminuser'
 export const createUserRecord = async (data, type) => {
   try {
-    const url = type === 'registration' ? '/clubmembers/join' : `/brainstv/shows/${review.id}/reviews`;
+    const url = type === 'clubmember' ? '/clubmembers/join' : `/brainstvadmins/createNewAdminUser`;
     // const url = type === 'registration' ? 'http://localhost:5000/clubmembers/join' : `http://localhost:5000/brainstv/shows/${review.id}/reviews`;
 
     const res = await axios({
@@ -38,6 +38,15 @@ export const createUserRecord = async (data, type) => {
 
     if (res.data.status === 'success') {
       showUserAlert('success', `${type.toUpperCase()} created successfully!`);
+      if (type === 'clubmember') {
+        window.setTimeout(() => {
+          location.assign('/clubmembers/registered');
+        }, 1500);
+      } else {
+        window.setTimeout(() => {
+          location.assign('/brainstvadmins/viewAdmin');
+        }, 1500);
+      }
     }
   } catch (err) {
     showUserAlert('error', err.response.data.message);

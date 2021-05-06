@@ -41,7 +41,8 @@
   </div>
   <div class="col-sm-5">
     <label for="dob">Phone number</label><span class="requiredfield">*</span>
-    <input type="text" name="phone" class="form-control" placeholder="Phone number" value="<%= admin.phone %>" required>
+    <input type="number" name="phone" class="form-control" id="phone" placeholder="Phone number"
+      value="<%= admin.phone %>" required>
   </div>
 </div>
 <div class="form-row align-items-center mt-1">
@@ -56,12 +57,12 @@
   <div class="col-sm-5 mt-1">
     <label for="gender">Gender</label> <span class="requiredfield">*</span>
     <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" value="Male" id="boy" name="gender"
+      <input type="radio" class="form-check-input gender" value="Male" id="boy" name="gender"
         <%= admin.gender === 'Male' ? 'checked' : '' %> required>
       <label class="form-check-label" for="boy">Male</label>
     </div>
     <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" value="Female" id="girl" name="gender"
+      <input type="radio" class="form-check-input gender" value="Female" id="girl" name="gender"
         <%= admin.gender === 'Female' ? 'checked' : '' %>>
       <label class="form-check-label" for="girl">Female</label>
     </div>

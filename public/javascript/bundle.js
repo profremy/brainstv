@@ -8653,7 +8653,7 @@ var updateSettings = /*#__PURE__*/function () {
   return function updateSettings(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
   };
-}(); // type is either 'registration', or 'review'
+}(); // type is either 'clubmember', or 'adminuser'
 
 
 exports.updateSettings = updateSettings;
@@ -8666,7 +8666,7 @@ var createUserRecord = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            url = type === 'registration' ? '/clubmembers/join' : "/brainstv/shows/".concat(review.id, "/reviews"); // const url = type === 'registration' ? 'http://localhost:5000/clubmembers/join' : `http://localhost:5000/brainstv/shows/${review.id}/reviews`;
+            url = type === 'clubmember' ? '/clubmembers/join' : "/brainstvadmins/createNewAdminUser"; // const url = type === 'registration' ? 'http://localhost:5000/clubmembers/join' : `http://localhost:5000/brainstv/shows/${review.id}/reviews`;
 
             _context2.next = 4;
             return (0, _axios.default)({
@@ -8680,6 +8680,16 @@ var createUserRecord = /*#__PURE__*/function () {
 
             if (res.data.status === 'success') {
               (0, _alerts.showUserAlert)('success', "".concat(type.toUpperCase(), " created successfully!"));
+
+              if (type === 'clubmember') {
+                window.setTimeout(function () {
+                  location.assign('/clubmembers/registered');
+                }, 1500);
+              } else {
+                window.setTimeout(function () {
+                  location.assign('/brainstvadmins/viewAdmin');
+                }, 1500);
+              }
             }
 
             _context2.next = 11;
@@ -9009,7 +9019,7 @@ var elements = (_elements = {
   jumbotron: document.querySelector('.jumbotron'),
   loadingSpinner: document.getElementById('loadingSpinner'),
   loaderTrigger: document.getElementById('loader')
-}, _defineProperty(_elements, "app", document.getElementById('app')), _defineProperty(_elements, "btnCheck", document.querySelector('.btncheck')), _defineProperty(_elements, "userCaretDown", document.querySelector('.userCaretDown')), _defineProperty(_elements, "checkBox", document.getElementById('check')), _defineProperty(_elements, "email", document.getElementById('email')), _defineProperty(_elements, "password", document.getElementById('password')), _defineProperty(_elements, "loginForm", document.getElementById('loginForm')), _defineProperty(_elements, "logOutBtn", document.querySelector('.logout')), _defineProperty(_elements, "userDataForm", document.querySelector('.form-user-data')), _defineProperty(_elements, "userPasswordForm", document.querySelector('.form-user-password')), _defineProperty(_elements, "updateReviewForm", document.querySelectorAll('.update-review-form')), _defineProperty(_elements, "reviewModal", document.querySelectorAll('.reviewModal')), _defineProperty(_elements, "editMyReviewBtn", document.querySelector('.editMyReview')), _defineProperty(_elements, "reviewInput", document.querySelector('.reviewInput')), _defineProperty(_elements, "reviewRating", document.querySelector('.reviewRating')), _elements);
+}, _defineProperty(_elements, "app", document.getElementById('app')), _defineProperty(_elements, "btnCheck", document.querySelector('.btncheck')), _defineProperty(_elements, "userCaretDown", document.querySelector('.userCaretDown')), _defineProperty(_elements, "checkBox", document.getElementById('check')), _defineProperty(_elements, "email", document.getElementById('email')), _defineProperty(_elements, "password", document.getElementById('password')), _defineProperty(_elements, "loginForm", document.getElementById('loginForm')), _defineProperty(_elements, "logOutBtn", document.querySelector('.logout')), _defineProperty(_elements, "userDataForm", document.querySelector('.form-user-data')), _defineProperty(_elements, "userPasswordForm", document.querySelector('.form-user-password')), _defineProperty(_elements, "joinbrainsclub", document.getElementById('joinbrainsclub')), _defineProperty(_elements, "registeradmin", document.getElementById('registeradmin')), _elements);
 {
   // USER OPTIONS
   // Execute this block only if user is logged in
@@ -9099,7 +9109,155 @@ var elements = (_elements = {
   }());
 }
 {
-  // UPDATE REVIEW
+  // Using AXIOS TO SUBMIT NEW REGISTRATION DATA
+  if (elements.joinbrainsclub) {
+    elements.joinbrainsclub.addEventListener('submit', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+        var memberCategory, className, firstname, lastname, email, dob, phone, city, gender, password, confirmPassword, signedConsent;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                e.preventDefault();
+                document.querySelector('.msf-submit-cta').textContent = 'Submitting...';
+                setTimeout(function () {
+                  document.querySelector('.msf-submit-cta').textContent = 'Submit';
+                }, 3000);
+                memberCategory = document.getElementById('category').value;
+                className = document.getElementById('className').value;
+                firstname = document.getElementById('firstname').value;
+                lastname = document.getElementById('lastname').value;
+                email = document.getElementById('email').value;
+                dob = document.getElementById('dob').value;
+                phone = document.getElementById('phone').value;
+                city = document.getElementById('city').value;
+                gender = document.querySelector('.gender').value;
+                password = document.getElementById('password').value;
+                confirmPassword = document.getElementById('confirmPassword').value;
+                signedConsent = document.getElementById('check').value;
+
+                if (!(password != confirmPassword)) {
+                  _context2.next = 18;
+                  break;
+                }
+
+                document.getElementById('passwordError').classList.remove('hideElement');
+                return _context2.abrupt("return", document.getElementById('passwordError').textContent = 'Passwords do not match');
+
+              case 18:
+                _context2.next = 20;
+                return (0, _userAccountSettings.createUserRecord)({
+                  memberCategory: memberCategory,
+                  className: className,
+                  firstname: firstname,
+                  lastname: lastname,
+                  email: email,
+                  dob: dob,
+                  gender: gender,
+                  phone: phone,
+                  city: city,
+                  password: password,
+                  confirmPassword: confirmPassword,
+                  signedConsent: signedConsent
+                }, 'clubmember');
+
+              case 20:
+                document.getElementById('category').value = '';
+                document.getElementById('className').value = '';
+                document.getElementById('firstname').value = '';
+                document.getElementById('lastname').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('dob').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('city').value = '';
+                document.querySelector('.gender').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('confirmPassword').value = '';
+                document.getElementById('check').value = '';
+
+              case 32:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+  }
+}
+{
+  // Using AXIOS TO SUBMIT NEW ADMIN REGISTRATION DATA
+  if (elements.registeradmin) {
+    elements.registeradmin.addEventListener('submit', /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
+        var firstname, lastname, email, role, dob, phone, city, gender, password, confirmPassword, signedConsent;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                e.preventDefault();
+                document.querySelector('.registeradmin__cta').textContent = 'Executing request...';
+                setTimeout(function () {
+                  document.querySelector('.registeradmin__cta').textContent = 'Create';
+                }, 3000);
+                firstname = document.getElementById('firstname').value;
+                lastname = document.getElementById('lastname').value;
+                email = document.getElementById('email').value;
+                role = document.getElementById('role').value;
+                dob = document.getElementById('dob').value;
+                phone = document.getElementById('phone').value;
+                city = document.getElementById('city').value;
+                gender = document.querySelector('.gender').value;
+                password = document.getElementById('password').value;
+                confirmPassword = document.getElementById('confirmPassword').value;
+                signedConsent = document.getElementById('check').value;
+                _context3.next = 16;
+                return (0, _userAccountSettings.createUserRecord)({
+                  firstname: firstname,
+                  lastname: lastname,
+                  email: email,
+                  role: role,
+                  dob: dob,
+                  gender: gender,
+                  phone: phone,
+                  city: city,
+                  password: password,
+                  confirmPassword: confirmPassword,
+                  signedConsent: signedConsent
+                }, 'adminuser');
+
+              case 16:
+                document.getElementById('firstname').value = '';
+                document.getElementById('lastname').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('role').value = '';
+                document.getElementById('dob').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('city').value = '';
+                document.querySelector('.gender').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('confirmPassword').value = '';
+                document.getElementById('check').value = '';
+
+              case 27:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x3) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+  }
+}
+{// UPDATE REVIEW
 
   /*
     elements.editMyReviewBtn.addEventListener('click', (event) => {
@@ -9124,81 +9282,7 @@ var elements = (_elements = {
     }
   });
   */
-  var updateReviewFormArr = Array.from(elements.updateReviewForm);
-  var reviewModalArr = Array.from(elements.reviewModal); //console.log(updateReviewFormArr);
-  //for (const cur of updateReviewFormArr) {
-
-  for (var _i = 0, _reviewModalArr = reviewModalArr; _i < _reviewModalArr.length; _i++) {
-    var cur = _reviewModalArr[_i];
-    // if (cur) {
-    cur.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var dataArr = [];
-      var reviewID,
-          showSlug,
-          reviewerId,
-          currentUserId,
-          currentUserRole,
-          review,
-          rating = ''; // var allReviews = document.querySelectorAll('.reviewInput');
-      // var allReviewsArr = Array.from(allReviews);
-      // for (const cur of allReviewsArr) {
-      //   review = cur.value;
-      // }
-
-      review = document.querySelector('.reviewInput').value;
-      rating = document.querySelector('.reviewRating').value;
-      reviewID = document.querySelector('.reviewID').value;
-      showSlug = document.querySelector('.showSlug').value;
-      reviewerId = document.querySelector('.reviewerId').value;
-      currentUserId = document.querySelector('.currentUserId').value;
-      currentUserRole = document.querySelector('.currentUserRole').value;
-      dataArr.push(reviewerId.trim(), currentUserId.trim(), currentUserRole.trim(), reviewID.trim());
-      console.log(dataArr, review, rating);
-      reviewerId = dataArr[0];
-      currentUserId = dataArr[1];
-      currentUserRole = dataArr[2];
-      reviewID = dataArr[3]; // updateSettings({ review, rating }, 'review', reviewID);
-      // setTimeout(function () {
-      //   location.assign(`/brainstv/show/${showSlug}`);
-      // }, 1000);
-
-      console.log("ReviewerID: ".concat(reviewerId, ", CurrentUserID: ").concat(currentUserId, ", currentUserRole: ").concat(currentUserRole, ", ReviewID: ").concat(reviewID)); // console.log(reviewerId, currentUserId, currentUserRole, reviewID);
-      // let message = 'You do not have permission to perform this action!';
-      // showUserAlert('error', message);
-
-      console.log('Done');
-      /*
-        if (`${reviewerId}` != `${currentUserId}`) {
-          let message = 'You do not have permission to perform this action!';
-          setTimeout(function () {
-            location.assign(`/brainstv/show/${showSlug}`);
-          }, 1000);
-          setTimeout(function () {
-            showUserAlert('error', message);
-            console.log('You do not have permission to perform this action!');
-          }, 2000);
-        }
-        if (`${reviewerId}` === `${currentUserId}` || `${currentUserRole}` === 'superAdmin') {
-          let message = 'Review updated successfully!';
-          updateSettings({ review, rating }, 'review', reviewID);
-          setTimeout(function () {
-            location.assign(`/brainstv/show/${showSlug}`);
-          }, 1000);
-          setTimeout(function () {
-            showUserAlert('error', message);
-            console.log('Review updated successfully!');
-          }, 2000);
-        }
-            */
-    }); // }
-  }
-} // $('.update-review-form').click(function () {
-//   var currentReview = $('.reviewInput').val();
-//   var currentRating = $('.reviewRating').val();
-//   console.log(currentReview, currentRating);
-// });
-
+}
 {
   // Disable form submit button
   // DELEGATION
@@ -9218,52 +9302,6 @@ var elements = (_elements = {
     });
   }
 }
-/*
-(function () {
-  'use strict';
-  var submitSuccess = document.querySelector('.submit-success');
-  var submitError = document.querySelector('.submit-error');
-
-  window.addEventListener(
-    'load',
-    function () {
-      // var submitSuccess = document.querySelector('.submit-success');
-      // var submitError = document.querySelector('.submit-error');
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function (form) {
-        form.addEventListener(
-          'submit',
-          function (event) {
-            // if (form.checkValidity() === true) {
-            //   console.log('submitSuccess');
-            //   submitSuccess.classList.add('alert');
-            //   submitSuccess.classList.add('show');
-            // } else {
-            //   console.log('an error occurred');
-            //   submitError.classList.add('alert');
-            //   submitError.classList.add('show');
-            //   event.preventDefault();
-            //   event.stopPropagation();
-            // }
-            // form.classList.add('was-validated');
-
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-          },
-          false
-        );
-      });
-    },
-    false
-  );
-})();
-*/
-
 $(function () {
   $('[data-toggle="popover"]').popover();
 });
@@ -9327,7 +9365,7 @@ window.addEventListener('scroll', scrollThrottle);
 
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var _cur = _step.value;
+          var cur = _step.value;
           var timeMsgClosed = new Date().getTime();
           localStorage.setItem('timeUserClosedMsg', timeMsgClosed);
         }
@@ -9665,7 +9703,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53589" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49255" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

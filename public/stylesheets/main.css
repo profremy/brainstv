@@ -589,6 +589,18 @@ input[type="radio"]:checked+span {
     background-color: var(--warning);
 }
 
+.form-field-error {
+    background-color: var(--red);
+    color: var(--light);
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.transparency {
+    opacity: 0.94;
+}
+
 .hideElement {
     display: none
 }

@@ -41,7 +41,8 @@
   </div>
   <div class="col-sm-5">
     <label for="dob">Phone number</label><span class="requiredfield">*</span>
-    <input type="text" name="phone" class="form-control" placeholder="Phone number" value="<%= admin.phone %>" required>
+    <input type="number" name="phone" class="form-control" id="phone" placeholder="Phone number"
+      value="<%= admin.phone %>" required>
   </div>
 </div>
 <div class="form-row align-items-center mt-1">
@@ -56,12 +57,12 @@
   <div class="col-sm-5 mt-1">
     <label for="gender">Gender</label> <span class="requiredfield">*</span>
     <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" value="Male" id="boy" name="gender"
+      <input type="radio" class="form-check-input gender" value="Male" id="boy" name="gender"
         <%= admin.gender === 'Male' ? 'checked' : '' %> required>
       <label class="form-check-label" for="boy">Male</label>
     </div>
     <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" value="Female" id="girl" name="gender"
+      <input type="radio" class="form-check-input gender" value="Female" id="girl" name="gender"
         <%= admin.gender === 'Female' ? 'checked' : '' %>>
       <label class="form-check-label" for="girl">Female</label>
     </div>
@@ -91,47 +92,3 @@
     </label>
   </div>
 </div>
-
-<!-- <div class="form-row align-items-center">
-  <div class="col-sm-5 mb-3">
-    <label for="userPassword" class="col-form-label">Confirm Password</label>
-    <input type="password" name="confirmPassword" id="confirmPassword" class="form-control"
-      aria-describedby="confirmPasswordHelpInline" id="password" placeholder="Confirm admin password">
-  </div>
-
-</div> -->
-
-<!-- 
-<div class="form-group row">
-  <label for="userName" class="col-sm-2 col-form-label">User Name</label>
-  <div class="col-sm-6">
-    <input type="text" name="userName" value="<%#= admin.userName %>" class="form-control" id="userName"
-      placeholder="User name">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="userEmail" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-6">
-      <input type="email" name="userEmail" class="form-control" id="userEmail" placeholder="User email address"
-        value="<%#= admin.userEmail %>">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="adminRole" class="col-sm-2 col-form-label">Admin Role <span class="role"><button type="button"
-          class="btn btn-sm btn-warning" data-toggle="popover" data-trigger="focus" title="Admin User Role"
-          data-content="Super Admin Role passes CRUD (create, retrieve, update, delete) privileges to the user. Default is 'basicAdmin' unless you select 'superAdmin'. Beware!"><i
-            class="fa fa-question-circle-o" aria-hidden="true"></i></button></span></label>
-    <select name="adminRole" class="custom-select" id="adminRole">
-      <option selected disabled>-- Select Admin Role</option>
-      <option name="superAdmin" value="superAdmin">Super Admin</option>
-      <option name="basicAdmin" value="basicAdmin">Basic Admin</option>
-    </select>
-  </div>
-
-  <div class="form-group row">
-    <label for="userPassword" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-6">
-      <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Password">
-    </div>
-  </div>
-  -->
