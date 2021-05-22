@@ -1,19 +1,175 @@
-<div class="jumbotron container-fluid _bg-show-details">
-    <hr class="my-1 document-divider">
-    <div class="show-details-container">
+<div class="jumbotron container-fluid instagram-gradient _bg-show-details">
+    <!-- <hr class="my-1 document-divider"> -->
+    <!-- <div class="_show-details-container bg-light rounded p-3"> -->
+    <% if (show.showType === "Video") { %>
+    <!-- <img src="/images/show_images/<%#= show.showThumbnail %>" width="100%" height="100%" class="_img-fluid"
+            alt="<%#= show.showTitle %>"> -->
 
-        <div class="show-details">
-            <% if (show) { %>
+
+
+
+    <div class="media bg-light d-flex flex-wrap">
+        <%# if (show) { %>
+        <div class="embed-responsive embed-responsive-16by9 _align-self-start _mr-3">
             <iframe class="responsive-iframe" width="560" height="315"
                 src="https://www.youtube-nocookie.com/embed/<%= show.showId %>?rel=0&modestbranding=1" frameborder="0"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
+        </div>
 
+        <%# } %>
+        <div class="media-body p-2">
+            <p><%= show.introParagraph %></p>
+            <p><%= show.bodyParagraph1 %></p>
+            <p><%= show.bodyParagraph2 %></p>
+            <p><%= show.bodyParagraph3 %></p>
+            <p><%= show.bodyParagraph4 %></p>
+            <p><%= show.bodyParagraph5 %></p>
+            <p><%= show.bodyParagraph6 %></p>
+            <p><%= show.bodyParagraph7 %></p>
+            <p><%= show.bodyParagraph8 %></p>
+            <p><%= show.bodyParagraph9 %></p>
+            <p><%= show.bodyParagraph10%></p>
+            <p class="mb-0"><small><%= show.activityList1%></small></p>
+            <p class="mb-0"><small><%= show.activityList2%></small></p>
+            <p class="mb-0"><small><%= show.activityList3%></small></p>
+            <p class="mb-0"><small><%= show.activityList4%></small></p>
+            <p class="mb-0"><small><%= show.activityList5%></small></p>
+            <p class="mb-0"><small><%= show.activityList6%></small></p>
+            <p class="mb-0"><small><%= show.activityList7%></small></p>
+            <p class="mb-0"><small><%= show.activityList8%></small></p>
+            <p class="mb-0"><small><%= show.activityList9%></small></p>
+            <p class="mb-0"><small><%= show.activityList10%></small></p>
+            <p class="mb-0"><small><%= show.activityList11%></small></p>
+            <p class="mb-0"><small><%= show.activityList12%></small></p>
+
+            <% if(show.ageGroup || show.footNote) { %>
+            <div class="d-flex flex-wrap justify-content-around bg-warning p-2 mt-3">
+                <p class="mb-0"><%= show.ageGroup%></p>
+                <% if(show.footNote) { %>
+                <p class="mb-0 text-danger desktopScreen">|</p>
+                <p class="mb-0"><%= show.footNote%></p>
+                <% } %>
+            </div>
             <% } %>
 
         </div>
 
+
     </div>
+    <!-- <div class="show-details">
+        <iframe class="responsive-iframe" width="560" height="315"
+            src="https://www.youtube-nocookie.com/embed/<%#= show.showId %>?rel=0&modestbranding=1" frameborder="0"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+
+    </div> -->
+    <% } %>
+    <!-- End of ShowType = Video -->
+
+    <!-- Start of ShowType = Show -->
+    <% if (show.showType === "Show" || show.showType === "Activity" || show.showType === "Game" || show.showType === "TakePart") { %>
+    <div class="media bg-light d-sm-flex flex-wrap">
+        <img src="/images/show_images/<%= show.showThumbnail %>" class="align-self-start mr-3 img-fluid"
+            alt="<%= show.showTitle %>">
+        <div class="media-body p-2">
+            <h1><%= show.showTitle %> </h1>
+            <p><%= show.introParagraph %></p>
+            <p><%= show.bodyParagraph1 %></p>
+            <p><%= show.bodyParagraph2 %></p>
+            <p><%= show.bodyParagraph3 %></p>
+            <p><%= show.bodyParagraph4 %></p>
+            <p><%= show.bodyParagraph5 %></p>
+            <p><%= show.bodyParagraph6 %></p>
+            <p><%= show.bodyParagraph7 %></p>
+            <p><%= show.bodyParagraph8 %></p>
+            <p><%= show.bodyParagraph9 %></p>
+            <p><%= show.bodyParagraph10%></p>
+            <p class="mb-0"><small><%= show.activityList1%></small></p>
+            <p class="mb-0"><small><%= show.activityList2%></small></p>
+            <p class="mb-0"><small><%= show.activityList3%></small></p>
+            <p class="mb-0"><small><%= show.activityList4%></small></p>
+            <p class="mb-0"><small><%= show.activityList5%></small></p>
+            <p class="mb-0"><small><%= show.activityList6%></small></p>
+            <p class="mb-0"><small><%= show.activityList7%></small></p>
+            <p class="mb-0"><small><%= show.activityList8%></small></p>
+            <p class="mb-0"><small><%= show.activityList9%></small></p>
+            <p class="mb-0"><small><%= show.activityList10%></small></p>
+            <p class="mb-0"><small><%= show.activityList11%></small></p>
+            <p class="mb-0"><small><%= show.activityList12%></small></p>
+
+            <% if(user) { %>
+
+            <% if(show.showType === 'Activity' || show.showType ==='TakePart') { %>
+            <% if(show.takePartType === 'Cause' || show.takePartType === 'Competition') { %>
+            <button type="button" class="btn btn-outline-info mb-2 revealSendHomeworkForm"><i class="fa fa-envelope"
+                    aria-hidden="true"></i>Send</button>
+            <div class="classWork bg-white p-2 hideElement">
+                <form action="/" method="POST" enctype="multipart/form-data" id="homeWorkUploadForm">
+                    <div class="form-row align-items-center">
+                        <div class="col-md-5 mb-2">
+                            <!-- <label for="fullname">Show/Resource Title</label> <span class="requiredfield">*</span> -->
+                            <input type="text" class="form-control" name="fullname"
+                                value="<%= user.firstname%> <%= user.lastname.toUpperCase()%>">
+                        </div>
+                        <div class="col-md-5 mb-2">
+                            <!-- <label for="email">Resource Type</label> <span class="requiredfield">*</span> -->
+                            <input type="text" class="form-control" name="email" value="<%= user.email%>">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="col-md-5 mb-2 p-2">
+                            <label for="homework" class="form-control-label">Attach a file for this
+                                <%= show.showType %> <span class="requiredfield">*</span></label>
+                            <input type="file" class="form-control-file" name="homework" id="homeWorkUploadFile">
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center marginTopBottomSmall">
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-outline-info" id="loader"><i class="fa fa-envelope"
+                                    aria-hidden="true"></i>Send</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="button" class="btn btn-outline-danger cancelOp"><i
+                                    class="fa fa-times-circle-o" aria-hidden="true"></i><span>Cancel</span></button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <% } else if (show.takePartType === 'Discussion') { %>
+            <a href="#" class="btn btn-outline-info">Start Discussion</a>
+            <% } else if (show.takePartType === 'Poll') { %>
+            <a href="#" class="btn btn-outline-info">Take a Poll</a>
+            <% } %>
+            <% } %>
+
+            <% if(show.downloadableDocument != null) { %>
+            <a href="/brainstv/download-activity-file" class="btn btn-lg btn-outline-info"><i class="fa fa-download"
+                    aria-hidden="true"></i>Download this Activity</a>
+            <% } %>
+
+
+            <% } else { %>
+            <a href="/clubmembers/joinbrainsclub">Register</a> |
+            <a href="/clubmembers/login">Login</a> to send your file or download activity file.
+            <% } %>
+
+
+            <% if(show.ageGroup || show.footNote) { %>
+            <div class="d-flex flex-wrap justify-content-around bg-warning p-2 mt-3">
+                <p class="mb-0"><%= show.ageGroup%></p>
+                <% if(show.footNote) { %>
+                <p class="mb-0 text-danger">|</p>
+                <p class="mb-0"><%= show.footNote%></p>
+                <% } %>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <% } %>
+
+
     <div class="flexStart">
         <div class="ShowTitle">
             <button type="button" class="btn btn-info rounded-0 p-3">
@@ -24,7 +180,7 @@
         <div class="reviewDetails">
             <% if (show.reviews.length === 0) { %>
             <button type="button" class="btn btn-warning rounded-0 p-3">
-                No comment or rating found for this show!
+                No comment or rating found for this <%= show.showType%>!
             </button>
             <% } else { %>
             <button type="button" class="btn btn-warning text-gray-dark rounded-0 p-3">
@@ -36,7 +192,7 @@
             </button>
         </div>
     </div>
-    <form action="/brainstv/shows/<%= show.id %>/reviews" method="POST">
+    <form action="/brainstv/shows/<%= show.id %>/reviews" method="POST" class="show-details-review-form">
         <div class="form-row align-items-center mt-1">
             <div class="col-sm-7">
                 <label for="review" class="col-sm-12 col-form-label">Comment on <%= show.showTitle %> </label>
@@ -46,7 +202,7 @@
                 </div>
             </div>
             <div class="col-sm-5">
-                <label for="rating" class="col-sm-6 col-form-label">Rate Video</label>
+                <label for="rating" class="col-sm-6 col-form-label">Rate this <%= show.showType %> </label>
                 <div class="col-md-4 mb-2">
                     <input type="number" min="1" max="5" class="form-control" name="rating"
                         value="<%#= review.rating %>">
@@ -58,9 +214,9 @@
             <button type="submit" class="btn btn-success"><span>Send</span></button>
         </div>
     </form>
-    <hr class="my-1 document-divider">
+    <hr class="my-2 document-divider bg-light">
     <!-- Start Comment and Related Shows Section -->
-    <div class="container">
+    <div class="container bg-light rounded-lg">
         <div class="row">
             <div class="col-sm">
                 <div class="input-group margin-bottom-sm">
@@ -204,7 +360,7 @@
             </div>
             <div class="col-sm">
                 <div class="input-group margin-bottom-sm">
-                    <span class="dark-blue-gradient-background px-3 mt-3">Related Shows</span>
+                    <span class="dark-blue-gradient-background px-3 mt-3">Related Resource</span>
                 </div>
 
                 <hr class="my-1 document-divider">
@@ -212,18 +368,19 @@
                     <% allShows.forEach(show => { %>
                     <% if(currentShowClass === show.className.className && currentShowId != show.id) { %>
                     <div class="col-sm-5 flex-item">
-                        <div class="embed-responsive embed-responsive-16by9">
+                        <div class="embed-responsive _embed-responsive-16by9">
                             <a href="/brainstv/show/<%= show.slug %>">
                                 <div class="resourcesOverlay"></div>
                             </a>
                             <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                            <iframe width="560" height="315"
-                                src="https://www.youtube-nocookie.com/embed/<%= show.showId %>?rel=0&modestbranding=1"
+                            <!-- <iframe width="560" height="315"
+                                src="https://www.youtube-nocookie.com/embed/<%#= show.showId %>?rel=0&modestbranding=1"
                                 frameborder="0"
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
+                                allowfullscreen></iframe> -->
 
-                            <!-- <img src="<%#= show.showThumbnail %>" class="img-fluid" alt="<%#= show.showTitle %>"> -->
+                            <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="100%"
+                                class="img-fluid" alt="<%= show.showTitle %>">
                             <% if (show.className.className.startsWith('Y')) { %>
                             <div class="learningResourcesBottomTitle"><%= show.className.className.split('E')[0]%>
                             </div>

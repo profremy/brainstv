@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 const ClubMember = require('../models/clubmember');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const sendEmail = require('./../utils/email');
+// const sendEmail = require('./../utils/email');
+const Email = require('./../utils/email');
 const saveProfilePhoto = require('../utils/saveProfilePhoto');
 
 const signToken = (id) => {
@@ -79,6 +80,9 @@ exports.join = catchAsync(async (req, res, next) => {
   }
 
   const newClubmember = await clubmember.save();
+
+  const url = `${req.protocol}://${req.get('host')}/clubmembers/profile/${clubmember._id}/edit`;
+  await new Email(clubmember, url).sendWelcome();
 
   createSendToken(newClubmember, 201, res);
 });
@@ -210,11 +214,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const message = `Forgot your password? Submit a PATCH request with your new password and password confirmation to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
 
   try {
-    await sendEmail({
-      email: clubmember.email,
-      subject: 'Your password reset request token (valid for 10 mins)',
-      message,
-    });
+    // await sendEmail({
+    //   email: clubmember.email,
+    //   subject: 'Your password reset request token (valid for 10 mins)',
+    //   message,
+    // });
 
     res.status(200).json({
       status: 'success',

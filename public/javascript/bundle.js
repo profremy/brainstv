@@ -9019,7 +9019,7 @@ var elements = (_elements = {
   jumbotron: document.querySelector('.jumbotron'),
   loadingSpinner: document.getElementById('loadingSpinner'),
   loaderTrigger: document.getElementById('loader')
-}, _defineProperty(_elements, "app", document.getElementById('app')), _defineProperty(_elements, "btnCheck", document.querySelector('.btncheck')), _defineProperty(_elements, "userCaretDown", document.querySelector('.userCaretDown')), _defineProperty(_elements, "checkBox", document.getElementById('check')), _defineProperty(_elements, "email", document.getElementById('email')), _defineProperty(_elements, "password", document.getElementById('password')), _defineProperty(_elements, "loginForm", document.getElementById('loginForm')), _defineProperty(_elements, "logOutBtn", document.querySelector('.logout')), _defineProperty(_elements, "userDataForm", document.querySelector('.form-user-data')), _defineProperty(_elements, "userPasswordForm", document.querySelector('.form-user-password')), _defineProperty(_elements, "joinbrainsclub", document.getElementById('joinbrainsclub')), _defineProperty(_elements, "registeradmin", document.getElementById('registeradmin')), _elements);
+}, _defineProperty(_elements, "app", document.getElementById('app')), _defineProperty(_elements, "btnCheck", document.querySelector('.btncheck')), _defineProperty(_elements, "userCaretDown", document.querySelector('.userCaretDown')), _defineProperty(_elements, "checkBox", document.getElementById('check')), _defineProperty(_elements, "email", document.getElementById('email')), _defineProperty(_elements, "password", document.getElementById('password')), _defineProperty(_elements, "loginForm", document.getElementById('loginForm')), _defineProperty(_elements, "logOutBtn", document.querySelector('.logout')), _defineProperty(_elements, "userDataForm", document.querySelector('.form-user-data')), _defineProperty(_elements, "userPasswordForm", document.querySelector('.form-user-password')), _defineProperty(_elements, "joinbrainsclub", document.getElementById('joinbrainsclub')), _defineProperty(_elements, "registeradmin", document.getElementById('registeradmin')), _defineProperty(_elements, "homeworkForm", document.querySelector('.revealSendHomeworkForm')), _defineProperty(_elements, "classWork", document.querySelector('.classWork')), _defineProperty(_elements, "cancelOp", document.querySelector('.cancelOp')), _elements);
 {
   // USER OPTIONS
   // Execute this block only if user is logged in
@@ -9067,6 +9067,18 @@ var elements = (_elements = {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     updateSettings({ name, email }, 'data');
+  });
+    OR
+    if (userDataForm)
+  userDataForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
+   
+    updateSettings(form, 'data');
   });
     */
   // CHANGE USER PASSWORD
@@ -9282,6 +9294,57 @@ var elements = (_elements = {
     }
   });
   */
+}
+{
+  // Check if Admin attached App file for upload.
+  var uploadForm = document.getElementById('uploadForm');
+  var appFile = document.getElementById('appfile');
+
+  if (uploadForm) {
+    uploadForm.addEventListener('submit', function (e) {
+      if (appFile.value === '' || elements.homeWorkFile.value === '') {
+        var message = 'This is unusual, there is no file to Upload!';
+        (0, _alerts.showUserAlert)('error', message);
+        e.preventDefault();
+      }
+    });
+  }
+}
+{
+  // Check if user attached homework file for upload.
+  var homeWorkUploadForm = document.getElementById('homeWorkUploadForm');
+  var homeWorkUploadFile = document.getElementById('homeWorkUploadFile');
+
+  if (homeWorkUploadForm) {
+    homeWorkUploadForm.addEventListener('submit', function (e) {
+      if (homeWorkUploadFile.value === '') {
+        var message = 'This is unusual, there is no file to Upload!';
+        (0, _alerts.showUserAlert)('error', message);
+        e.preventDefault();
+      }
+    });
+  }
+}
+{
+  // Activity and TakePart Submission if any
+  // Check if user is on activity page
+  if (elements.homeworkForm) {
+    elements.homeworkForm.addEventListener('click', function (e) {
+      if (e) {
+        elements.classWork.classList.remove('hideElement');
+        elements.homeworkForm.classList.add('hideElement');
+      }
+    });
+  }
+
+  if (elements.cancelOp) {
+    elements.cancelOp.addEventListener('click', function (e) {
+      if (e) {
+        elements.classWork.classList.add('hideElement');
+        elements.homeworkForm.classList.remove('hideElement');
+      }
+    });
+  }
 }
 {
   // Disable form submit button
@@ -9703,7 +9766,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49255" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63099" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

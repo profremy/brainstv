@@ -1,3 +1,6 @@
+const multer = require('multer');
+const fsPromises = require('fs').promises;
+const sharp = require('sharp');
 const Admin = require('../models/brainstvadmin');
 const ClubMember = require('../models/clubmember');
 const ClassName = require('../models/class');
@@ -8,6 +11,190 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
 const factory = require('./handlerFactory');
+
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'views/brainstv');
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, `${file.originalname}`);
+//   },
+// });
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  // use the filter to test if the file is an image. Test for file type here
+
+  // if (file.originalname.split('.')[1] === 'ejs') {
+  //   // pass null or no error to callback with true - its a .ejs file
+  //   cb(null, true);
+  // } else {
+  //   // pass an error message to callback with false - its not an image
+  //   cb(new AppError('This file is not allowed! Please upload only .ejs file', 400), false);
+  // }
+
+  // // use the filter to test if the file is an image. Test for file type here
+  // if (file.mimetype.startsWith('image')) {
+  //   // pass null or no error to callback with true - its an image
+  //   cb(null, true);
+  // } else {
+  //   // pass an error message to callback with false - its not an image
+  //   cb(new AppError('Not an image file! Please upload only images.', 400), false);
+  // }
+
+  // use the filter to test if the file is an image. Test for file type here
+  if (file.mimetype.startsWith('image')) {
+    // pass null or no error to callback with true - its an image
+    cb(null, true);
+  } else if (file.originalname.split('.')[1] === 'ejs') {
+    // pass null or no error to callback with true - its a .ejs file
+    cb(null, true);
+  } else if (file.originalname.split('.')[1] === 'pdf') {
+    cb(null, true);
+  } else {
+    // pass an error message to callback with false - its not an image
+    cb(new AppError('Not an image or .ejs file! Please upload only images.', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadAppFile = upload.single('selectedFile');
+// exports.uploadShowThumbnail = upload.single('showThumbnail');
+
+// Multiple field names with multiple files (maxCount: 3) or single file (maxCount: 1) of any mime type
+exports.uploadShowResourceFiles = upload.fields([
+  { name: 'showThumbnail', maxCount: 1 },
+  { name: 'downloadableDocument', maxCount: 1 },
+]);
+
+// Single field name with multiple files of any mime type
+//exports.attachFiles = upload.array('fileAttachements', 3); // image audio video file: Form field => name="fileAttachments"
+
+exports.renderAdminPanel = catchAsync(async (req, res, next) => {
+  res.status(200).render('brainstvadmins', { pageTitle: 'Admin Panel', successMessage: 'File Successfully Uploaded!' });
+});
+
+exports.fileUploadHandler = catchAsync(async (req, res, next) => {
+  if (!req.files) {
+    return next();
+  }
+
+  // use the filter to test if the file is an image and a pdf here
+  if (req.files.showThumbnail && req.files.downloadableDocument) {
+    req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
+    await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
+
+    req.body.downloadableDocument = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.pdf`;
+    await fsPromises.writeFile(`views/brainstv/downloadables/${req.body.downloadableDocument}`, req.files.downloadableDocument[0].buffer);
+
+    return next();
+  }
+
+  // use the filter to test if the file is an image. Test for file type here
+  if (req.files.showThumbnail) {
+    req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
+
+    // Do image resizing with the sharp package
+    // This creates an object in which we can chain multiple methods eg. resize, toFormat
+    await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
+
+    return next();
+  }
+
+  /*
+
+  // Processing array of multiple file attachments
+  // Assumes all files are images so converts to .jpeg
+  req.body.fileAttachments = [];
+  await Promise.all(
+    req.files.fileAttachments.map(async (file, index) => {
+      //const ext =  req.files.originalname.split('.')[1];
+      const filename = `${req.params.id}-${Date.now()}-${index + 1}.jpeg`;
+      await sharp(file.buffer).resize(2000, 1333).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${filename}`);
+      req.body.fileAttachments.push(filename);
+    })
+  );
+  */
+
+  //next();
+});
+
+exports.updateSlug = catchAsync(async (req, res, next) => {
+  req.body.slug = `${req.body.showTitle.split(' ').join('-').toLowerCase()}`;
+  next();
+});
+/*
+exports.fileUploadHandlerEdit = catchAsync(async (req, res, next) => {
+  console.log(req.files);
+  // if (!req.files.showThumbnail || !req.files.downloadableDocument) {
+  if (!req.files) {
+    console.log('No  F I L E');
+    return next();
+  }
+
+  console.log('File or Files exist - Processing...');
+
+  // use the filter to test if the file is an image. Test for file type here
+  if (req.files.showThumbnail[0].mimetype.startsWith('image')) {
+    console.log('process image file');
+    req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
+
+    // Do image resizing with the sharp package
+    // This creates an object in which we can chain multiple methods eg. resize, toFormat
+    await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
+  } else if (req.files.showThumbnail[0].mimetype.startsWith('image') && req.files.downloadableDocument[0].originalname.split('.')[1] === 'pdf') {
+    console.log('process image and pdf file');
+
+    req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
+    await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
+
+    req.body.downloadableDocument = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.pdf`;
+    await fsPromises.writeFile(`views/brainstv/downloadables/${req.body.downloadableDocument}`, req.files.downloadableDocument[0].buffer);
+  }
+
+  next();
+});
+*/
+exports.uploadAppFileHandler = catchAsync(async (req, res, next) => {
+  if (req.file.originalname.split('.')[1] === 'ejs') {
+    req.file.filename = `${req.file.originalname}`;
+    await fsPromises.writeFile(`views/brainstv/${req.file.filename}`, req.file.buffer);
+  }
+  next();
+});
+
+exports.downloadPrivacyPolicy = catchAsync(async (req, res, next) => {
+  try {
+    const filePath = 'views/brainstv/privacy-policy.ejs'; // The path to the file
+    const fileName = 'privacy-policy.ejs'; // The default name the browser will use
+
+    res.download(filePath, fileName);
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+exports.downloadTerms = catchAsync(async (req, res, next) => {
+  try {
+    const filePath = 'views/brainstv/our-terms.ejs'; // The path to the file
+    const fileName = 'our-terms.ejs'; // The default name the browser will use
+
+    res.download(filePath, fileName);
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.getUploadFile = catchAsync(async (req, res, next) => {
+  try {
+    res.status(200).render('brainstvadmins/uploadfile', { pageTitle: 'Upload App File' });
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
 
 exports.getAdminPanel = catchAsync(async (req, res, next) => {
   // Only admin users can view this route
@@ -89,20 +276,43 @@ exports.createShow = catchAsync(async (req, res, next) => {
   const show = new Show({
     showTitle: req.body.showTitle,
     showType: req.body.showType,
+    takePartType: req.body.takePartType,
     showId: req.body.showId,
-    showThumbnail: req.body.showThumbnail,
     className: req.body.className,
+    showThumbnail: req.body.showThumbnail,
+    downloadableDocument: req.body.downloadableDocument,
+    introParagraph: req.body.introParagraph,
+    bodyParagraph1: req.body.bodyParagraph1,
+    bodyParagraph2: req.body.bodyParagraph2,
+    bodyParagraph3: req.body.bodyParagraph3,
+    bodyParagraph4: req.body.bodyParagraph4,
+    bodyParagraph5: req.body.bodyParagraph5,
+    bodyParagraph6: req.body.bodyParagraph6,
+    bodyParagraph7: req.body.bodyParagraph7,
+    bodyParagraph8: req.body.bodyParagraph8,
+    bodyParagraph9: req.body.bodyParagraph9,
+    bodyParagraph10: req.body.bodyParagraph10,
+    activityList1: req.body.activityList1,
+    activityList2: req.body.activityList2,
+    activityList3: req.body.activityList3,
+    activityList4: req.body.activityList4,
+    activityList5: req.body.activityList5,
+    activityList6: req.body.activityList6,
+    activityList7: req.body.activityList7,
+    activityList8: req.body.activityList8,
+    activityList9: req.body.activityList9,
+    activityList10: req.body.activityList10,
+    activityList11: req.body.activityList11,
+    activityList12: req.body.activityList12,
+    ageGroup: req.body.ageGroup,
+    footNote: req.body.footNote,
   });
 
   try {
     const newShow = await show.save();
-    res.redirect(`/brainstvadmins/shows`);
+    res.redirect('/brainstvadmins/shows');
   } catch {
-    res.render('brainstvadmins/shows/new', {
-      show: show,
-      errorMessage: 'Error creating show or show already exist!',
-      pageTitle: 'Create Show',
-    });
+    res.redirect('/brainstvadmins/shows/new');
   }
 });
 
@@ -124,15 +334,57 @@ exports.updateShow = catchAsync(async (req, res, next) => {
   let show;
 
   try {
-    show = await Show.findById(req.params.id);
-    show.showTitle = req.body.showTitle;
-    show.showType = req.body.showType;
-    show.showId = req.body.showId;
-    show.showThumbnail = req.body.showThumbnail;
-    show.className = req.body.className;
-
-    await show.save();
+    show = await Show.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    // show = await Show.findById(req.params.id);
     res.redirect('/brainstvadmins/shows');
+    // show.showTitle = req.body.showTitle;
+    // show.showType = req.body.showType;
+    // show.showId = req.body.showId;
+    // show.className.className = req.body.className;
+    // show.introParagraph = req.body.introParagraph;
+    // show.bodyParagraph1 = req.body.bodyParagraph1;
+    // show.bodyParagraph2 = req.body.bodyParagraph2;
+    // show.bodyParagraph3 = req.body.bodyParagraph3;
+    // show.bodyParagraph4 = req.body.bodyParagraph4;
+    // show.bodyParagraph5 = req.body.bodyParagraph5;
+    // show.bodyParagraph6 = req.body.bodyParagraph6;
+    // show.bodyParagraph7 = req.body.bodyParagraph7;
+    // show.bodyParagraph8 = req.body.bodyParagraph8;
+    // show.bodyParagraph9 = req.body.bodyParagraph9;
+    // show.bodyParagraph10 = req.body.bodyParagraph10;
+    // show.activityList1 = req.body.activityList1;
+    // show.activityList2 = req.body.activityList2;
+    // show.activityList3 = req.body.activityList3;
+    // show.activityList4 = req.body.activityList4;
+    // show.activityList5 = req.body.activityList5;
+    // show.activityList6 = req.body.activityList6;
+    // show.activityList7 = req.body.activityList7;
+    // show.activityList8 = req.body.activityList8;
+    // show.activityList9 = req.body.activityList9;
+    // show.activityList10 = req.body.activityList10;
+    // show.activityList11 = req.body.activityList11;
+    // show.activityList12 = req.body.activityList12;
+    // show.ageGroup = req.body.ageGroup;
+    // show.footNote = req.body.footNote;
+
+    // if (req.file) show.showThumbnail = req.file.filename;
+
+    // const newshow = await show.save();
+    // res.redirect('/brainstvadmins/shows');
+
+    // if (name != '') {
+    //   show.showThumbnail = name;
+    //   console.log(name);
+    //   await show.save();
+    //   res.redirect('/brainstvadmins/shows');
+    // } else {
+    //   show.showThumbnail = show.showThumbnail;
+    //   await show.save();
+    //   res.redirect('/brainstvadmins/shows');
+    // }
   } catch {
     res.render('brainstvadmins/shows/edit', {
       show: show,

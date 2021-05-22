@@ -1,28 +1,30 @@
 <div class="form-row align-items-center">
-    <div class="col-md-5 mb-2">
-        <label for="showTitle">Show or Youtube Video Title</label> <span class="requiredfield">*</span>
+    <div class="col-md-3 mb-2">
+        <label for="showTitle">Show/Resource Title</label> <span class="requiredfield">*</span>
         <input type="text" class="form-control" name="showTitle" value="<%= show.showTitle%>"
-            placeholder="Enter show or youtube video title">
+            placeholder="Enter show/resource or youtube video title" required>
     </div>
     <div class="col-md-5 mb-2">
-        <label for="showType">Show Type</label> <span class="requiredfield">*</span>
-        <small>[ Video, Game, Activity, Take Part or E-Classroom ]</small>
+        <label for="showType">Type</label> <span class="requiredfield">*</span>
+        <small>[Show, Video, Game, Activity, TakePart, E-Class, News, Advert]</small>
         <input type="text" class="form-control" name="showType" value="<%= show.showType%>"
-            placeholder="Enter show or youtube video type">
+            placeholder="You must enter correct resource type here" required>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label for="takePartType">TakePart Type</label> <span class="requiredfield">*</span>
+        <small>[Poll, Cause, Competition, Discussion]</small>
+        <input type="text" class="form-control" name="takePartType" value="<%= show.takePartType%>"
+            placeholder="Enter correct TakePart type here">
     </div>
 </div>
 <div class="form-row align-items-center">
     <div class="col-md-5 mb-2">
-        <label for="showId">Show ID</label> <small>(Require for Youtube Videos)</small> <span
+        <label for="showId">Show/Resource ID</label> <small>(Required for Youtube Videos Only)</small> <span
             class="requiredfield">*</span>
         <input type="text" class="form-control" name="showId" value="<%= show.showId%>"
-            placeholder="Enter show or youtube video ID">
+            placeholder="Enter Youtube video ID">
     </div>
-    <!-- <div class="col-md-5 mb-2">
-        <label for="showThumbnail">Show Thumbnail ID</label>
-        <input type="text" class="form-control" name="showThumbnail" value="<%#= show.showThumbnail%>"
-            placeholder="Enter show Thumbnail or cover Image ID">
-    </div> -->
+
     <div class="col-md-5 mb-2">
         <label for="className">Class Level</label>
         <select class="custom-select" name="className" id="className">
@@ -39,21 +41,183 @@
         </select>
     </div>
 </div>
-
-<!-- <div class="form-row align-items-center">
-    <div class="col-md-5 mb-2">
-        <label for="className">Class Level</label>
-        <select class="custom-select" name="className" id="className">
-            <%# classes.forEach(c => { %>
-            <%# if (c.id == show.className) { %>
-            <option selected label="<%#= c.className %>" value="<%#= c.id %>">
-            </option>
-            <%# } else { %>
-            <option label="<%#= c.className %>" value="<%#= c.id %>">
-            </option>
-            <%# } %>
-
-            <%# }) %>
-        </select>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2 bg-white p-2">
+        <label for="showThumbnail" class="form-control-label">Choose Cover Image <span
+                class="requiredfield">*</span></label>
+        <input type="file" class="form-control-file" name="showThumbnail"
+            placeholder="Enter show Thumbnail or cover Image">
     </div>
-</div> -->
+
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2 bg-white p-2">
+        <label for="downloadableDocument" class="form-control-label">Choose .pdf file <span class="requiredfield">* [
+                Required for a downloadable Activity ]</span></label>
+        <input type="file" class="form-control-file" name="downloadableDocument"
+            placeholder="Please attach a .pdf activity file">
+    </div>
+</div>
+
+<div class="col-md-10 mb-2">
+    <h5 class="bg-warning p-1">Resource Paragraph Text</h5>
+    <hr class="my-1 document-divider">
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-10 mb-2">
+        <label for="introParagraph">Introductory Paragraph</label> <span class="requiredfield">*</span>
+        <textarea name="introParagraph" class="form-control" id="introParagraph" rows="3"
+            required><%= show.introParagraph %></textarea>
+    </div>
+</div>
+
+
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph1">Body Paragraph 1</label>
+        <textarea name="bodyParagraph1" class="form-control" rows="3"><%= show.bodyParagraph1 %></textarea>
+    </div>
+
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph2">Body Paragraph 2</label>
+        <textarea name="bodyParagraph2" class="form-control" rows="3"><%= show.bodyParagraph2 %></textarea>
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph3">Body Paragraph 3</label>
+        <textarea name="bodyParagraph3" class="form-control" rows="3"><%= show.bodyParagraph3 %></textarea>
+    </div>
+
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph4">Body Paragraph 4</label>
+        <textarea name="bodyParagraph4" class="form-control" rows="3"><%= show.bodyParagraph4 %></textarea>
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph5">Body Paragraph 5</label>
+        <textarea name="bodyParagraph5" class="form-control" rows="3"><%= show.bodyParagraph5 %></textarea>
+    </div>
+
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph6">Body Paragraph 6</label>
+        <textarea name="bodyParagraph6" class="form-control" rows="3"><%= show.bodyParagraph6 %></textarea>
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph7">Body Paragraph 7</label>
+        <textarea name="bodyParagraph7" class="form-control" rows="3"><%= show.bodyParagraph7 %></textarea>
+    </div>
+
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph8">Body Paragraph 8</label>
+        <textarea name="bodyParagraph8" class="form-control" rows="3"><%= show.bodyParagraph8 %></textarea>
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph9">Body Paragraph 9</label>
+        <textarea name="bodyParagraph9" class="form-control" rows="3"><%= show.bodyParagraph9 %></textarea>
+    </div>
+
+    <div class="col-md-5 mb-2">
+        <label for="bodyParagraph10">Body Paragraph 10</label>
+        <textarea name="bodyParagraph10" class="form-control" rows="3"><%= show.bodyParagraph10 %></textarea>
+    </div>
+</div>
+<div class="col-md-10 mb-2">
+    <h5 class="bg-warning p-1">ACTIVITY LISTINGS IF ANY</h5>
+    <hr class="my-1 document-divider">
+</div>
+
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="activityList1">Activity List 1</label>
+        <input type="text" class="form-control" name="activityList1" value="<%= show.activityList1%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="activityList2">Activity List 2</label>
+        <input type="text" class="form-control" name="activityList2" value="<%= show.activityList2%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="activityList3">Activity List 3</label>
+        <input type="text" class="form-control" name="activityList3" value="<%= show.activityList3%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="activityList4">Activity List 4</label>
+        <input type="text" class="form-control" name="activityList4" value="<%= show.activityList4%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="activityList5">Activity List 5</label>
+        <input type="text" class="form-control" name="activityList5" value="<%= show.activityList5%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="activityList6">Activity List 6</label>
+        <input type="text" class="form-control" name="activityList6" value="<%= show.activityList6%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="activityList7">Activity List 7</label>
+        <input type="text" class="form-control" name="activityList7" value="<%= show.activityList7%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="activityList8">Activity List 8</label>
+        <input type="text" class="form-control" name="activityList8" value="<%= show.activityList8%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="activityList9">Activity List 9</label>
+        <input type="text" class="form-control" name="activityList9" value="<%= show.activityList9%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="activityList10">Activity List 10</label>
+        <input type="text" class="form-control" name="activityList10" value="<%= show.activityList10%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="activityList11">Activity List 11</label>
+        <input type="text" class="form-control" name="activityList11" value="<%= show.activityList11%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="activityList12">Activity List 12</label>
+        <input type="text" class="form-control" name="activityList12" value="<%= show.activityList12%>"
+            placeholder="Enter a listed activity for this resource">
+    </div>
+</div>
+
+<div class="col-md-10 mb-2">
+    <h5 class="bg-warning p-1">Age Group Notification and Footnote</h5>
+    <hr class="my-1 document-divider">
+</div>
+<div class="form-row align-items-center">
+    <div class="col-md-5 mb-2">
+        <label for="ageGroup">Age Group Notification</label>
+        <input type="text" class="form-control" name="ageGroup" value="<%= show.ageGroup%>"
+            placeholder="Enter age group for this resource">
+    </div>
+    <div class="col-md-5 mb-2">
+        <label for="footNote">Footnote</label>
+        <input type="text" class="form-control" name="footNote" value="<%= show.footNote%>"
+            placeholder="Enter a footnote for this resource">
+    </div>
+</div>

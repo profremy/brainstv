@@ -33,7 +33,7 @@ router.use(authController.protect);
 router.patch('/updateMyPassword', authController.updatePassword);
 
 router.get('/me', clubmemberController.getMe, clubmemberController.getUser);
-router.patch('/updateMe', clubmemberController.updateMe);
+router.patch('/updateMe', clubmemberController.uploadClubmemberPhoto, clubmemberController.resizeClubmemberPhoto, clubmemberController.updateMe);
 router.delete('/deleteMe', clubmemberController.deleteMe);
 
 //View All Club members Route

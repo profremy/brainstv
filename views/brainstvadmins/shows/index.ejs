@@ -1,7 +1,7 @@
 <div class="jumbotron container-fluid">
     <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
             aria-hidden="true"></i><span>Back</span></a>
-    <h4>Shows</h4>
+    <h4>Shows/Resources</h4>
     <a href="/brainstvadmins/shows/new" class="btn btn-sm btn-success">Create/Add New</a>
 
     <span class="role"><button type="button" class="btn btn-sm btn-warning" data-toggle="popover" data-trigger="focus"
@@ -20,7 +20,7 @@
     </nav>
     <hr class="my-1" />
     <% if (show != null) { %>
-    <p>Listing a total of <strong><%= show.length %></strong> Shows</p>
+    <p>Listing a total of <strong><%= show.length %></strong> Shows and Other Resources</p>
     <% } %>
 
     <div class="table-responsive-sm">
@@ -30,6 +30,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Show Title</th>
                     <th scope="col">Show Type</th>
+                    <th scope="col">TakePart Type</th>
                     <th scope="col">Date Posted</th>
                     <th scope="col">Class Name</th>
                     <th scope="col">#</th>
@@ -43,6 +44,7 @@
                     </th>
                     <td><%= ytShow.showTitle %></td>
                     <td><%= ytShow.showType %></td>
+                    <td><%= ytShow.takePartType %></td>
                     <td><%= ytShow.datePosted.toISOString().split('T')[0] %></td>
                     <td><%= ytShow.className.className %></td>
                     <td>

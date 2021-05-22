@@ -6,15 +6,15 @@
         </div>
     </div>
     <nav class="navbar navbar-light bg-info">
-        <a class="navbar-brand">New Show</a>
+        <a class="navbar-brand">New Show/Resource</a>
     </nav>
     <hr class="my-1 document-divider">
-    <form action="/brainstvadmins/shows" method="POST">
+    <form action="/brainstvadmins/shows" method="POST" encType="multipart/form-data">
         <%- include('_new_form_fields') %>
         <div class="form-group row">
             <div class="col-sm-10 marginTopBottomBig">
                 <button type="submit" class="btn btn-success" id="loader"><i class="fa fa-plus"
-                        aria-hidden="true"></i><span>Add Show</span></button>
+                        aria-hidden="true"></i><span>Add Show/Resource</span></button>
             </div>
         </div>
     </form>

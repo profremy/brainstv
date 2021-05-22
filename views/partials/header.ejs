@@ -38,9 +38,12 @@
             <img height="30" width="30" src="<%= user.profileImagePath %>" class="align-self-start mr-3 reviewerImg"
               alt="Club member photo">
 
+            <% } else if (user.gender != 'Female'){ %>
+            <img height="30" width="30" src="/images/male_avatar.png" class="align-self-start mr-3 reviewerImg"
+              alt="Club member photo">
             <% } else { %>
-            <img height="30" width="30" src="/images/blank-profile-picture.png"
-              class="align-self-start mr-3 reviewerImg" alt="Club member photo">
+            <img height="30" width="30" src="/images/female_avatar.png" class="align-self-start mr-3 reviewerImg"
+              alt="Club member photo">
             <% } %>
           </div>
           <div class="flex-grow-1 ms-3">
@@ -54,7 +57,7 @@
             <div class="dropdown-divider m-0"></div>
             <a class="dropdown-item py-2" href="/clubmembers/profile/<%= user.id %>/edit">Edit your profile</a>
             <div class="dropdown-divider m-0"></div>
-            <a class="dropdown-item py-2" href="/brainstv/privacy-policy">Send us email</a>
+            <a class="dropdown-item py-2" href="/brainstv/contact-us">Send us email</a>
             <div class="dropdown-divider m-0"></div>
             <a class="dropdown-item py-2" href="/private/account/security/details">Change your password</a>
           </div>

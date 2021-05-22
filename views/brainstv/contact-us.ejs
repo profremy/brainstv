@@ -1,3 +1,11 @@
 <div class="jumbotron container-fluid">
-    This is contact us
+
+    <h4>Contact BrainsTV Club</h4>
+    <hr class="my-1 document-divider">
+    <!-- <form action="/brainstv/contact-us" method="POST"> -->
+    <form action="/brainstv/sendContactForm" enctype="multipart/form-data" method="POST" id="contact-brainstv">
+        <%- include('_contact_form_fields') %>
+
+    </form>
+
 </div>

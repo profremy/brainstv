@@ -20,16 +20,20 @@
       <a class="nav-item nav-link" id="nav-popUpInfo-tab" data-toggle="tab" href="#nav-popUpInfo" role="tab"
         aria-controls="nav-popUpInfo" aria-selected="false">Pop Up</a>
       <a class="nav-item nav-link" id="nav-shows-tab" data-toggle="tab" href="#nav-shows" role="tab"
-        aria-controls="nav-shows" aria-selected="true">Shows</a>
-      <a class="nav-item nav-link" id="nav-newsroom-tab" data-toggle="tab" href="#nav-newsroom" role="tab"
-        aria-controls="nav-newsroom" aria-selected="false">News Update</a>
+        aria-controls="nav-shows" aria-selected="true">Shows/Other Resources</a>
+      <!-- <a class="nav-item nav-link" id="nav-newsroom-tab" data-toggle="tab" href="#nav-newsroom" role="tab"
+        aria-controls="nav-newsroom" aria-selected="false">News Update</a> -->
+      <a class="nav-item nav-link" id="nav-more-tab" data-toggle="tab" href="#nav-more" role="tab"
+        aria-controls="nav-more" aria-selected="false">App Files</a>
+      <a class="nav-item nav-link" id="nav-pdf-tab" data-toggle="tab" href="#nav-pdf" role="tab" aria-controls="nav-pdf"
+        aria-selected="false">User PDF Files</a>
 
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade admin-tab-pane show active" id="nav-adminusers" role="tabpanel"
       aria-labelledby="nav-users-tab">
-      <h4 class="section-sub-heading">Admin Users And E-Class Management Console</h4>
+      <h4 class="section-sub-heading">Admin Management Console</h4>
       <div class="row">
         <div class="auto-grid">
           <a href="/brainstvadmins/new" class="btn btn-lg btn-success">Create New Admin User</a>
@@ -89,15 +93,46 @@
     </div>
 
     <div class="tab-pane fade admin-tab-pane" id="nav-shows" role="tabpanel" aria-labelledby="nav-shows-tab">
-      ON NOW, NEXT, LATER
-      <h4 class="section-sub-heading">Shows Management</h4>
+      <h4 class="section-sub-heading">Shows/Other Resources Management</h4>
+      <p class="text-center"><small>[ Shows, Games, Videos, Activities, TakePart, E-Classroom, News Update, Advertise
+          ]</small></p>
       <div class="auto-grid">
-        <a href="/brainstvadmins/shows/new" class="btn btn-lg btn-success">Create New Show</a>
-        <a href="/brainstvadmins/shows" class="btn btn-lg btn-primary">View/Modify Shows</a>
+        <a href="/brainstvadmins/shows/new" class="btn btn-lg btn-success">Create New Show/Resource</a>
+        <a href="/brainstvadmins/shows" class="btn btn-lg btn-primary">View/Modify Show/Resource</a>
       </div>
     </div>
-    <div class="tab-pane fade admin-tab-pane" id="nav-newsroom" role="tabpanel" aria-labelledby="nav-newsroom-tab">
-      Post/Edit/Update/Delete News</div>
+    <!-- <div class="tab-pane fade admin-tab-pane" id="nav-newsroom" role="tabpanel" aria-labelledby="nav-newsroom-tab">
+      Post/Edit/Update/Delete News</div> -->
+
+    <div class="tab-pane fade admin-tab-pane" id="nav-more" role="tabpanel" aria-labelledby="nav-more-tab">
+      <h4 class="section-sub-heading">More Management Console</h4>
+      <p class="requiredfield text-center">Some knowledge of .ejs and .html is required to perform
+        these tasks to
+        avoid breaking code! Keep an original copy as backup and edit another copy in a code editor for upload. File
+        being uploaded must retain the same name as the downloaded copy.</p>
+      <div class="auto-grid">
+        <a href="/brainstvadmins/download-privacy-policy" class="btn btn-lg btn-success"><i class="fa fa-download"
+            aria-hidden="true"></i>Download
+          Privacy
+          Policy</a>
+        <!-- <a href="/brainstvadmins/upload-file" class="btn btn-lg btn-primary">Upload Updated Privacy Policy</a> -->
+        <a href="/brainstvadmins/download-terms" class="btn btn-lg btn-success"><i class="fa fa-download"
+            aria-hidden="true"></i>Download Terms of use</a>
+        <a href="/brainstvadmins/upload-file" class="btn btn-lg btn-warning"><i class="fa fa-upload"
+            aria-hidden="true"></i>Upload App File</a>
+      </div>
+    </div>
+
+    <div class="tab-pane fade admin-tab-pane" id="nav-pdf" role="tabpanel" aria-labelledby="nav-pdf-tab">
+      <h4 class="section-sub-heading">PDF File Management Console</h4>
+      <p class="requiredfield text-center">Upload PDF file name must be the same a the slugified title of the resource.
+        Example if the resource title is Colour the rainbow, the slugified title would be colour-the-rainbow so the
+        upload PDF file name should be colour-the-rainbow.pdf</p>
+      <div class="auto-grid">
+        <a href="/brainstvadmins/upload-pdf-file" class="btn btn-lg btn-inline btn-warning"><i class="fa fa-upload"
+            aria-hidden="true"></i>Upload PDF File</a>
+      </div>
+    </div>
 
 
   </div>

@@ -11,16 +11,105 @@ const showSchema = new mongoose.Schema(
     showType: {
       type: String,
       required: [true, 'Show type is require'],
-      enum: ['Video', 'Games', 'Activity', 'Take Part', 'E-Classroom'],
+      enum: ['Show', 'Video', 'Games', 'Activity', 'TakePart', 'E-Class', 'News', 'Advert'],
+    },
+    takePartType: {
+      type: String,
+      // required: [true, 'Take part type is require'],
+      enum: ['Poll', 'Cause', 'Competition', 'Discussion', 'NA'],
+      default: 'NA',
     },
     showId: {
       type: String,
-      required: [true, 'Show Id is required'],
+      // required: [true, 'Show Id is required'],
       unique: true,
     },
-    // showThumbnail: {
-    //   type: String,
+    showThumbnail: {
+      type: String,
+      // required: [true, 'Resource thumbnail is required'],
+    },
+    downloadableDocument: {
+      type: String,
+    },
+    // downloadableDocument: {
+    //   type: [String], // Array for attaching multiple documents with multer
     // },
+    introParagraph: {
+      type: String,
+      required: [true, 'You must add introductory paragraph required'],
+    },
+    bodyParagraph1: {
+      type: String,
+    },
+    bodyParagraph2: {
+      type: String,
+    },
+    bodyParagraph3: {
+      type: String,
+    },
+    bodyParagraph4: {
+      type: String,
+    },
+    bodyParagraph5: {
+      type: String,
+    },
+    bodyParagraph6: {
+      type: String,
+    },
+    bodyParagraph7: {
+      type: String,
+    },
+    bodyParagraph8: {
+      type: String,
+    },
+    bodyParagraph9: {
+      type: String,
+    },
+    bodyParagraph10: {
+      type: String,
+    },
+    activityList1: {
+      type: String,
+    },
+    activityList2: {
+      type: String,
+    },
+    activityList3: {
+      type: String,
+    },
+    activityList4: {
+      type: String,
+    },
+    activityList5: {
+      type: String,
+    },
+    activityList6: {
+      type: String,
+    },
+    activityList7: {
+      type: String,
+    },
+    activityList8: {
+      type: String,
+    },
+    activityList9: {
+      type: String,
+    },
+    activityList10: {
+      type: String,
+    },
+    activityList11: {
+      type: String,
+    },
+    activityList12: {
+      type: String,
+    },
+    ageGroup: {
+      type: String,
+    },
+    footNote: {
+      type: String,
+    },
     datePosted: {
       type: Date,
       default: Date.now,
@@ -81,6 +170,14 @@ showSchema.virtual('reviews', {
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
 showSchema.pre('save', function (next) {
   this.slug = slugify(this.showTitle, { lower: true });
+  next();
+});
+showSchema.pre('save', function (next) {
+  if (this.showId === '') {
+    this.showId = slugify(this.showTitle + '-' + Date.now(), { lower: true });
+  } else {
+    this.showId === this.showId;
+  }
   next();
 });
 

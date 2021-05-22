@@ -6,6 +6,19 @@ const AppError = require('./../utils/appError');
 
 const factory = require('./handlerFactory');
 
+exports.downloadActivityFile = catchAsync(async (req, res, next) => {
+  let show;
+  try {
+    show = await Show.findOne(req.params.id);
+    const filePath = `views/brainstv/downloadables/${show.downloadableDocument}`; // The path to the file
+    const fileName = `${show.downloadableDocument}`; // The default name the browser will use
+
+    res.download(filePath, fileName);
+  } catch {
+    res.redirect('/');
+  }
+});
+
 //exports.getAllShows = factory.getAll(Show);
 exports.getAllShows = catchAsync(async (req, res, next) => {
   let show;
@@ -113,6 +126,10 @@ exports.getAllFaqs = catchAsync(async (req, res, next) => {
 
 exports.getContactUs = catchAsync(async (req, res, next) => {
   res.status(200).render('brainstv/contact-us', { pageTitle: 'Contact Us' });
+});
+exports.sendContactForm = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  res.send('Email sent');
 });
 
 exports.getAdverts = catchAsync(async (req, res, next) => {

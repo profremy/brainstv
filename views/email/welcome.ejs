@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            background-color: #659ed6;
+            padding: 48px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .font-weight-bold {
+            font-weight: bold;
+        }
+
+        .d-flex {
+            display: flex;
+            padding: 8px 16px;
+            justify-content: space-evenly;
+        }
+
+        .primary {
+            color: #ffffff;
+        }
+
+        .btn-info {
+            color: #fff !important;
+            background-color: #17a2b8 !important;
+            border-color: #17a2b8;
+            text-decoration: none;
+        }
+
+
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h2 class="primary text-center">The BrainsTV Club</h2>
+        <hr>
+        <div class="text-center">
+            <h3>Welcome <%= firstname.toUpperCase() %>!</h3>
+        </div>
+
+        <div class="text-center">
+            <p class="font-weight-bold">We're happy to have you with us at BrainsTV Club</p>
+            <p>We have classes for toddlers and upto Year 6.</p>
+        </div>
+
+        <div class="bg-white">
+            <h3 class="primary text-center">Here's how to get started</h3>
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <table style="color:rgb(0, 0, 0); background-color: #ffffff;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>Update Your Profile</p>
+                                </th>
+                                <th>
+                                    <p>Have Fun!</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Your profile makes you stand out from the crowed</p>
+                                    <a href="<%= url %>" class="btn btn-info">View and edit your profile</a>
+                                </td>
+                                <td>
+                                    <p>There are lots of shows, activities and games</p>
+                                    <a href="/brainstv/shows" class="btn btn-info">Jump Into Shows Now!</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <p>The BrainsTV Team</p>
+    </div>
+
+</body>
+
+</html>

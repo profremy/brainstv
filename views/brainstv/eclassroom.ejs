@@ -1,3 +1,37 @@
 <div class="jumbotron container-fluid">
-    This is E-Classroom
+    <div class="input-group margin-bottom-sm">
+        <span class="input-group-addon bg-light p-1"><i class="fa fa-home shows" aria-hidden="true"></i></span>
+        <span class="dark-blue-gradient-background p-1">E-Classroom</span>
+    </div>
+
+    <hr class="my-1 document-divider">
+    <div class="main-flex">
+
+        <% allShows.forEach(show => { %>
+        <% if(show.showType === "Activities") { %>
+        <div class="col-sm-3 flex-item">
+            <div class="embed-responsive _embed-responsive-16by9 transform-scale">
+                <a href="/brainstv/show/<%= show.slug %>">
+                    <div class="resourcesOverlay"></div>
+                </a>
+                <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
+                <!-- <iframe width="560" height="315"
+                    src="https://www.youtube-nocookie.com/embed/<%#= show.showId %>?rel=0&modestbranding=1"
+                    frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe> -->
+
+                <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200" class="_img-fluid"
+                    alt="<%= show.showTitle %>">
+                <% if (show.className.className.startsWith('Y')) { %>
+                <div class="learningResourcesBottomTitle"><%= show.className.className.split('E')[0]%> </div>
+                <% } else { %>
+                <div class="learningResourcesBottomTitle"><%= show.className.className %> </div>
+                <% } %>
+            </div>
+        </div>
+        <% } %>
+        <% }) %>
+
+    </div>
 </div>

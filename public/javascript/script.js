@@ -37,6 +37,9 @@ const elements = {
   userPasswordForm: document.querySelector('.form-user-password'),
   joinbrainsclub: document.getElementById('joinbrainsclub'),
   registeradmin: document.getElementById('registeradmin'),
+  homeworkForm: document.querySelector('.revealSendHomeworkForm'),
+  classWork: document.querySelector('.classWork'),
+  cancelOp: document.querySelector('.cancelOp'),
   // updateReviewForm: document.querySelectorAll('.update-review-form'),
   // reviewModal: document.querySelectorAll('.reviewModal'),
   // editMyReviewBtn: document.querySelector('.editMyReview'),
@@ -91,6 +94,20 @@ const elements = {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     updateSettings({ name, email }, 'data');
+  });
+
+  OR
+
+  if (userDataForm)
+  userDataForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
+   
+    updateSettings(form, 'data');
   });
 
   */
@@ -229,6 +246,57 @@ const elements = {
     }
   });
   */
+}
+
+{
+  // Check if Admin attached App file for upload.
+  const uploadForm = document.getElementById('uploadForm');
+  const appFile = document.getElementById('appfile');
+  if (uploadForm) {
+    uploadForm.addEventListener('submit', (e) => {
+      if (appFile.value === '' || elements.homeWorkFile.value === '') {
+        let message = 'This is unusual, there is no file to Upload!';
+        showUserAlert('error', message);
+        e.preventDefault();
+      }
+    });
+  }
+}
+{
+  // Check if user attached homework file for upload.
+  const homeWorkUploadForm = document.getElementById('homeWorkUploadForm');
+  const homeWorkUploadFile = document.getElementById('homeWorkUploadFile');
+  if (homeWorkUploadForm) {
+    homeWorkUploadForm.addEventListener('submit', (e) => {
+      if (homeWorkUploadFile.value === '') {
+        let message = 'This is unusual, there is no file to Upload!';
+        showUserAlert('error', message);
+        e.preventDefault();
+      }
+    });
+  }
+}
+
+{
+  // Activity and TakePart Submission if any
+  // Check if user is on activity page
+  if (elements.homeworkForm) {
+    elements.homeworkForm.addEventListener('click', (e) => {
+      if (e) {
+        elements.classWork.classList.remove('hideElement');
+        elements.homeworkForm.classList.add('hideElement');
+      }
+    });
+  }
+
+  if (elements.cancelOp) {
+    elements.cancelOp.addEventListener('click', (e) => {
+      if (e) {
+        elements.classWork.classList.add('hideElement');
+        elements.homeworkForm.classList.remove('hideElement');
+      }
+    });
+  }
 }
 
 {

@@ -1,11 +1,56 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const ClubMember = require('./../models/clubmember');
 const Membercategory = require('../models/category');
 const ClassName = require('../models/class');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const saveProfilePhoto = require('../utils/saveProfilePhoto');
-
 const factory = require('./handlerFactory');
+
+// Write file to disk
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'public/img/clubmembers');
+//   },
+//   filename: (req, file, cb) => {
+//     // clubmember-74745858bda6bc-16956245785.jpeg
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `clubmember-${req.clubmember.id}-${Date.now()}.${ext}`);
+//   },
+// });
+
+// OR Write file to memory
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  // use the filter to test if the file is an image. Test for file type here
+  if (file.mimetype.startsWith('image')) {
+    // pass null or no error to callback with true - its an image
+    cb(null, true);
+  } else {
+    // pass an error message to callback with false - its not an image
+    cb(new AppError('Not an image file! Please upload only images.', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadClubmemberPhoto = upload.single('photo');
+
+exports.resizeClubmemberPhoto = catchAsync(async (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `clubmember-${req.clubmember.id}-${Date.now()}.jpeg`;
+
+  // Do image resizing with the sharp package
+  // This creates an object in which we can chain multiple methods eg. resize, toFormat
+  await sharp(req.file.buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/img/clubmembers/${req.file.filename}`);
+  next();
+});
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -171,13 +216,17 @@ exports.updateClubMember = async (req, res) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+  // console.log(req.file);
+  // console.log(req.body);
   // 1) Create error if clubmember POSTs password data
   if (req.body.password || req.body.confirmPassword) {
     return next(new AppError('This route is not for password updates. Please use /updateMyPassword.', 400));
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
+  // So only listed fields are actually allowed to be updated
   const filteredBody = filterObj(req.body, 'firstname', 'lastname', 'email', 'gender', 'phone', 'dob', 'city');
+  if (req.file) filteredBody.photo = req.file.filename;
 
   // 3) Update clubmember document
   const updatedClubmember = await ClubMember.findByIdAndUpdate(req.clubmember.id, filteredBody, {

@@ -98,7 +98,10 @@ const clubmemberSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: 'birthday.png',
+  },
   signedConsent: {
     type: String,
     required: true,

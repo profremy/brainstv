@@ -6,10 +6,10 @@
         </div>
     </div>
     <nav class="navbar navbar-light bg-info">
-        <a class="navbar-brand">Edit Show By Id</a>
+        <a class="navbar-brand">Edit Show/Resource</a>
     </nav>
     <hr class="my-3 document-divider">
-    <form action="/brainstvadmins/shows/<%= show.id %>?_method=PUT" method="POST">
+    <form action="/brainstvadmins/shows/<%= show.id %>?_method=PUT" method="POST" encType="multipart/form-data">
         <%- include('_edit_form_fields') %>
         <div class="form-group row">
             <div class="col-sm-10 marginTopBottomBig">

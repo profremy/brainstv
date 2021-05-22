@@ -8,6 +8,13 @@ router.use(authController.isLoggedIn);
 //Admin User Page Route
 router.route('/').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getAdminPanel);
 
+// DOWNLOADS UPLOADS
+router.route('/download-privacy-policy').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.downloadPrivacyPolicy);
+router.route('/download-terms').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.downloadTerms);
+router.route('/upload-file').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getUploadFile);
+router.route('/upload-app-file').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.uploadAppFile, brainstvadminsController.uploadAppFileHandler, brainstvadminsController.renderAdminPanel);
+// router.route('/upload-app-file').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.saveAppFilesToDisk, brainstvadminsController.uploadAppFile, brainstvadminsController.renderAdminPanel);
+
 // View All Admin Users Route
 router.route('/viewAdmin').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getAdminUsers);
 
@@ -44,7 +51,8 @@ router.route('/shows').get(authController.protect, authController.restrictTo('su
 router.route('/shows/new').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.newShow);
 
 //Create New Show
-router.route('/shows').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.createShow);
+// router.route('/shows').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.uploadShowThumbnail, brainstvadminsController.fileUploadHandler, brainstvadminsController.createShow);
+router.route('/shows').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.uploadShowResourceFiles, brainstvadminsController.fileUploadHandler, brainstvadminsController.createShow);
 
 //TV Schedule
 //Get TV Schedule
@@ -80,7 +88,8 @@ router.route('/classes/:id').put(authController.protect, authController.restrict
 router.route('/faqs/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateFaqs);
 
 // Update Shows by id //
-router.route('/shows/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateShow);
+// router.route('/shows/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.uploadShowThumbnail, brainstvadminsController.fileUploadHandler, brainstvadminsController.updateShow);
+router.route('/shows/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.uploadShowResourceFiles, brainstvadminsController.fileUploadHandler, brainstvadminsController.updateSlug, brainstvadminsController.updateShow);
 
 // Delete Admin by id
 router.route('/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteAdminUser);

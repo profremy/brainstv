@@ -1,27 +1,60 @@
+const fs = require('fs');
 const nodemailer = require('nodemailer');
+const ejs = require('ejs');
+const path = require('path');
+const htmlToText = require('html-to-text');
+const { data } = require('jquery');
 
-const sendEmail = async (options) => {
-  // 1) Create a transporter
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
+module.exports = class Email {
+  constructor(clubmember, url) {
+    this.to = clubmember.email;
+    this.firstname = clubmember.firstname;
+    this.url = url;
+    this.from = `BrainsTV Web Contact <${process.env.EMAIL_FROM}>`;
+  }
+  newTransport() {
+    if (process.env.NODE_ENV === 'production') {
+      // SendGrid
+      return 1;
+    }
 
-  // 2) Define the email options token
-  const mailOptions = {
-    from: 'BrainsTV <noreply@brainstv.com>',
-    to: options.email,
-    subject: options.subject,
-    text: options.message,
-    //html:
-  };
+    return nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+  }
 
-  // 3) Send out the email
-  await transporter.sendMail(mailOptions);
+  async send(template, subject) {
+    // Send the actual email
+    // (1) Render HTML based on ejs templated
+    const [err, html] = await new Promise((resolve) => {
+      ejs.renderFile(path.join(__dirname, `../views/email/${template}.ejs`), { firstname: this.firstname, url: this.url, subject }, (err, html) => resolve([err, html]));
+    });
+    if (err) {
+      console.log(err);
+      return;
+    }
+    //console.log(html);
+    //return html;
+
+    // (2) Define email options
+    const mailOptions = {
+      from: this.from,
+      to: this.to,
+      subject: subject,
+      html: html,
+      text: htmlToText.fromString(html),
+    };
+
+    // (3) Create a transport and send email
+    await this.newTransport().sendMail(mailOptions);
+  }
+
+  async sendWelcome() {
+    await this.send('welcome', 'Welcome to BrainsTV Club!');
+  }
 };
-
-module.exports = sendEmail;
