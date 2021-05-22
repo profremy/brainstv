@@ -3,6 +3,7 @@ node_modules
 docs
 arootfolder
 public/uploads
+public/img/clubmembers
 
 # misc
 .env
