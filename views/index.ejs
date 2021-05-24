@@ -1,12 +1,111 @@
 <div class="jumbotron container-fluid">
-  Welcome - This is the homepage of BrainsTV!
+  <div class="d-flex flex-fill flex-wrap justify-content-center bd-highlight">
+    <div class="p-2 vw-100 bd-highlight mobileScreen boxShadowGridPhotos mb-3">
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="responsive-iframe" width="560" height="315"
+          src="https://www.youtube-nocookie.com/embed/<%= livestream.livestreamURL %>?rel=0&modestbranding=1"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="p-2 w-75 bd-highlight desktopScreen boxShadowGridPhotos mr-2 mb-3">
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="responsive-iframe" width="560" height="315"
+          src="https://www.youtube-nocookie.com/embed/<%= livestream.livestreamURL %>?rel=0&modestbranding=1"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="d-flex flex-fill flex-shrink-1 justify-content-around align-content-center flex-column bd-highlight">
+
+      <div class="rounded-pill bg-warning text-center mb-3 pt-2 pb-2 text-light">
+        <p class="mb-0 font-weight-bold">On Now: <%= liveTV[0].showingTime %></p>
+        <%= liveTV[0].showingStatus === 'On Now' ? liveTV[0].showingName : 'No Live Schedule' %>
+      </div>
+      <div class="rounded-pill bg-info text-center mb-3 pt-2 pb-2 text-light">
+        <p class="mb-0 font-weight-bold">Next: <%= liveTV[1].showingTime %></p>
+        <%= liveTV[1].showingStatus === 'Next' ? liveTV[1].showingName : 'No Live Schedule' %>
+      </div>
+      <div class="onNow rounded-pill bg-primary text-center mb-3 pt-2 pb-2 text-light">
+        <p class="mb-0 font-weight-bold">Later: <%= liveTV[2].showingTime %></p>
+        <%= liveTV[2].showingStatus === 'In Queue' ? liveTV[2].showingName : 'No Live Schedule' %>
+      </div>
+      <a href="/brainstv/tvschedule" class="text-center">Click For Full Schedule</a>
+
+    </div>
+  </div>
+
   <!-- <br>
   <button class="btn btn-info rounded-0">New content</button>
   <div id="newContent"></div> -->
+  <div class="section__recent__videos mt-3 p-3" style="background-color: #7eb379;">
+    <div class="auto-grid-front-page-shows">
+      <% fourRecentVideos.forEach(recentVideo => { %>
+      <div class="autoGridPhotos transform-scale">
+        <a href="/brainstv/show/<%= recentVideo.slug %>">
+          <div class="resourcesOverlay"></div>
+        </a>
+        <div class="learningResourcesTopTitle"><%= recentVideo.showStatus %> </div>
+
+        <img src="/images/show_images/<%= recentVideo.showThumbnail %>" width="100%" height="200" class="img-fluid"
+          alt="<%= recentVideo.showTitle %>">
+
+        <div class="learningResourcesBottomTitle"><%= recentVideo.showTitle %> </div>
+      </div>
+      <% }) %>
+    </div>
+    <div class="text-center">
+      <a href="/brainstv/videos" class="btn btn-outline-light mt-3">All Videos</a>
+    </div>
+  </div>
+
+  <div class="section__recent__shows mt-3 p-3 timber-gradient">
+    <div class="auto-grid-front-page-shows">
+      <% eightRecentShows.forEach(recentShow => { %>
+      <div class="autoGridPhotos transform-scale">
+        <a href="/brainstv/show/<%= recentShow.slug %>">
+          <div class="resourcesOverlay"></div>
+        </a>
+        <div class="learningResourcesTopTitle"><%= recentShow.showStatus %> </div>
+
+        <img src="/images/show_images/<%= recentShow.showThumbnail %>" width="100%" height="200" class="img-fluid"
+          alt="<%= recentShow.showTitle %>">
+
+        <div class="learningResourcesBottomTitle"><%= recentShow.showTitle %> </div>
+      </div>
+      <% }) %>
+    </div>
+    <div class="text-center">
+      <a href="/brainstv/shows" class="btn btn-outline-light mt-3">All Shows</a>
+    </div>
+  </div>
+
+  <div class="section__recent__takePart mt-3 p-3" style="background-color: #355394;">
+    <h3 class="text-center text-light">Trending Now: Take Part Before time is up</h3>
+    <div class="auto-grid-front-page-shows">
+      <% fourRecentTakePart.forEach(recentTakePart => { %>
+      <div class="autoGridPhotos transform-scale">
+        <a href="/brainstv/show/<%= recentTakePart.slug %>">
+          <div class="resourcesOverlay"></div>
+        </a>
+        <div class="learningResourcesTopTitle"><%= recentTakePart.showStatus %> </div>
+
+        <img src="/images/show_images/<%= recentTakePart.showThumbnail %>" width="100%" height="200" class="img-fluid"
+          alt="<%= recentTakePart.showTitle %>">
+
+        <div class="learningResourcesBottomTitle"><%= recentTakePart.showTitle %> </div>
+      </div>
+      <% }) %>
+    </div>
+    <div class="text-center">
+      <a href="/brainstv/takepart" class="btn btn-outline-light mt-3">All TakePart</a>
+    </div>
+  </div>
 
   <br>
   <div class="recentlyRegistered bg-yellow mb-2 p-3">
-    <h2 class="text-center bg-dark text-light">Recently Joined</h2>
+    <h3 class="text-center bg-dark text-light">Recently Joined</h3>
     <div class="recent-flex">
 
       <!-- <div class="d-flex justify-content-around"> -->

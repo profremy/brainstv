@@ -25,8 +25,8 @@
         aria-controls="nav-newsroom" aria-selected="false">News Update</a> -->
       <a class="nav-item nav-link" id="nav-more-tab" data-toggle="tab" href="#nav-more" role="tab"
         aria-controls="nav-more" aria-selected="false">App Files</a>
-      <a class="nav-item nav-link" id="nav-pdf-tab" data-toggle="tab" href="#nav-pdf" role="tab" aria-controls="nav-pdf"
-        aria-selected="false">User PDF Files</a>
+      <a class="nav-item nav-link" id="nav-livestream-tab" data-toggle="tab" href="#nav-livestream" role="tab"
+        aria-controls="nav-livestream" aria-selected="false">Live Stream</a>
 
     </div>
   </nav>
@@ -123,14 +123,11 @@
       </div>
     </div>
 
-    <div class="tab-pane fade admin-tab-pane" id="nav-pdf" role="tabpanel" aria-labelledby="nav-pdf-tab">
-      <h4 class="section-sub-heading">PDF File Management Console</h4>
-      <p class="requiredfield text-center">Upload PDF file name must be the same a the slugified title of the resource.
-        Example if the resource title is Colour the rainbow, the slugified title would be colour-the-rainbow so the
-        upload PDF file name should be colour-the-rainbow.pdf</p>
+    <div class="tab-pane fade admin-tab-pane" id="nav-livestream" role="tabpanel" aria-labelledby="nav-livestream-tab">
+      <h4 class="section-sub-heading">Live Stream URL ID Management</h4>
       <div class="auto-grid">
-        <a href="/brainstvadmins/upload-pdf-file" class="btn btn-lg btn-inline btn-warning"><i class="fa fa-upload"
-            aria-hidden="true"></i>Upload PDF File</a>
+        <a href="/brainstvadmins/livestream/new" class="btn btn-lg btn-success">Add Live Stream URL ID</a>
+        <a href="/brainstvadmins/livestream" class="btn btn-lg btn-primary">Modify Live Stream URL ID</a>
       </div>
     </div>
 

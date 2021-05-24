@@ -7,6 +7,7 @@ const ClassName = require('../models/class');
 const Tvschedule = require('../models/tvschedule');
 const Faq = require('../models/faq');
 const Show = require('../models/show');
+const Livestream = require('../models/livestream');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
@@ -216,6 +217,40 @@ exports.getClasses = catchAsync(async (req, res, next) => {
     });
   } catch {
     res.redirect('brainstvadmins');
+  }
+});
+
+exports.getLivestream = catchAsync(async (req, res, next) => {
+  let livestream;
+  try {
+    livestream = await Livestream.find({});
+    res.render('brainstvadmins/livestream/index', {
+      livestream: livestream,
+      pageTitle: 'Live Stream',
+    });
+  } catch {
+    res.redirect('brainstvadmins');
+  }
+});
+
+exports.newLivestream = catchAsync(async (req, res, next) => {
+  res.render('brainstvadmins/livestream/new', { livestream: new Livestream(), pageTitle: 'New Livestream' });
+});
+
+exports.createLivestream = catchAsync(async (req, res, next) => {
+  const livestream = new Livestream({
+    livestreamURL: req.body.livestreamURL,
+  });
+
+  try {
+    const newLivestream = await livestream.save();
+    res.redirect(`/brainstvadmins/livestream`);
+  } catch {
+    res.render('brainstvadmins/livestream/new', {
+      livestream: livestream,
+      errorMessage: 'Error creating live stream URL or live stream URL already exist!',
+      pageTitle: 'Create Live Stream',
+    });
   }
 });
 
@@ -603,6 +638,18 @@ exports.editClass = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.editLivestream = catchAsync(async (req, res, next) => {
+  try {
+    const livestream = await Livestream.findById(req.params.id);
+    res.render('brainstvadmins/livestream/edit', {
+      livestream: livestream,
+      pageTitle: 'Edit Live Stream',
+    });
+  } catch {
+    res.redirect('/brainstivadmins/livestream');
+  }
+});
+
 exports.editFaqs = catchAsync(async (req, res, next) => {
   try {
     const faq = await Faq.findById(req.params.id);
@@ -673,6 +720,24 @@ exports.updateClass = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.updateLivestream = catchAsync(async (req, res, next) => {
+  let livestream;
+
+  try {
+    livestream = await Livestream.findById(req.params.id);
+    livestream.livestreamURL = req.body.livestreamURL;
+
+    await livestream.save();
+    res.redirect('/brainstvadmins/livestream');
+  } catch {
+    res.render('brainstvadmins/livestream/edit', {
+      livestream: livestream,
+      errorMessage: 'Error updating live stream URL ID. Try again!',
+      pageTitle: 'Update class',
+    });
+  }
+});
+
 exports.updateFaqs = catchAsync(async (req, res, next) => {
   let faq;
 
@@ -722,6 +787,18 @@ exports.deleteClass = catchAsync(async (req, res, next) => {
     } else {
       res.redirect('/brainstvadmins/classes');
     }
+  }
+});
+
+exports.deleteLivestream = catchAsync(async (req, res, next) => {
+  let livestream;
+
+  try {
+    livestream = await Livestream.findById(req.params.id);
+    await livestream.remove();
+    res.redirect('/brainstvadmins/livestream');
+  } catch {
+    res.redirect('/brainstvadmins');
   }
 });
 

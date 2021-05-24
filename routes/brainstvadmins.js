@@ -26,6 +26,15 @@ router.route('/new').get(authController.protect, authController.restrictTo('supe
 //router.route('/join').post(brainstvadminsController.createAdminUser);
 router.post('/createNewAdminUser', authController.protect, authController.restrictTo('superAdmin'), authController.createNewAdminUser);
 
+// Live Stream Page Route
+router.route('/livestream').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), authController.protect, brainstvadminsController.getLivestream);
+
+//New Live stream Route
+router.route('/livestream/new').get(authController.protect, authController.restrictTo('superAdmin'), authController.protect, brainstvadminsController.newLivestream);
+
+//Create New Live stream
+router.route('/livestream').post(authController.protect, brainstvadminsController.createLivestream);
+
 //Classes Page Route
 router.route('/classes').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), authController.protect, brainstvadminsController.getClasses);
 
@@ -72,6 +81,9 @@ router.route('/:id/edit').get(authController.protect, authController.restrictTo(
 // Edit Class by id //
 router.route('/classes/:id/edit').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.editClass);
 
+// Edit Live Stream by id //
+router.route('/livestream/:id/edit').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.editLivestream);
+
 // Edit Faqs by id //
 router.route('/faqs/:id/edit').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.editFaqs);
 
@@ -83,6 +95,9 @@ router.route('/:id').put(authController.protect, authController.restrictTo('supe
 
 // Update Class by id //
 router.route('/classes/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateClass);
+
+// Update Live Stream by id //
+router.route('/livestream/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateLivestream);
 
 // Update Faqs by id //
 router.route('/faqs/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateFaqs);
@@ -96,6 +111,9 @@ router.route('/:id').delete(authController.protect, authController.restrictTo('s
 
 // Delete Class by id
 router.route('/classes/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteClass);
+
+// Delete Live Stream by id
+router.route('/livestream/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteLivestream);
 
 // Delete FAQs by id
 router.route('/faqs/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteFaqs);

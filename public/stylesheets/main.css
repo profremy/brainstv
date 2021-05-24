@@ -390,6 +390,10 @@ input[type="radio"]:checked+span {
     border-radius: 0 0 5px 5px;
 }
 
+.autoGridPhotos {
+    position: relative;
+}
+
 .resourcesOverlay {
     position: absolute;
     top: 0;
@@ -398,6 +402,10 @@ input[type="radio"]:checked+span {
     background-color: transparent;
     z-index: 2;
     border: 10px groove var(--warning);
+}
+
+.rightSpacer:not(:last-child) {
+    margin-right: 10px;
 }
 
 .transform-scale {

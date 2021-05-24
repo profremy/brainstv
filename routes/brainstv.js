@@ -26,7 +26,7 @@ router.use('/shows/:showId/reviews', reviewRouter);
 router.get('/tvschedule', brainstvController.getTvSchedule);
 
 //Games
-router.route('/games').get(authController.protect, brainstvController.getAllGames);
+router.route('/games').get(brainstvController.getAllGames);
 
 //Videos
 router.route('/videos').get(brainstvController.getAllVideos);
