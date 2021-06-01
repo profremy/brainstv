@@ -81,17 +81,16 @@
                                         <p><%= popups.subtitle %></p>
                                     </div>
                                     <div class="cta">
-                                        <a href="/clubmembers/joinbrainsclub"
-                                            class="btn btn-warning btn-lg text-dark">Create Free
-                                            Account
-                                            Now!</a>
+                                        <a href="<%= popups.buttonLink %>"
+                                            class="btn btn-warning btn-lg text-dark"><%= popups.buttonName %></a>
                                     </div>
                                     <div class="popup-footer mt-2 mb-2">
                                         <small><%= popups.footer %></small>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light popupMsgClose text-dark"
-                                            data-dismiss="modal">NO THANKS</button>
+                                            data-dismiss="modal"><i class="fa fa-times-circle-o"
+                                                aria-hidden="true"></i>Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -112,9 +111,7 @@
                                     </div>
                                     <div class="cta">
                                         <a href="/api/v1/clubmembers/newclubmember"
-                                            class="btn btn-warning btn-lg text-dark">Create Free
-                                            Account
-                                            Now!</a>
+                                            class="btn btn-warning btn-lg text-dark">Book Now!</a>
                                     </div>
                                     <div class="popup-footer mt-2 mb-2">
                                         <small>Your footer here</small>

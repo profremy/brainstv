@@ -11,6 +11,7 @@ router.route('/').get(authController.protect, authController.restrictTo('superAd
 // DOWNLOADS UPLOADS
 router.route('/download-privacy-policy').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.downloadPrivacyPolicy);
 router.route('/download-terms').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.downloadTerms);
+router.route('/advertising-price-list').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.downloadAdvertPricing);
 router.route('/upload-file').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getUploadFile);
 router.route('/upload-app-file').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.uploadAppFile, brainstvadminsController.uploadAppFileHandler, brainstvadminsController.renderAdminPanel);
 // router.route('/upload-app-file').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.saveAppFilesToDisk, brainstvadminsController.uploadAppFile, brainstvadminsController.renderAdminPanel);
@@ -63,6 +64,16 @@ router.route('/shows/new').get(authController.protect, authController.restrictTo
 // router.route('/shows').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.uploadShowThumbnail, brainstvadminsController.fileUploadHandler, brainstvadminsController.createShow);
 router.route('/shows').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.uploadShowResourceFiles, brainstvadminsController.fileUploadHandler, brainstvadminsController.createShow);
 
+// Birthdays
+// Get birthdays
+router.route('/birthdays').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), authController.protect, brainstvadminsController.getBirthdays);
+// New Birthday
+router.route('/birthdays/new').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.newBirthday);
+
+// Create Birthday
+router.route('/birthdays').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.createBirthday);
+// router.route('/birthdays').post(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.uploadBirthdayCard, brainstvadminsController.birthdayCardUploadHandler, brainstvadminsController.createBirthday);
+
 //TV Schedule
 //Get TV Schedule
 router.route('/tvschedule').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getTVSchedule);
@@ -84,6 +95,9 @@ router.route('/classes/:id/edit').get(authController.protect, authController.res
 // Edit Live Stream by id //
 router.route('/livestream/:id/edit').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.editLivestream);
 
+// Edit Birthday by id //
+router.route('/birthdays/:id/edit').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.editBirthday);
+
 // Edit Faqs by id //
 router.route('/faqs/:id/edit').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.editFaqs);
 
@@ -98,6 +112,9 @@ router.route('/classes/:id').put(authController.protect, authController.restrict
 
 // Update Live Stream by id //
 router.route('/livestream/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateLivestream);
+
+// Update Birthday by id //
+router.route('/birthdays/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateBirthday);
 
 // Update Faqs by id //
 router.route('/faqs/:id').put(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.updateFaqs);
@@ -114,6 +131,9 @@ router.route('/classes/:id').delete(authController.protect, authController.restr
 
 // Delete Live Stream by id
 router.route('/livestream/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteLivestream);
+
+// Delete Birthday by id
+router.route('/birthdays/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteBirthday);
 
 // Delete FAQs by id
 router.route('/faqs/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteFaqs);

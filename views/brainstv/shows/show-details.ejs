@@ -125,11 +125,11 @@
                         </div>
                     </div>
                     <div class="form-row align-items-center marginTopBottomSmall">
-                        <div class="col-sm-3">
+                        <div class="col-sm-3 mb-2">
                             <button type="submit" class="btn btn-outline-info" id="loader"><i class="fa fa-envelope"
                                     aria-hidden="true"></i>Send</button>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-3 mb-2">
                             <button type="button" class="btn btn-outline-danger cancelOp"><i
                                     class="fa fa-times-circle-o" aria-hidden="true"></i><span>Cancel</span></button>
                         </div>
@@ -145,8 +145,9 @@
             <% } %>
 
             <% if(show.downloadableDocument != null) { %>
-            <a href="/brainstv/download-activity-file" class="btn btn-lg btn-outline-info"><i class="fa fa-download"
-                    aria-hidden="true"></i>Download this Activity</a>
+            <a href="/brainstv/download-activity-file" class="btn btn-lg btn-outline-info"
+                title="<%= show.showTitle %> "><i class="fa fa-download" aria-hidden="true"></i>Download this
+                Activity</a>
             <% } %>
 
 
@@ -382,12 +383,13 @@
 
                             <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="100%"
                                 class="img-fluid" alt="<%= show.showTitle %>">
-                            <% if (show.className.className.startsWith('Y')) { %>
-                            <div class="learningResourcesBottomTitle"><%= show.className.className.split('E')[0]%>
+                            <%# if (show.className.className.startsWith('Y')) { %>
+                            <div class="learningResourcesBottomTitle"><%= show.showTitle %>
+                                <!-- <div class="learningResourcesBottomTitle"><%#= show.className.className.split('E')[0]%> -->
                             </div>
-                            <% } else { %>
-                            <div class="learningResourcesBottomTitle"><%= show.className.className %> </div>
-                            <% } %>
+                            <%# } else { %>
+                            <!-- <div class="learningResourcesBottomTitle"><%#= show.className.className %> </div> -->
+                            <%# } %>
                         </div>
                     </div>
                     <% } %>

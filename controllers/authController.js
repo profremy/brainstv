@@ -137,7 +137,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 3) Check if user still exists
   const currentMember = await ClubMember.findById(decoded.id); //check if member in the decoded payload exists.
   if (!currentMember) {
-    return next(new AppError('The user assigned to this payload does not exist!', 401)); //Unauthorized
+    return next(new AppError('The user assigned to this payload does not exist! Sign in please.', 401)); //Unauthorized
   }
 
   // 4) Check if user changed password after the token was issued

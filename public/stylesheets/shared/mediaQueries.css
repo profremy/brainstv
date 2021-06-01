@@ -75,7 +75,7 @@
     }
 
     .boxShadowGridPhotos {
-        box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.9);
+        box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.9);
     }
 
     .auto-grid-front-page-shows {
@@ -85,6 +85,15 @@
         /* width: 60%; */
         margin: 0 auto;
         gap: 10px;
+    }
+
+    .auto-grid-front-page-birthdays {
+        box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.9);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+        margin: 0 auto;
+        gap: 10px;
+        align-items: center;
     }
 
     .view_member_auto-grid {
@@ -120,6 +129,11 @@
 
     .auto-grid-front-page-shows {
         box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.9);
+    }
+
+    .auto-grid-front-page-birthdays {
+        box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.9);
+        grid-template-columns: repeat(auto-fit, minmax(13em, 1fr));
     }
 
 

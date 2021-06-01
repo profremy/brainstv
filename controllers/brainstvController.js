@@ -19,6 +19,13 @@ exports.downloadActivityFile = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.downloadAdvertPricing = catchAsync(async (req, res, next) => {
+  const filePath = 'views/brainstv/advertising-price-list.pdf'; // The path to the file
+  const fileName = 'advertising-price-list.pdf'; // The default name the browser will use
+
+  res.download(filePath, fileName);
+});
+
 //exports.getAllShows = factory.getAll(Show);
 exports.getAllShows = catchAsync(async (req, res, next) => {
   let show;
@@ -100,6 +107,25 @@ exports.getAllTakePart = catchAsync(async (req, res, next) => {
 
 exports.getAllClassroom = catchAsync(async (req, res, next) => {
   res.status(200).render('brainstv/eclassroom', { pageTitle: 'E-Classroom' });
+});
+
+exports.getYearOneClassroom = catchAsync(async (req, res, next) => {
+  res.status(200).render('brainstv/year1', { pageTitle: 'Year 1 E-Classroom' });
+});
+exports.getYearTwoClassroom = catchAsync(async (req, res, next) => {
+  res.status(200).render('brainstv/year2', { pageTitle: 'Year 2 E-Classroom' });
+});
+exports.getYearThreeClassroom = catchAsync(async (req, res, next) => {
+  res.status(200).render('brainstv/year3', { pageTitle: 'Year 3 E-Classroom' });
+});
+exports.getYearFourClassroom = catchAsync(async (req, res, next) => {
+  res.status(200).render('brainstv/year4', { pageTitle: 'Year 4 E-Classroom' });
+});
+exports.getYearFiveClassroom = catchAsync(async (req, res, next) => {
+  res.status(200).render('brainstv/year5', { pageTitle: 'Year 5 E-Classroom' });
+});
+exports.getYearSixClassroom = catchAsync(async (req, res, next) => {
+  res.status(200).render('brainstv/year6', { pageTitle: 'Year 6 E-Classroom' });
 });
 
 exports.getAllNewsUpdate = catchAsync(async (req, res, next) => {

@@ -1,21 +1,24 @@
 <div class="form-row align-items-center">
-    <div class="col-md-3 mb-2">
+    <div class="col-md-2 mb-2">
         <label for="showTitle">Show/Resource Title</label> <span class="requiredfield">*</span>
         <input type="text" class="form-control" name="showTitle" value="<%= show.showTitle%>"
-            placeholder="Enter show/resource or youtube video title" required>
+            placeholder="Enter resource title" required>
     </div>
     <div class="col-md-5 mb-2">
         <label for="showType">Type</label> <span class="requiredfield">*</span>
-        <small>[Show, Video, Game, Activity, TakePart, E-Class, News, Advert]</small>
+        <small>[Show, Video, Game, Activity, TakePart, E-Class, News]</small>
         <input type="text" class="form-control" name="showType" value="<%= show.showType%>"
             placeholder="You must enter correct resource type here" required>
     </div>
-    <div class="col-md-4 mb-2">
-        <label for="takePartType">TakePart Type</label> <span class="requiredfield">*</span>
-        <small>[Poll, Cause, Competition, Discussion]</small>
+    <div class="col-md-5 mb-2">
+        <label for="takePartType">Resource Category</label> <span class="requiredfield">*</span>
+        <small>[Poll, Cause, Competition, Discussion, etc.]</small>
         <input type="text" class="form-control" name="takePartType" value="<%= show.takePartType%>"
             placeholder="Enter correct TakePart type here">
     </div>
+    <small><span class="requiredfield">Before proceeding, be sure Resource Category is completed. If no category leave
+            as NA: [ Poll, Cause,
+            Competition, Discussion, Puzzle, Colouring, Quiz, Others ]</small>
 </div>
 <div class="form-row align-items-center">
     <div class="col-md-5 mb-2">

@@ -1,4 +1,5 @@
 const multer = require('multer');
+const path = require('path');
 const fsPromises = require('fs').promises;
 const sharp = require('sharp');
 const Admin = require('../models/brainstvadmin');
@@ -8,8 +9,11 @@ const Tvschedule = require('../models/tvschedule');
 const Faq = require('../models/faq');
 const Show = require('../models/show');
 const Livestream = require('../models/livestream');
+const Birthday = require('../models/birthday');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+
+const imageMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
 
 const factory = require('./handlerFactory');
 
@@ -54,7 +58,7 @@ const multerFilter = (req, file, cb) => {
     cb(null, true);
   } else {
     // pass an error message to callback with false - its not an image
-    cb(new AppError('Not an image or .ejs file! Please upload only images.', 400), false);
+    cb(new AppError('Not an image .pdf, or .ejs file! Please upload only relevant files.', 400), false);
   }
 };
 
@@ -65,6 +69,24 @@ const upload = multer({
 
 exports.uploadAppFile = upload.single('selectedFile');
 // exports.uploadShowThumbnail = upload.single('showThumbnail');
+
+/*
+exports.uploadBirthdayCard = upload.single('birthdayCard');
+
+exports.birthdayCardUploadHandler = catchAsync(async (req, res, next) => {
+  if (!req.file) {
+    return next(new AppError('Not an image or no file attached! Please upload only images.', 400), false);
+  }
+
+  console.log(req.file);
+
+  // use the filter to test if the file is an image. Test for file type here
+  const bufferData = req.file.buffer;
+  req.body.birthdayCard = `${bufferData}`;
+
+  return next();
+});
+*/
 
 // Multiple field names with multiple files (maxCount: 3) or single file (maxCount: 1) of any mime type
 exports.uploadShowResourceFiles = upload.fields([
@@ -161,7 +183,11 @@ exports.fileUploadHandlerEdit = catchAsync(async (req, res, next) => {
 });
 */
 exports.uploadAppFileHandler = catchAsync(async (req, res, next) => {
-  if (req.file.originalname.split('.')[1] === 'ejs') {
+  if (!req.file) {
+    return next(new AppError('Not a .ejs. .pdf or no file attached!.', 400), false);
+  }
+
+  if (req.file.originalname.split('.')[1] === 'ejs' || req.file.originalname.split('.')[1] === 'pdf') {
     req.file.filename = `${req.file.originalname}`;
     await fsPromises.writeFile(`views/brainstv/${req.file.filename}`, req.file.buffer);
   }
@@ -187,6 +213,13 @@ exports.downloadTerms = catchAsync(async (req, res, next) => {
   } catch {
     res.redirect('/brainstvadmins');
   }
+});
+
+exports.downloadAdvertPricing = catchAsync(async (req, res, next) => {
+  const filePath = 'views/brainstv/advertising-price-list.pdf'; // The path to the file
+  const fileName = 'advertising-price-list.pdf'; // The default name the browser will use
+
+  res.download(filePath, fileName);
 });
 
 exports.getUploadFile = catchAsync(async (req, res, next) => {
@@ -217,6 +250,84 @@ exports.getClasses = catchAsync(async (req, res, next) => {
     });
   } catch {
     res.redirect('brainstvadmins');
+  }
+});
+
+exports.getBirthdays = catchAsync(async (req, res, next) => {
+  let birthday;
+  try {
+    birthday = await Birthday.find({});
+    res.render('brainstvadmins/birthdays', {
+      birthday: birthday,
+      pageTitle: 'All Birthday',
+    });
+  } catch {
+    res.redirect('brainstvadmins');
+  }
+});
+
+exports.newBirthday = catchAsync(async (req, res, next) => {
+  //res.render('brainstvadmins/birthdays/new', { birthday: new Birthday(), pageTitle: 'New Birthday' });
+
+  try {
+    const birthday = await Birthday.find({});
+    if (birthday.length === null || birthday.length < 10) {
+      renderNewBirthday(res, new Birthday());
+    } else {
+      res.render('brainstvadmins/birthdays/index', { birthday: birthday, errorMessage: 'An error occurred. Maximum recordable is 10 Birthdays!', pageTitle: 'New Birthday' });
+    }
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.createBirthday = catchAsync(async (req, res, next) => {
+  const birthday = new Birthday({
+    fullName: req.body.fullName,
+    birthdayMessage: req.body.birthdayMessage,
+    birthdayCard: req.body.birthdayCard,
+    birthdayCardType: req.body.birthdayCardType,
+  });
+
+  saveBirthdayCard(birthday, req.body.birthdayCard);
+  try {
+    const newBirthday = await birthday.save();
+    res.redirect('/brainstvadmins/birthdays');
+  } catch {
+    renderNewBirthday(res, birthday, true);
+  }
+});
+
+exports.editBirthday = catchAsync(async (req, res, next) => {
+  try {
+    const birthday = await Birthday.findById(req.params.id);
+    renderEditBirthday(res, birthday);
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.updateBirthday = catchAsync(async (req, res, next) => {
+  try {
+    birthday = await Birthday.findById(req.params.id);
+    birthday.fullName = req.body.fullName;
+    birthday.birthdayMessage = req.body.birthdayMessage;
+    birthday.birthdayCard = req.body.birthdayCard;
+    birthday.birthdayCardType = req.body.birthdayCardType;
+
+    if (req.body.birthdayCard != null && req.body.birthdayCard !== '') {
+      saveBirthdayCard(birthday, req.body.birthdayCard);
+    }
+    await birthday.save();
+
+    res.redirect(`/brainstvadmins/birthdays`);
+  } catch (err) {
+    console.log(err);
+    if (birthday != null) {
+      renderEditBirthday(res, birthday, true);
+    } else {
+      res.redirect('/brainstvadmins/birthdays');
+    }
   }
 });
 
@@ -846,6 +957,57 @@ exports.deleteTVSchedule = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.deleteBirthday = catchAsync(async (req, res, next) => {
+  let birthday;
+
+  try {
+    birthday = await Birthday.findById(req.params.id);
+    await birthday.remove();
+    res.redirect('/brainstvadmins/birthdays');
+  } catch {
+    res.redirect('/brainstvadmins/birthdays');
+  }
+});
+
 // Delete to be executed from handlerFactory deleteOne function
 // handlerFactory is imported above as factory with require
 // exports.deleteShow = factory.deleteOne(Show);
+
+async function renderNewBirthday(res, birthday, hasError = false) {
+  try {
+    const params = {
+      birthday: birthday,
+      pageTitle: 'New Birthday',
+    };
+
+    if (hasError) params.errorMessage = 'An error occurred while processing birthday. Try again!';
+    res.render('brainstvadmins/birthdays/new', params);
+  } catch {
+    res.redirect('/brainstvadmins/birthdays/index');
+  }
+}
+
+async function renderEditBirthday(res, birthday, hasError = false) {
+  try {
+    const params = {
+      birthday: birthday,
+      pageTitle: 'Edit Birthday',
+    };
+
+    if (hasError) params.errorMessage = 'An error occurred while processing birthday. Try again!';
+    res.render('brainstvadmins/birthdays/edit', params);
+  } catch {
+    res.redirect('/brainstvadmins/birthdays/edit', {
+      errorMessage: 'There was an error trying to update birthday!.',
+    });
+  }
+}
+
+function saveBirthdayCard(birthday, birthdayCardImageEncoded) {
+  if (birthdayCardImageEncoded == null) return;
+  const birthdayCardImage = JSON.parse(birthdayCardImageEncoded);
+  if (birthdayCardImage != null && imageMimeTypes.includes(birthdayCardImage.type)) {
+    birthday.birthdayCard = new Buffer.from(birthdayCardImage.data, 'base64');
+    birthday.birthdayCardType = birthdayCardImage.type;
+  }
+}

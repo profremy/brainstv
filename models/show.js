@@ -11,12 +11,12 @@ const showSchema = new mongoose.Schema(
     showType: {
       type: String,
       required: [true, 'Show type is require'],
-      enum: ['Show', 'Video', 'Games', 'Activity', 'TakePart', 'E-Class', 'News', 'Advert'],
+      enum: ['Show', 'Video', 'Games', 'Activity', 'TakePart', 'E-Class', 'News'],
     },
     takePartType: {
       type: String,
       // required: [true, 'Take part type is require'],
-      enum: ['Poll', 'Cause', 'Competition', 'Discussion', 'NA'],
+      enum: ['Poll', 'Cause', 'Competition', 'Discussion', 'Others', 'Puzzle', 'Colouring', 'Quiz', 'NA'],
       default: 'NA',
     },
     showId: {

@@ -37,11 +37,19 @@ router.route('/activities').get(brainstvController.getAllActivities);
 // DOWNLOADS UPLOADS
 router.route('/download-activity-file').get(authController.protect, authController.restrictTo('clubMember'), brainstvController.downloadActivityFile);
 
+router.route('/advertising-price-list').get(brainstvController.downloadAdvertPricing);
+
 //Take Part
 router.route('/takePart').get(brainstvController.getAllTakePart);
 
 //E-classroom
 router.route('/eclassroom').get(brainstvController.getAllClassroom);
+router.route('/year_1_E_Classroom').get(brainstvController.getYearOneClassroom);
+router.route('/year_2_E_Classroom').get(brainstvController.getYearTwoClassroom);
+router.route('/year_3_E_Classroom').get(brainstvController.getYearThreeClassroom);
+router.route('/year_4_E_Classroom').get(brainstvController.getYearFourClassroom);
+router.route('/year_5_E_Classroom').get(brainstvController.getYearFiveClassroom);
+router.route('/year_6_E_Classroom').get(brainstvController.getYearSixClassroom);
 
 //Newsroom
 router.route('/newsupdate').get(brainstvController.getAllNewsUpdate);

@@ -5,35 +5,172 @@
     </div>
 
     <hr class="my-1 document-divider">
-    <div class="main-flex">
+    <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+        <li class="nav-item mr-auto" role="presentation">
+            <a class="nav-link btn btn-outline-info rounded-pill" id="pills-competition-tab" data-toggle="pill"
+                href="#pills-competition" role="tab" aria-controls="pills-competition"
+                aria-selected="true">Competition</a>
+        </li>
+        <li class="nav-item mr-auto" role="presentation">
+            <a class="nav-link  btn btn-outline-info rounded-pill" id="pills-discussion-tab" data-toggle="pill"
+                href="#pills-discussion" role="tab" aria-controls="pills-discussion"
+                aria-selected="false">Discussion</a>
+        </li>
+        <li class="nav-item mr-auto" role="presentation">
+            <a class="nav-link btn btn-outline-info rounded-pill" id="pills-causes-tab" data-toggle="pill"
+                href="#pills-causes" role="tab" aria-controls="pills-causes" aria-selected="false">Causes</a>
+        </li>
+        <li class="nav-item mr-auto" role="presentation">
+            <a class="nav-link btn btn-outline-info rounded-pill" id="pills-poll-tab" data-toggle="pill"
+                href="#pills-poll" role="tab" aria-controls="pills-poll" aria-selected="false">Poll</a>
+        </li>
+        <li class="nav-item mr-auto" role="presentation">
+            <a class="nav-link btn btn-outline-info rounded-pill" id="pills-others-tab" data-toggle="pill"
+                href="#pills-others" role="tab" aria-controls="pills-others" aria-selected="false">Others</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-competition" role="tabpanel"
+            aria-labelledby="pills-competition-tab">
+            <div class="main-flex">
 
-        <% allShows.forEach(show => { %>
-        <% if(show.showType === "TakePart") { %>
+                <% allShows.forEach(show => { %>
+                <% if(show.showType === "TakePart" && show.takePartType === "Competition") { %>
+                <div class="col-sm-3 flex-item">
+                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
+                        <a href="/brainstv/show/<%= show.slug %>">
+                            <div class="resourcesOverlay"></div>
+                        </a>
+                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
+                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-discussion" role="tabpanel" aria-labelledby="pills-discussion-tab">
+            <div class="main-flex">
+
+                <% allShows.forEach(show => { %>
+                <% if(show.showType === "TakePart" && show.takePartType === "Discussion") { %>
+                <div class="col-sm-3 flex-item">
+                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
+                        <a href="/brainstv/show/<%= show.slug %>">
+                            <div class="resourcesOverlay"></div>
+                        </a>
+                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
+                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-causes" role="tabpanel" aria-labelledby="pills-causes-tab">
+            <div class="main-flex">
+
+                <% allShows.forEach(show => { %>
+                <% if(show.showType === "TakePart" && show.takePartType === "Cause") { %>
+                <div class="col-sm-3 flex-item">
+                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
+                        <a href="/brainstv/show/<%= show.slug %>">
+                            <div class="resourcesOverlay"></div>
+                        </a>
+                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
+                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-poll" role="tabpanel" aria-labelledby="pills-poll-tab">
+            <div class="main-flex">
+
+                <% allShows.forEach(show => { %>
+                <% if(show.showType === "TakePart" && show.takePartType === "Poll") { %>
+                <div class="col-sm-3 flex-item">
+                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
+                        <a href="/brainstv/show/<%= show.slug %>">
+                            <div class="resourcesOverlay"></div>
+                        </a>
+                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
+                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-others" role="tabpanel" aria-labelledby="pills-others-tab">
+            <div class="main-flex">
+
+                <% allShows.forEach(show => { %>
+                <% if(show.showType === "TakePart" && show.takePartType === "Others") { %>
+                <div class="col-sm-3 flex-item">
+                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
+                        <a href="/brainstv/show/<%= show.slug %>">
+                            <div class="resourcesOverlay"></div>
+                        </a>
+                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
+                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="main-flex">
+
+        <%# allShows.forEach(show => { %>
+        <%# if(show.showType === "TakePart") { %>
         <div class="col-sm-3 flex-item">
             <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                <a href="/brainstv/show/<%= show.slug %>">
+                <a href="/brainstv/show/<%#= show.slug %>">
                     <div class="resourcesOverlay"></div>
                 </a>
-                <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                <!-- <iframe width="560" height="315"
+                <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div>
+                <iframe width="560" height="315"
                     src="https://www.youtube-nocookie.com/embed/<%#= show.showId %>?rel=0&modestbranding=1"
                     frameborder="0"
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe> -->
+                    allowfullscreen></iframe>
 
-                <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200" class="_img-fluid"
-                    alt="<%= show.showTitle %>">
+                <img src="/images/show_images/<%#= show.showThumbnail %>" width="315" height="200" class="_img-fluid"
+                    alt="<%#= show.showTitle %>">
                 <%# if (show.className.className.startsWith('Y')) { %>
                 <div class="learningResourcesBottomTitle"><%#= show.className.className.split('E')[0]%> </div>
                 <%# } else { %>
-                <!-- <div class="learningResourcesBottomTitle"><%#= show.className.className %> </div> -->
-                <div class="learningResourcesBottomTitle"><%= show.showTitle %> | <%= show.takePartType %> </div>
+                <div class="learningResourcesBottomTitle"><%#= show.className.className %> </div>
+                <div class="learningResourcesBottomTitle"><%#= show.showTitle %> | <%#= show.takePartType %> </div>
 
                 <%# } %>
             </div>
         </div>
-        <% } %>
-        <% }) %>
+        <%# } %>
+        <%# }) %> -->
 
-    </div>
+</div>
+
+
+
 </div>

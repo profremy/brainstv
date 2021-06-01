@@ -4,34 +4,22 @@
         <span class="dark-blue-gradient-background p-1">Advertisement</span>
     </div>
 
-    <hr class="my-1 document-divider">
-    <div class="main-flex">
+    <div class="row align-items-center">
+        <div class="col-8 pt-3">
+            <div class="card card-block align-items-center p-2">
+                <p>Advertising with Brains TV is very easy. Advertising with Brains TV is very easy.</p>
+                <p>Advertising with Brains TV is very easy. Advertising with Brains TV is very easy.</p>
+                <p>Advertising with Brains TV is very easy. Advertising with Brains TV is very easy.</p>
+                <p>Advertising with Brains TV is very easy. Advertising with Brains TV is very easy.</p>
 
-        <% allShows.forEach(show => { %>
-        <% if(show.showType === "Advert") { %>
-        <div class="col-sm-3 flex-item">
-            <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                <a href="/brainstv/show/<%= show.slug %>">
-                    <div class="resourcesOverlay"></div>
-                </a>
-                <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                <!-- <iframe width="560" height="315"
-                    src="https://www.youtube-nocookie.com/embed/<%#= show.showId %>?rel=0&modestbranding=1"
-                    frameborder="0"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe> -->
-
-                <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200" class="_img-fluid"
-                    alt="<%= show.showTitle %>">
-                <% if (show.className.className.startsWith('Y')) { %>
-                <div class="learningResourcesBottomTitle"><%= show.className.className.split('E')[0]%> </div>
-                <% } else { %>
-                <div class="learningResourcesBottomTitle"><%= show.className.className %> </div>
-                <% } %>
+                <br />
+                <strong>Contact David on 09039000082 for more details.</strong>
             </div>
         </div>
-        <% } %>
-        <% }) %>
-
+        <div class="col-4">
+            <a href="/brainstv/advertising-price-list" class="btn btn-info"><i class="fa fa-download"></i>Download
+                Pricing</a>
+        </div>
     </div>
+
 </div>

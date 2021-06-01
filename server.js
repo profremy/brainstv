@@ -48,6 +48,7 @@ const Popup = require('./models/popup');
 const ClassName = require('./models/class');
 const Show = require('./models/show');
 const Livestream = require('./models/livestream');
+const Birthday = require('./models/birthday');
 const Tvschedule = require('./models/tvschedule');
 
 const app = express();
@@ -158,11 +159,14 @@ app.use(async (req, res, next) => {
   app.locals.membercategories = await Membercategory.find({});
   app.locals.classes = await ClassName.find({});
   app.locals.allShows = await Show.find({}).sort({ datePosted: -1 });
+  app.locals.allShowsA_Z = await Show.find({}).sort({ showTitle: 1 });
   app.locals.livestream = await Livestream.findOne({});
   app.locals.liveTV = await Tvschedule.find({}).limit(3).sort({ showingStatus: -1 });
   app.locals.fourRecentVideos = await Show.find({ showType: 'Video' }).limit(4).sort({ datePosted: -1 });
   app.locals.eightRecentShows = await Show.find({ showType: 'Show' }).limit(8).sort({ datePosted: -1 });
   app.locals.fourRecentTakePart = await Show.find({ showType: 'TakePart' }).limit(4).sort({ datePosted: -1 });
+  app.locals.birthdayCelebrants = await Birthday.find({});
+
   next();
 });
 

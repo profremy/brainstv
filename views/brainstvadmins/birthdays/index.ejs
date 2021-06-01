@@ -1,0 +1,41 @@
+<div class="jumbotron container-fluid">
+    <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+            aria-hidden="true"></i><span>Back</span></a>
+    <h4>Birthdays</h4>
+    <hr class="my-1 document-divider" />
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Birthdays Celebrants</a>
+    </nav>
+    <hr class="my-1" />
+    <div class="table-responsive-sm">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col">Birthday Message</th>
+                    <th scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (birthday) { %>
+                <% birthday.forEach(person => { %>
+
+                <tr>
+                    <th scope="row"><a href="/brainstvadmins/birthdays/<%= person.id %>/edit" class="text-success"
+                            title="Edit Category"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </th>
+                    <td><%= person.fullName %></td>
+                    <td><%= person.birthdayMessage %></td>
+                    <td>
+                        <!-- this is ejs rendering of delete form button in partials folder -->
+                        <%- include('../../partials/deleteForm', { url: `/brainstvadmins/birthdays/${person.id}` }) %>
+                    </td>
+                </tr>
+                <% }) %>
+                <% } %>
+
+            </tbody>
+        </table>
+    </div>
+</div>

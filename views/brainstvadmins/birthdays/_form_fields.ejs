@@ -1,0 +1,31 @@
+<div class="form-row">
+    <div class="col-md-6 mb-2">
+        <label for="fullName" class="form-control-label">Full name</label> <span class="requiredfield">*</span>
+        <input type="text" class="form-control" name="fullName" value="<%= birthday.fullName%>"
+            placeholder="Enter full name">
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-6">
+        <label for="birthdayMessage" class="form-control-label">Birthday Message</label> <span
+            class="requiredfield">*</span>
+        <textarea name="birthdayMessage" class="form-control" rows="3" placeholder="Enter birthday message"
+            required><%= birthday.birthdayMessage%></textarea>
+    </div>
+</div>
+<!-- <div class="form-row">
+    <div class="col-md-6 mt-2 p-2">
+        <label for="birthdayCard" class="form-control-label">Choose Birthday Card Image <span
+        class="requiredfield">*</span></label>
+        <input type="file" class="form-control-file" name="birthdayCard" class="filepond">
+    </div>
+</div> -->
+
+<label for="birthdayCard" class="form-control-label">Choose Birthday Card Image <span class="requiredfield">
+        <small>[Image must be 640 X 640
+            pixels]</small> *</span></label>
+<div class="form-group row">
+    <div class="col-sm-5 my-2">
+        <input type="file" name="birthdayCard" class="filepond">
+    </div>
+</div>

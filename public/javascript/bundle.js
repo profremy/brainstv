@@ -9019,7 +9019,15 @@ var elements = (_elements = {
   jumbotron: document.querySelector('.jumbotron'),
   loadingSpinner: document.getElementById('loadingSpinner'),
   loaderTrigger: document.getElementById('loader')
-}, _defineProperty(_elements, "app", document.getElementById('app')), _defineProperty(_elements, "btnCheck", document.querySelector('.btncheck')), _defineProperty(_elements, "userCaretDown", document.querySelector('.userCaretDown')), _defineProperty(_elements, "checkBox", document.getElementById('check')), _defineProperty(_elements, "email", document.getElementById('email')), _defineProperty(_elements, "password", document.getElementById('password')), _defineProperty(_elements, "loginForm", document.getElementById('loginForm')), _defineProperty(_elements, "logOutBtn", document.querySelector('.logout')), _defineProperty(_elements, "userDataForm", document.querySelector('.form-user-data')), _defineProperty(_elements, "userPasswordForm", document.querySelector('.form-user-password')), _defineProperty(_elements, "joinbrainsclub", document.getElementById('joinbrainsclub')), _defineProperty(_elements, "registeradmin", document.getElementById('registeradmin')), _defineProperty(_elements, "homeworkForm", document.querySelector('.revealSendHomeworkForm')), _defineProperty(_elements, "classWork", document.querySelector('.classWork')), _defineProperty(_elements, "cancelOp", document.querySelector('.cancelOp')), _elements);
+}, _defineProperty(_elements, "app", document.getElementById('app')), _defineProperty(_elements, "btnCheck", document.querySelector('.btncheck')), _defineProperty(_elements, "userCaretDown", document.querySelector('.userCaretDown')), _defineProperty(_elements, "checkBox", document.getElementById('check')), _defineProperty(_elements, "email", document.getElementById('email')), _defineProperty(_elements, "password", document.getElementById('password')), _defineProperty(_elements, "loginForm", document.getElementById('loginForm')), _defineProperty(_elements, "logOutBtn", document.querySelector('.logout')), _defineProperty(_elements, "userDataForm", document.querySelector('.form-user-data')), _defineProperty(_elements, "userPasswordForm", document.querySelector('.form-user-password')), _defineProperty(_elements, "joinbrainsclub", document.getElementById('joinbrainsclub')), _defineProperty(_elements, "registeradmin", document.getElementById('registeradmin')), _defineProperty(_elements, "classYear", document.getElementById('selectedClassYear')), _defineProperty(_elements, "homeworkForm", document.querySelector('.revealSendHomeworkForm')), _defineProperty(_elements, "classWork", document.querySelector('.classWork')), _defineProperty(_elements, "cancelOp", document.querySelector('.cancelOp')), _elements);
+{
+  // Switch E-classrooms
+  if (elements.classYear) {
+    elements.classYear.addEventListener('change', function (event) {
+      location.assign("/brainstv/".concat(event.target.value));
+    });
+  }
+}
 {
   // USER OPTIONS
   // Execute this block only if user is logged in
@@ -9766,7 +9774,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63099" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57266" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

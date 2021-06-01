@@ -20,6 +20,15 @@ const popupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  buttonLink: {
+    type: String,
+    required: true,
+  },
+  buttonName: {
+    type: String,
+    required: true,
+  },
+
   createdAt: { type: Date, required: true, default: Date.now },
 });
 

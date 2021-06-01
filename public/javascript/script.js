@@ -37,6 +37,7 @@ const elements = {
   userPasswordForm: document.querySelector('.form-user-password'),
   joinbrainsclub: document.getElementById('joinbrainsclub'),
   registeradmin: document.getElementById('registeradmin'),
+  classYear: document.getElementById('selectedClassYear'),
   homeworkForm: document.querySelector('.revealSendHomeworkForm'),
   classWork: document.querySelector('.classWork'),
   cancelOp: document.querySelector('.cancelOp'),
@@ -46,6 +47,15 @@ const elements = {
   // reviewInput: document.querySelector('.reviewInput'),
   // reviewRating: document.querySelector('.reviewRating'),
 };
+
+{
+  // Switch E-classrooms
+  if (elements.classYear) {
+    elements.classYear.addEventListener('change', (event) => {
+      location.assign(`/brainstv/${event.target.value}`);
+    });
+  }
+}
 
 {
   // USER OPTIONS

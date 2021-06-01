@@ -48,6 +48,8 @@ router.post('/', async (req, res) => {
     title: req.body.title,
     subtitle: req.body.subtitle,
     footer: req.body.footer,
+    buttonLink: req.body.buttonLink,
+    buttonName: req.body.buttonName,
     popupBackground: req.body.popupBackground,
     popupBackgroundType: req.body.popupBackgroundType,
   });
@@ -94,6 +96,8 @@ router.put('/:id', async (req, res) => {
     popup.subtitle = req.body.subtitle;
     popup.footer = req.body.footer;
     popup.title = req.body.title;
+    popup.buttonLink = req.body.buttonLink;
+    popup.buttonName = req.body.buttonName;
 
     if (req.body.popupBackground != null && req.body.popupBackground !== '') {
       saveSitePopup(popup, req.body.popupBackground);
@@ -104,7 +108,7 @@ router.put('/:id', async (req, res) => {
   } catch (err) {
     console.log(err);
     if (popup != null) {
-      renderEditLogo(res, popup, true);
+      renderEditPopup(res, popup, true);
     } else {
       res.redirect('/popups');
     }

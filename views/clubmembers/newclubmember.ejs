@@ -15,4 +15,26 @@
         </form>
     </div>
 
+    <div class="section__recent__takePart _mt-3 p-3" style="background-color: #355394;">
+        <h3 class="text-center text-light">Trending Now: Take Part Before time is up</h3>
+        <div class="auto-grid-front-page-shows">
+            <% fourRecentTakePart.forEach(recentTakePart => { %>
+            <div class="autoGridPhotos transform-scale">
+                <a href="/brainstv/show/<%= recentTakePart.slug %>">
+                    <div class="noBorderResourcesOverlay"></div>
+                </a>
+                <!-- <div class="learningResourcesTopTitle"><%#= recentTakePart.showStatus %> </div> -->
+
+                <img src="/images/show_images/<%= recentTakePart.showThumbnail %>" width="100%" height="200"
+                    class="img-fluid" alt="<%= recentTakePart.showTitle %>">
+
+                <div class="noBorderLearningResourcesBottomTitle"><%= recentTakePart.showTitle %> </div>
+            </div>
+            <% }) %>
+        </div>
+        <div class="text-center">
+            <a href="/brainstv/takepart" class="btn btn-outline-light mt-3">All TakePart</a>
+        </div>
+    </div>
+
 </div>
