@@ -124,7 +124,7 @@
     }
 
     .boxShadowGridPhotos {
-        box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.9);
+        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.9);
     }
 
     .auto-grid-front-page-shows {
@@ -293,6 +293,9 @@
 }
 
 @media only screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.7rem;
+    }
 
     /* Header ejs */
     #auth-link {
