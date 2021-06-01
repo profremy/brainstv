@@ -464,13 +464,13 @@ input[type="radio"]:checked+span {
     text-align: center;
     /* background-color: rgba(0, 0, 0, .8); */
     background-color: var(--color-background-light);
-    opacity: .8;
+    opacity: .9;
     color: var(--light);
     left: 0;
     bottom: 0;
     font-size: 15px;
     font-style: italic;
-    padding: 0 0.7em;
+    padding: 0.5em 0.7em;
     width: 100%;
     z-index: 1;
 }
@@ -479,6 +479,10 @@ input[type="radio"]:checked+span {
 
 .my-w-75 {
     width: 50% !important;
+}
+
+.myImgFluid {
+    width: inherit !important;
 }
 
 .recentImgName {
