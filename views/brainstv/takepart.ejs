@@ -1,10 +1,11 @@
-<div class="jumbotron container-fluid">
-    <div class="input-group margin-bottom-sm">
+<div class="jumbotron container-fluid pb-1">
+    <div class="input-group margin-bottom-sm pl-2">
         <span class="input-group-addon bg-light p-1"><i class="fa fa-commenting shows" aria-hidden="true"></i></span>
         <span class="dark-blue-gradient-background p-1">Take Part</span>
     </div>
 
     <hr class="my-1 document-divider">
+
     <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
         <li class="nav-item mr-auto" role="presentation">
             <a class="nav-link btn btn-outline-info rounded-pill" id="pills-competition-tab" data-toggle="pill"
@@ -29,112 +30,151 @@
                 href="#pills-others" role="tab" aria-controls="pills-others" aria-selected="false">Others</a>
         </li>
     </ul>
-    <div class="tab-content" id="pills-tabContent">
+
+    <div class="tab-content timber-gradient mb-3 p-3" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-competition" role="tabpanel"
             aria-labelledby="pills-competition-tab">
-            <div class="main-flex">
 
+            <div class="auto-grid-front-page-shows mb-3">
                 <% allShows.forEach(show => { %>
                 <% if(show.showType === "TakePart" && show.takePartType === "Competition") { %>
-                <div class="col-sm-3 flex-item">
-                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
-                            <div class="resourcesOverlay"></div>
-                        </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
-                    </div>
+                <div class="autoGridPhotos transform-scale">
+                    <a href="/brainstv/show/<%= show.slug %>">
+                        <div class="noBorderResourcesOverlay"></div>
+                    </a>
+                    <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
+
+                    <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
+                        class="myImg-fluid _img-fluid" alt="<%= show.showTitle %>">
+
+                    <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
                 </div>
                 <% } %>
                 <% }) %>
-
             </div>
         </div>
-        <div class="tab-pane fade" id="pills-discussion" role="tabpanel" aria-labelledby="pills-discussion-tab">
-            <div class="main-flex">
 
+        <div class="tab-pane fade" id="pills-discussion" role="tabpanel" aria-labelledby="pills-discussion-tab">
+
+            <div class="auto-grid-front-page-shows mb-3">
                 <% allShows.forEach(show => { %>
                 <% if(show.showType === "TakePart" && show.takePartType === "Discussion") { %>
-                <div class="col-sm-3 flex-item">
-                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
-                            <div class="resourcesOverlay"></div>
-                        </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
-                    </div>
+                <div class="autoGridPhotos transform-scale">
+                    <a href="/brainstv/show/<%= show.slug %>">
+                        <div class="noBorderResourcesOverlay"></div>
+                    </a>
+                    <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
+
+                    <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
+                        class="myImg-fluid _img-fluid" alt="<%= show.showTitle %>">
+
+                    <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
                 </div>
                 <% } %>
                 <% }) %>
-
             </div>
+
+            <!-- <div class="main-flex">
+
+                <%# allShows.forEach(show => { %>
+                <%# if(show.showType === "TakePart" && show.takePartType === "Discussion") { %>
+                <div class="col-sm-3 flex-item">
+                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
+                        <a href="/brainstv/show/<%#= show.slug %>">
+                            <div class="resourcesOverlay"></div>
+                        </a>
+                        <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div>
+                        <img src="/images/show_images/<%#= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%#= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%#= show.showTitle %> </div>
+                    </div>
+                </div>
+                <%# } %>
+                <%# }) %>
+
+            </div> -->
         </div>
         <div class="tab-pane fade" id="pills-causes" role="tabpanel" aria-labelledby="pills-causes-tab">
-            <div class="main-flex">
 
+            <div class="auto-grid-front-page-shows mb-3">
                 <% allShows.forEach(show => { %>
                 <% if(show.showType === "TakePart" && show.takePartType === "Cause") { %>
-                <div class="col-sm-3 flex-item">
-                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
-                            <div class="resourcesOverlay"></div>
-                        </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
-                    </div>
+                <div class="autoGridPhotos transform-scale">
+                    <a href="/brainstv/show/<%= show.slug %>">
+                        <div class="noBorderResourcesOverlay"></div>
+                    </a>
+                    <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
+
+                    <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
+                        class="myImg-fluid _img-fluid" alt="<%= show.showTitle %>">
+
+                    <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
                 </div>
                 <% } %>
                 <% }) %>
-
             </div>
+
         </div>
         <div class="tab-pane fade" id="pills-poll" role="tabpanel" aria-labelledby="pills-poll-tab">
-            <div class="main-flex">
 
+            <div class="auto-grid-front-page-shows mb-3">
                 <% allShows.forEach(show => { %>
                 <% if(show.showType === "TakePart" && show.takePartType === "Poll") { %>
-                <div class="col-sm-3 flex-item">
-                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
-                            <div class="resourcesOverlay"></div>
-                        </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
-                    </div>
+                <div class="autoGridPhotos transform-scale">
+                    <a href="/brainstv/show/<%= show.slug %>">
+                        <div class="noBorderResourcesOverlay"></div>
+                    </a>
+                    <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
+
+                    <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
+                        class="myImg-fluid _img-fluid" alt="<%= show.showTitle %>">
+
+                    <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
                 </div>
                 <% } %>
                 <% }) %>
-
             </div>
         </div>
         <div class="tab-pane fade" id="pills-others" role="tabpanel" aria-labelledby="pills-others-tab">
-            <div class="main-flex">
-
+            <div class="auto-grid-front-page-shows mb-3">
                 <% allShows.forEach(show => { %>
                 <% if(show.showType === "TakePart" && show.takePartType === "Others") { %>
-                <div class="col-sm-3 flex-item">
-                    <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
-                            <div class="resourcesOverlay"></div>
-                        </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
-                    </div>
+                <div class="autoGridPhotos transform-scale">
+                    <a href="/brainstv/show/<%= show.slug %>">
+                        <div class="noBorderResourcesOverlay"></div>
+                    </a>
+                    <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
+
+                    <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
+                        class="myImg-fluid _img-fluid" alt="<%= show.showTitle %>">
+
+                    <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
                 </div>
                 <% } %>
                 <% }) %>
-
             </div>
+        </div>
+    </div>
+
+    <div class="section__recent__takePart _mt-3 p-3" style="background-color: #355394;">
+        <h3 class="text-center text-light">Trending Now: Take Part Before time is up</h3>
+        <div class="auto-grid-front-page-shows">
+            <% fourRecentTakePart.forEach(recentTakePart => { %>
+            <div class="autoGridPhotos transform-scale">
+                <a href="/brainstv/show/<%= recentTakePart.slug %>">
+                    <div class="noBorderResourcesOverlay"></div>
+                </a>
+                <!-- <div class="learningResourcesTopTitle"><%#= recentTakePart.showStatus %> </div> -->
+
+                <img src="/images/show_images/<%= recentTakePart.showThumbnail %>" width="100%" height="200"
+                    class="img-fluid" alt="<%= recentTakePart.showTitle %>">
+
+                <div class="noBorderLearningResourcesBottomTitle"><%= recentTakePart.showTitle %> </div>
+            </div>
+            <% }) %>
+        </div>
+        <div class="text-center">
+            <a href="/brainstv/takepart" class="btn btn-outline-light mt-3">All TakePart</a>
         </div>
     </div>
 

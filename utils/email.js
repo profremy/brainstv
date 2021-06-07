@@ -4,27 +4,37 @@ const ejs = require('ejs');
 const path = require('path');
 const htmlToText = require('html-to-text');
 const { data } = require('jquery');
-
 module.exports = class Email {
   constructor(clubmember, url) {
     this.to = clubmember.email;
     this.firstname = clubmember.firstname;
     this.url = url;
-    this.from = `BrainsTV Web Contact <${process.env.EMAIL_FROM}>`;
+    this.from = `BrainsTV Club <${process.env.BTV_EMAIL}>`;
   }
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
-      // SendGrid
-      return 1;
+      return nodemailer.createTransport({
+        host: process.env.BTV_EMAIL_HOST,
+        port: process.env.BTV_EMAIL_PORT,
+        secure: true,
+        auth: {
+          user: process.env.BTV_EMAIL,
+          pass: process.env.BTV_EMAIL_PASSWORD,
+        },
+      });
     }
 
     return nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
+      host: process.env.BTV_EMAIL_NOSSL_HOST,
+      port: process.env.BTV_EMAIL_NOSSL_PORT,
+      secure: false,
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
+        user: process.env.BTV_EMAIL,
+        pass: process.env.BTV_EMAIL_PASSWORD,
       },
+
+      //Transport Layer Security - use only for testing on local server
+      tls: { rejectUnauthorized: false },
     });
   }
 
@@ -56,5 +66,9 @@ module.exports = class Email {
 
   async sendWelcome() {
     await this.send('welcome', 'Welcome to BrainsTV Club!');
+  }
+
+  async sendPasswordReset() {
+    await this.send('passwordReset', 'Your password reset token (valid for only 10 minutes)');
   }
 };

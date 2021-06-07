@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-5 mx-auto mb-2">
             <label for="telephone" class="text-info mb-0">Phone Number</label> <span class="requiredfield"> *</span>
-            <input type="tel" class="form-control form__input" <% if (user != null) { %> value="<%= user.phone %> "
+            <input type="number" class="form-control form__input" <% if (user != null) { %> value="<%= user.phone %> "
                 <% } %>name="telephone" required placeholder="Enter your phone number" required>
         </div>
     </div>
@@ -41,15 +41,16 @@
         <div class="col-md-5 mx-auto mb-2">
             <div class="form-group">
                 <label for="subject-details" class="text-info mb-0">Please provide some details below:</label>
-                <textarea class="form-control" id="subject-details" rows="3"></textarea>
+                <textarea name="subjectDetails" class="form-control" id="subject_details" rows="3"></textarea>
             </div>
 
         </div>
     </div>
     <div class="row">
         <div class="col-md-5 mx-auto mb-2">
-            <label for="file" class="text-danger mb-0"><small>You may attach [ jpeg | png | mp3 | mp4 ]</small></label>
-            <input type="file" class="mb-2" name="attachment" id="attachment" />
+            <label for="contactUsAttachment" class="text-danger mb-0"><small>You may attach [ jpeg | png | mp3 | mp4
+                    ]</small></label>
+            <input type="file" class="mb-2" name="contactUsAttachment" id="attachment" />
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="jumbotron container-fluid" style="background-color: rgb(214, 231, 138);">
+<div class="jumbotron container-fluid pb-1" style="background-color: rgb(214, 231, 138);">
     <div class="input-group margin-bottom-sm">
         <span class="input-group-addon bg-light p-1"><i class="fa fa-home shows" aria-hidden="true"></i></span>
         <span class="dark-blue-gradient-background p-1">E-Classroom</span>
@@ -9,7 +9,7 @@
     <h1 class="text-center mt-3">Year 2 E-Classroom</h1>
 
     <div class="d-flex flex-fill flex-wrap _justify-content-center bd-highlight">
-        <div class="p-2 vw-100 bd-highlight mobileScreen boxShadowGridPhotos mb-3">
+        <div class="p-2 vw-100 bd-highlight mobileScreen mb-3">
             <div class="embed-responsive embed-responsive-16by9">
                 <iframe class="responsive-iframe" width="560" height="315"
                     src="https://www.youtube-nocookie.com/embed/<%#= livestream.livestreamURL %>?rel=0&modestbranding=1"
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="p-2 my-w-75 bd-highlight desktopScreen boxShadowGridPhotos mr-2 mb-3">
+        <div class="p-2 my-w-75 bd-highlight desktopScreen mr-2 mb-3">
             <div class="embed-responsive embed-responsive-16by9">
                 <iframe class="responsive-iframe" width="560" height="315"
                     src="https://www.youtube-nocookie.com/embed/<%= livestream.livestreamURL %>?rel=0&modestbranding=1"
@@ -35,7 +35,7 @@
                 <p class="mb-0 font-weight-bold text-center">Do you have a question on this subject? Type it below.</p>
             </div>
             <!-- <div class="text-center mb-3 pt-2 pb-2"> -->
-            <form action="/" method="POST" id="askQuestionForm">
+            <form action="/brainstv/eClassRoomQuestion" method="POST" id="askQuestionForm">
                 <div class="form-group">
                     <input type="text" class="form-control" name="fullname" placeholder="Enter your full name here"
                         required>
@@ -48,6 +48,13 @@
                     <textarea name="askQuestion" class="form-control" rows="3" placeholder="Enter your question here"
                         required></textarea>
                 </div>
+                <div class="form-group align-items-center">
+                    <p class="mb-0 footnote"><small><strong>NOTE:</strong> If you are watching a
+                            recorded
+                            class, you must sign in before you can ask your question. You will get an answer within
+                            48hrs.</small>
+                    </p>
+                </div>
 
                 <% if(user) { %>
                 <div class="form-group text-center marginTopBottomSmall">
@@ -57,7 +64,7 @@
                     </div>
                 </div>
                 <% } else { %>
-                <p class="mb-0 font-weight-bold text-center">You must <a href="\clubmembers\joinbrainsclub">Sign in</a>
+                <p class="mb-0 font-weight-bold text-center">You must <a href="\clubmembers\login">Sign in</a>
                     to send a question.</p>
 
                 <% } %>

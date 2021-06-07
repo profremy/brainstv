@@ -1,10 +1,15 @@
 const express = require('express');
 const brainstvController = require('./../controllers/brainstvController');
+const emailController = require('./../controllers/emailController');
 const authController = require('./../controllers/authController');
 const reviewController = require('./../controllers/reviewController');
 
 const router = express.Router();
 const reviewRouter = require('./reviewRoutes');
+
+router.route('/sendContactForm').post(emailController.uploadContactUsAttachmentFile, emailController.mailContactForm, brainstvController.getAllShows);
+
+router.route('/eClassRoomQuestion').post(emailController.sendClassQuestion, brainstvController.getAllClassroom);
 
 router.use(authController.isLoggedIn); // throwing error on all routes
 
@@ -65,7 +70,7 @@ router.route('/question-and-answers').get(brainstvController.getAllFaqs);
 
 //Contact Us
 router.route('/contact-us').get(brainstvController.getContactUs);
-router.route('/sendContactForm').post(authController.protect, authController.restrictTo('clubMember'), brainstvController.sendContactForm);
+// router.route('/sendContactForm').post(authController.protect, authController.restrictTo('clubMember'), brainstvController.sendContactForm);
 
 //Advertise
 router.route('/advertise').get(brainstvController.getAdverts);

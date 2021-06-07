@@ -1,7 +1,7 @@
 console.log('Script started!');
 import '@babel/polyfill';
 import { login, logout } from './login';
-import { updateSettings, createUserRecord } from './userAccountSettings';
+import { updateSettings, createUserRecord, sendPasswordResetLink, clubmemberPasswordReset } from './userAccountSettings';
 import { showUserAlert } from './alerts';
 
 // window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -141,6 +141,42 @@ const elements = {
 }
 
 {
+  // PROCESS AND SEND PASSWORD RESET LINK
+  const resetPassWord = document.querySelector('.forgottenpassword');
+  if (resetPassWord) {
+    resetPassWord.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.querySelector('.btn--save-password').textContent = 'Sending please wait...';
+
+      const email = document.getElementById('email').value;
+      await sendPasswordResetLink({ email }, 'reset');
+
+      document.getElementById('email').value = '';
+      document.querySelector('.btn--save-password').textContent = 'Send password reset email';
+    });
+  }
+}
+
+{
+  // IF PASSWORD RESET FORM IS OPEN WITH A RESET TOKEN, PROCESS PASSWORD RESET
+  const processPasswordReset = document.getElementById('formPasswordReset');
+  if (processPasswordReset) {
+    processPasswordReset.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.querySelector('.btn--save-password').textContent = 'Submitting please wait...';
+
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      await clubmemberPasswordReset({ password, confirmPassword }, 'passwordReset');
+
+      document.getElementById('password').value = '';
+      document.getElementById('confirmPassword').value = '';
+      document.querySelector('.btn--save-password').textContent = 'Submit';
+    });
+  }
+}
+
+{
   // Using AXIOS TO SUBMIT NEW REGISTRATION DATA
   if (elements.joinbrainsclub) {
     elements.joinbrainsclub.addEventListener('submit', async (e) => {
@@ -277,7 +313,7 @@ const elements = {
   const homeWorkUploadForm = document.getElementById('homeWorkUploadForm');
   const homeWorkUploadFile = document.getElementById('homeWorkUploadFile');
   if (homeWorkUploadForm) {
-    homeWorkUploadForm.addEventListener('submit', (e) => {
+    homeWorkUploadForm.addEventListener('submit', async (e) => {
       if (homeWorkUploadFile.value === '') {
         let message = 'This is unusual, there is no file to Upload!';
         showUserAlert('error', message);
@@ -285,6 +321,22 @@ const elements = {
       }
     });
   }
+}
+{
+  // Check if user attached homework file for upload.
+  // const contactBrainsTV = document.getElementById('contact_brainstv');
+  // var subjectDetails = document.getElementById('subject_details');
+  // if (contactBrainsTV) {
+  //   contactBrainsTV.addEventListener('submit', async (e) => {
+  //     e.preventDefault();
+  //     var str = subjectDetails.value;
+  //     if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(str)) {
+  //       let message = 'Url is not allowed details field';
+  //       showUserAlert('error', message);
+  //       return false;
+  //     }
+  //   });
+  // }
 }
 
 {
@@ -689,4 +741,26 @@ window.addEventListener('scroll', scrollThrottle);
     }
   }
 }
+
+// new birthday slider
+var swiper = new Swiper('.btvbirthday-slider', {
+  spaceBetween: 30,
+  effect: 'fade',
+  loop: true,
+  mousewheel: {
+    invert: false,
+  },
+  autoplay: {
+    delay: 2500,
+    disableOnInteraction: false,
+  },
+  // autoHeight: true,
+  pagination: {
+    el: '.btvbirthday-slider__pagination',
+    clickable: true,
+  },
+});
+
+// scheduled eclassroom thumbnail slider
+
 console.log('end of script');

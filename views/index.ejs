@@ -1,54 +1,59 @@
-<div class="jumbotron container-fluid">
-  <div class="d-flex flex-fill flex-wrap justify-content-center bd-highlight">
-    <div class="p-2 vw-100 bd-highlight mobileScreen boxShadowGridPhotos mb-3">
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="responsive-iframe" width="560" height="315"
-          src="https://www.youtube-nocookie.com/embed/<%#= livestream.livestreamURL %>?rel=0&modestbranding=1"
-          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-      </div>
-    </div>
+<div class="jumbotron container-fluid pb-1 px-0">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <div class="d-flex flex-fill flex-wrap justify-content-center bd-highlight">
+        <div class="p-2 vw-100 bd-highlight mobileScreen mb-3">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="responsive-iframe" width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/<%= livestream.livestreamURL %>?rel=0&modestbranding=1"
+              frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+        </div>
 
-    <div class="p-2 my-w-75 bd-highlight desktopScreen boxShadowGridPhotos mr-2 mb-3">
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="responsive-iframe" width="360" height="215"
-          src="https://www.youtube-nocookie.com/embed/<%= livestream.livestreamURL %>?rel=0&modestbranding=1"
-          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-      </div>
-    </div>
-    <div class="d-flex flex-fill flex-shrink-1 justify-content-around align-content-center flex-column bd-highlight">
+        <div class="p-2 myhome-w-75 bd-highlight desktopScreen mr-2 mb-3">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="responsive-iframe" width="360" height="215"
+              src="https://www.youtube-nocookie.com/embed/<%= livestream.livestreamURL %>?rel=0&modestbranding=1"
+              frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+        <div
+          class="d-flex flex-fill flex-shrink-1 justify-content-around align-content-center flex-column bd-highlight px-1">
 
-      <div class="rounded-pill bg-warning text-center mb-3 pt-2 pb-2 text-light">
-        <p class="mb-0 font-weight-bold">On Now: <%= liveTV[0].showingTime %></p>
-        <%= liveTV[0].showingStatus === 'On Now' ? liveTV[0].showingName : 'No Live Schedule' %>
-      </div>
-      <div class="rounded-pill bg-info text-center mb-3 pt-2 pb-2 text-light">
-        <p class="mb-0 font-weight-bold">Next: <%= liveTV[1].showingTime %></p>
-        <%= liveTV[1].showingStatus === 'Next' ? liveTV[1].showingName : 'No Live Schedule' %>
-      </div>
-      <div class="onNow rounded-pill bg-primary text-center mb-3 pt-2 pb-2 text-light">
-        <p class="mb-0 font-weight-bold">Later: <%= liveTV[2].showingTime %></p>
-        <%= liveTV[2].showingStatus === 'In Queue' ? liveTV[2].showingName : 'No Live Schedule' %>
-      </div>
-      <a href="/brainstv/tvschedule" class="text-center">Click For Full Schedule</a>
+          <div class="rounded-pill bg-warning text-center mb-3 pt-2 pb-2 text-light">
+            <p class="mb-0 font-weight-bold">On Now: <%= liveTV[0].showingTime %></p>
+            <%= liveTV[0].showingStatus === 'On Now' ? liveTV[0].showingName : 'No Live Schedule' %>
+          </div>
+          <div class="rounded-pill bg-info text-center mb-3 pt-2 pb-2 text-light">
+            <p class="mb-0 font-weight-bold">Next: <%= liveTV[1].showingTime %></p>
+            <%= liveTV[1].showingStatus === 'Next' ? liveTV[1].showingName : 'No Live Schedule' %>
+          </div>
+          <div class="onNow rounded-pill bg-primary text-center mb-3 pt-2 pb-2 text-light">
+            <p class="mb-0 font-weight-bold">Later: <%= liveTV[2].showingTime %></p>
+            <%= liveTV[2].showingStatus === 'In Queue' ? liveTV[2].showingName : 'No Live Schedule' %>
+          </div>
+          <a href="/brainstv/tvschedule" class="text-center">Click For Full Schedule</a>
 
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="section__recent__videos mt-3 p-3" style="background-color: #7eb379;">
+  <div class="section__recent__videos mt-3 mb-3 p-3" style="background-color: #7eb379;">
     <div class="auto-grid-front-page-shows">
       <% fourRecentVideos.forEach(recentVideo => { %>
       <div class="autoGridPhotos transform-scale">
         <a href="/brainstv/show/<%= recentVideo.slug %>">
-          <div class="resourcesOverlay"></div>
+          <div class="noBorderResourcesOverlay"></div>
         </a>
-        <div class="learningResourcesTopTitle"><%= recentVideo.showStatus %> </div>
+        <div class="learningResourcesTopTitle"><%#= recentVideo.showStatus %> </div>
 
         <img src="/images/show_images/<%= recentVideo.showThumbnail %>" width="100%" height="200" class="img-fluid"
           alt="<%= recentVideo.showTitle %>">
 
-        <div class="learningResourcesBottomTitle"><%= recentVideo.showTitle %> </div>
+        <div class="noBorderLearningResourcesBottomTitle"><%= recentVideo.showTitle %> </div>
       </div>
       <% }) %>
     </div>
@@ -57,7 +62,8 @@
     </div>
   </div>
 
-  <div class="container-fluid p-3" style="background-color: #355394;">
+  <!-- style="background-color: #355394;" -->
+  <!-- <div class="container-fluid p-3" style="background-color: #355394;">
     <h3 class="text-center text-light">Birthday Celebrants</h3>
     <div class="auto-grid-front-page-birthdays">
       <div class="left-column p-3">
@@ -67,23 +73,23 @@
 
       <div class="right-column p-2">
         <div id="birthdayCarousel" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
+          <div class="carousel-inner" style="width: 640px; height:560px;">
             <div class="carousel-item active">
-              <img src="/img/clubmembers/birthday.png" class="d-block img-fluid img-thumbnail" alt="Birthday Card">
+              <img src="/img/clubmembers/birthday.png" class="d-block img-fluid _img-thumbnail" alt="Birthday Card">
               <div class="carousel-caption d-none d-md-block p-3 birthdayMessage">
                 <h5>Let's Celebrate your birthday!</h5>
                 <p class="font-italic">We're happy to celebrate your special day with you here.</p>
               </div>
             </div>
-            <% birthdayCelebrants.forEach(celebrant => { %>
+            <%# birthdayCelebrants.forEach(celebrant => { %>
             <div class="carousel-item">
-              <img src="<%= celebrant.birthdayCardPath %>" class="d-block img-fluid img-thumbnail" alt="Birthday Card">
+              <img src="<%#= celebrant.birthdayCardPath %>" class="d-block img-fluid _img-thumbnail" alt="Birthday Card">
               <div class="carousel-caption d-none d-md-block p-3 birthdayMessage">
-                <h5><%= celebrant.fullName %> </h5>
-                <p class="font-italic"><%= celebrant.birthdayMessage %></p>
+                <h5><%#= celebrant.fullName %> </h5>
+                <p class="font-italic"><%#= celebrant.birthdayMessage %></p>
               </div>
             </div>
-            <% }) %>
+            <%# }) %>
           </div>
           <a class="carousel-control-prev" href="#birthdayCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -97,21 +103,50 @@
 
       </div>
     </div>
+  </div> -->
+  <!-- <div class="section__slider"></div> -->
+
+  <h3 class="text-center text-dark">Birthday Celebrants</h3>
+
+  <div class="btvbirthday-slider">
+    <div class="btvbirthday-slider__wrp swiper-wrapper">
+      <% birthdayCelebrants.forEach(celebrant => { %>
+      <div class="btvbirthday-slider__item swiper-slide">
+        <div class="btvbirthday-slider__img">
+
+          <img src="<%= celebrant.birthdayCardPath %>" alt="Birthday celebrant">
+        </div>
+        <div class="btvbirthday-slider__content">
+          <!-- <span class="btvbirthday-slider__code">26 December 2019</span> -->
+          <div class="btvbirthday-slider__title"><%= celebrant.fullName %></div>
+          <div class="btvbirthday-slider__text">"<%= celebrant.birthdayMessage %>"</div>
+          <div class="btvbirthday-slider__text text-dark font-italic "><small>Do you want your birthday card here? Join
+              the
+              Brains
+              club.</small></div>
+          <a href="/clubmembers/joinbrainsclub" class="btn btn-primary _btvbirthday-slider__button">Click
+            Here</a>
+        </div>
+      </div>
+
+      <% }) %>
+    </div>
+    <div class="btvbirthday-slider__pagination"></div>
   </div>
 
-  <div class="section__recent__shows _mt-3 p-3 timber-gradient">
+  <div class="section__recent__shows mt-3 p-3 timber-gradient">
     <div class="auto-grid-front-page-shows">
       <% eightRecentShows.forEach(recentShow => { %>
       <div class="autoGridPhotos transform-scale">
         <a href="/brainstv/show/<%= recentShow.slug %>">
-          <div class="resourcesOverlay"></div>
+          <div class="noBorderResourcesOverlay"></div>
         </a>
-        <div class="learningResourcesTopTitle"><%= recentShow.showStatus %> </div>
+        <!-- <div class="learningResourcesTopTitle"><%#= recentShow.showStatus %> </div> -->
 
-        <img src="/images/show_images/<%= recentShow.showThumbnail %>" width="100%" height="200" class="img-fluid"
+        <img src="/images/show_images/<%= recentShow.showThumbnail %>" width="100%" height="100%" class="_img-fluid"
           alt="<%= recentShow.showTitle %>">
 
-        <div class="learningResourcesBottomTitle"><%= recentShow.showTitle %> </div>
+        <div class="noBorderLearningResourcesBottomTitle"><%= recentShow.showTitle %> </div>
       </div>
       <% }) %>
     </div>
@@ -119,55 +154,66 @@
       <a href="/brainstv/shows" class="btn btn-outline-light mt-3">All Shows</a>
     </div>
   </div>
+</div>
 
-  <div class="section__recent__takePart _mt-3 p-3" style="background-color: #355394;">
-    <h3 class="text-center text-light">Trending Now: Take Part Before time is up</h3>
-    <div class="auto-grid-front-page-shows">
-      <% fourRecentTakePart.forEach(recentTakePart => { %>
-      <div class="autoGridPhotos transform-scale">
-        <a href="/brainstv/show/<%= recentTakePart.slug %>">
-          <div class="resourcesOverlay"></div>
-        </a>
-        <div class="learningResourcesTopTitle"><%= recentTakePart.showStatus %> </div>
+<div class="section__recent__takePart mt-3 p-3" style="background-color: #355394;">
+  <h3 class="text-center text-light">Trending Now: Take Part Before time is up</h3>
+  <div class="auto-grid-front-page-shows">
+    <% fourRecentTakePart.forEach(recentTakePart => { %>
+    <div class="autoGridPhotos transform-scale">
+      <a href="/brainstv/show/<%= recentTakePart.slug %>">
+        <div class="noBorderResourcesOverlay"></div>
+      </a>
+      <!-- <div class="learningResourcesTopTitle"><%#= recentTakePart.showStatus %> </div> -->
 
-        <img src="/images/show_images/<%= recentTakePart.showThumbnail %>" width="100%" height="200" class="img-fluid"
-          alt="<%= recentTakePart.showTitle %>">
+      <img src="/images/show_images/<%= recentTakePart.showThumbnail %>" width="100%" height="200" class="img-fluid"
+        alt="<%= recentTakePart.showTitle %>">
 
-        <div class="learningResourcesBottomTitle"><%= recentTakePart.showTitle %> </div>
-      </div>
-      <% }) %>
+      <div class="noBorderLearningResourcesBottomTitle"><%= recentTakePart.showTitle %> </div>
     </div>
-    <div class="text-center">
-      <a href="/brainstv/takepart" class="btn btn-outline-light mt-3">All TakePart</a>
-    </div>
+    <% }) %>
   </div>
+  <div class="text-center">
+    <a href="/brainstv/takepart" class="btn btn-outline-light mt-3">All TakePart</a>
+  </div>
+</div>
 
-  <div class="recentlyRegistered bg-yellow mb-2 p-3 _boxShadowGridPhotos">
+<!-- <div class="recentlyRegistered bg-yellow mb-2 p-3 _boxShadowGridPhotos">
     <h3 class="text-center bg-dark text-light">Recently Joined</h3>
     <div class="recent-flex">
 
-      <% recentMembers.forEach(member => { %>
+      <%# recentMembers.forEach(member => { %>
       <%# console.log(member) %>
       <div class="card recent_item" style="width: 100px;">
-        <% if (member.profileImagePath != null) { %>
-        <img height="100" width="100" src="<%= member.profileImagePath %>" class="card-img-top" alt="Profile Image"
+        <%# if (member.profileImagePath != null) { %>
+        <img height="100" width="100" src="<%#= member.profileImagePath %>" class="card-img-top" alt="Profile Image"
           class="recentImg">
-        <% } else if (member.gender != 'Female') { %>
+        <%# } else if (member.gender != 'Female') { %>
         <img height="100" width="100" src="/images/male_avatar.png" class="card-img-top" alt="Profile Image"
           class="recentImg">
-        <% } else { %>
+        <%# } else { %>
         <img height="100" width="100" src="/images/female_avatar.png" class="card-img-top" alt="Profile Image"
           class="recentImg">
-        <% } %>
+        <%# } %>
         <div class="recentImgName">
-          <p class="card-text">Joined <%=  member.dateJoined.toISOString().split('T')[0] %></p>
+          <p class="card-text">Joined <%#=  member.dateJoined.toISOString().split('T')[0] %></p>
         </div>
       </div>
-      <% }) %>
+      <%# }) %>
 
     </div>
 
-  </div>
+  </div> -->
+
+<!-- <div class="slider" id="main-slider"> -->
+<!-- outermost container element -->
+<!-- <div class="slider-wrapper"> -->
+<!-- innermost wrapper element -->
+<%# birthdayCelebrants.forEach(celebrant => { %>
+<!-- <img src="<%#= celebrant.birthdayCardPath %>" alt="First" class="slide" />slides -->
+<%# }) %>
+<!-- </div> -->
+<!-- </div> -->
 
 
 

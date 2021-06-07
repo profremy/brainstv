@@ -1,29 +1,39 @@
 const express = require('express');
 const clubmemberController = require('./../controllers/clubmemberController');
 const authController = require('./../controllers/authController');
+const brainstvController = require('./../controllers/brainstvController');
+const emailController = require('./../controllers/emailController');
 const { patch } = require('./reviewRoutes');
 
 const router = express.Router();
 
 // Forgotten Password
 router.route('/forgotten').get(clubmemberController.getForgottenForm);
-
-router.use(authController.isLoggedIn);
-
-router.post('/login', authController.login);
-router.get('/logout', authController.logout);
-router.post('/join', authController.join);
 router.post('/forgotPassword', authController.forgotPassword);
-router.patch('/resetPassword/:token', authController.resetPassword);
+// router.patch('/resetPassword/:token', authController.resetPassword);
+
+// Get Reset Password Form
+router.get('/resetPassword/:token', clubmemberController.getAccountPasswordResetForm);
+// Post new Password
+router.patch('/clubmemberPasswordReset/:token', authController.resetPassword);
+
+// router.use(authController.isLoggedIn);
+
+//  Logout
+router.get('/logout', authController.logout);
+
+// Sign in page
+router.route('/login').get(clubmemberController.getLoginForm);
+router.post('/login', authController.login);
+
+//New Club member Route
+router.route('/joinbrainsclub').get(clubmemberController.newMember);
+router.post('/join', authController.join);
 
 //Thank you for Registering page
 router.route('/registered').get(clubmemberController.registered);
 
-// Sign in page
-router.route('/login').get(clubmemberController.getLoginForm);
-
-//New Club member Route
-router.route('/joinbrainsclub').get(clubmemberController.newMember);
+router.route('/sendActivityTakePartEmail').post(emailController.uploadActivityTakePartFile, emailController.mailActivityTakePart, brainstvController.getAllShows);
 
 // authController.protect is a  middleware function. Since middleware runs
 // runs in sequence, we can prevent repeating it for each route below

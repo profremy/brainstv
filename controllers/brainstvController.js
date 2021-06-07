@@ -153,10 +153,6 @@ exports.getAllFaqs = catchAsync(async (req, res, next) => {
 exports.getContactUs = catchAsync(async (req, res, next) => {
   res.status(200).render('brainstv/contact-us', { pageTitle: 'Contact Us' });
 });
-exports.sendContactForm = catchAsync(async (req, res, next) => {
-  console.log(req.body);
-  res.send('Email sent');
-});
 
 exports.getAdverts = catchAsync(async (req, res, next) => {
   res.status(200).render('brainstv/advertise', { pageTitle: 'Advertise with us' });

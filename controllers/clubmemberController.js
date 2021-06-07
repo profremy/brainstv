@@ -163,6 +163,12 @@ exports.getForgottenForm = (req, res) => {
   res.status(200).render('clubmembers/signin/forgotten', { pageTitle: 'Forgotten Password' });
 };
 
+exports.getAccountPasswordResetForm = (req, res) => {
+  res.status(200).render('clubmembers/profile/account_password_reset', {
+    pageTitle: 'Reset Password',
+  });
+};
+
 /*
 exports.createClubMember = catchAsync(async (req, res, next) => {
   const clubmember = new ClubMember({

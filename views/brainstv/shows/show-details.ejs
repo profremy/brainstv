@@ -1,4 +1,4 @@
-<div class="jumbotron container-fluid instagram-gradient _bg-show-details">
+<div class="jumbotron container-fluid instagram-gradient _bg-show-details pb-1">
     <!-- <hr class="my-1 document-divider"> -->
     <!-- <div class="_show-details-container bg-light rounded p-3"> -->
     <% if (show.showType === "Video") { %>
@@ -105,7 +105,8 @@
             <button type="button" class="btn btn-outline-info mb-2 revealSendHomeworkForm"><i class="fa fa-envelope"
                     aria-hidden="true"></i>Send</button>
             <div class="classWork bg-white p-2 hideElement">
-                <form action="/" method="POST" enctype="multipart/form-data" id="homeWorkUploadForm">
+                <form id="homeWorkUploadForm" action="/clubmembers/sendActivityTakePartEmail" method="POST"
+                    enctype="multipart/form-data">
                     <div class="form-row align-items-center">
                         <div class="col-md-5 mb-2">
                             <!-- <label for="fullname">Show/Resource Title</label> <span class="requiredfield">*</span> -->
@@ -118,10 +119,12 @@
                         </div>
                     </div>
                     <div class="form-row align-items-center">
-                        <div class="col-md-5 mb-2 p-2">
-                            <label for="homework" class="form-control-label">Attach a file for this
-                                <%= show.showType %> <span class="requiredfield">*</span></label>
-                            <input type="file" class="form-control-file" name="homework" id="homeWorkUploadFile">
+                        <div class="col-md-10 mb-2 p-2">
+                            <label for="selectedActivityTakePartFile" class="form-control-label">Attach a file for this
+                                <%= show.showType %> <span class="requiredfield"><small> [ You may attach: jpeg | jpg |
+                                        png ]</small> *</span></label>
+                            <input type="file" class="form-control-file" name="selectedActivityTakePartFile"
+                                id="homeWorkUploadFile">
                         </div>
                     </div>
                     <div class="form-row align-items-center marginTopBottomSmall">
@@ -218,7 +221,7 @@
     </form>
     <hr class="my-2 document-divider bg-light">
     <!-- Start Comment and Related Shows Section -->
-    <div class="container bg-light rounded-lg">
+    <div class="container bg-light rounded-lg pb-2">
         <div class="row">
             <div class="col-sm">
                 <div class="input-group margin-bottom-sm">
@@ -366,35 +369,46 @@
                 </div>
 
                 <hr class="my-1 document-divider">
-                <div class="main-flex">
+
+
+                <div class="auto-grid-front-page-shows-related-resources">
                     <% allShows.forEach(show => { %>
                     <% if(currentShowClass === show.className.className && currentShowId != show.id) { %>
-                    <div class="col-sm-5 flex-item">
-                        <div class="embed-responsive _embed-responsive-16by9">
-                            <a href="/brainstv/show/<%= show.slug %>">
-                                <div class="resourcesOverlay"></div>
-                            </a>
-                            <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                            <!-- <iframe width="560" height="315"
-                                src="https://www.youtube-nocookie.com/embed/<%#= show.showId %>?rel=0&modestbranding=1"
-                                frameborder="0"
-                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe> -->
+                    <div class="autoGridPhotos transform-scale">
+                        <a href="/brainstv/show/<%= show.slug %>">
+                            <div class="noBorderResourcesOverlay"></div>
+                        </a>
+                        <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
 
-                            <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="100%"
-                                class="img-fluid" alt="<%= show.showTitle %>">
-                            <%# if (show.className.className.startsWith('Y')) { %>
-                            <div class="learningResourcesBottomTitle"><%= show.showTitle %>
-                                <!-- <div class="learningResourcesBottomTitle"><%#= show.className.className.split('E')[0]%> -->
-                            </div>
-                            <%# } else { %>
-                            <!-- <div class="learningResourcesBottomTitle"><%#= show.className.className %> </div> -->
-                            <%# } %>
-                        </div>
+                        <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
+                            class="img-fluid" alt="<%= show.showTitle %>">
+
+                        <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
                     </div>
                     <% } %>
                     <% }) %>
                 </div>
+
+
+                <!-- <div class="main-flex">
+                    <%# allShows.forEach(show => { %>
+                    <%# if(currentShowClass === show.className.className && currentShowId != show.id) { %>
+
+                    <div class="col-sm-5 flex-item">
+                        <div class="embed-responsive _embed-responsive-16by9">
+                            <a href="/brainstv/show/<%#= show.slug %>">
+                                <div class="resourcesOverlay"></div>
+                            </a>
+                            <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div>
+
+                            <img src="/images/show_images/<%#= show.showThumbnail %>" width="100%" height="100%"
+                                class="img-fluid" alt="<%#= show.showTitle %>">
+                            <div class="learningResourcesBottomTitle"><%#= show.showTitle %></div>
+                        </div>
+                    </div>
+                    <%# } %>
+                    <%# }) %>
+                </div> -->
             </div>
             <!-- End of relatedShows -->
 

@@ -198,7 +198,7 @@ exports.restrictTo = (...roles) => {
 };
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
-  // 1) Get user based on posted emailHelp
+  // 1) Get user based on posted email
   const clubmember = await ClubMember.findOne({ email: req.body.email }).exec();
   if (!clubmember) {
     return next(new AppError(`There is no club member with email address ${req.body.email}`, 404));
@@ -209,9 +209,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await clubmember.save({ validateBeforeSave: false });
 
   // 3) Send it to user's email
-  const resetURL = `${req.protocol}://${req.get('host')}/clubmembers/resetPassword/${resetToken}`;
+  // const resetURL = `${req.protocol}://${req.get('host')}/clubmembers/resetPassword/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and password confirmation to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
+  // const message = `Forgot your password? Submit a PATCH request with your new password and password confirmation to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
 
   try {
     // await sendEmail({
@@ -219,6 +219,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     //   subject: 'Your password reset request token (valid for 10 mins)',
     //   message,
     // });
+
+    const resetURL = `${req.protocol}://${req.get('host')}/clubmembers/resetPassword/${resetToken}`;
+    await new Email(clubmember, resetURL).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',

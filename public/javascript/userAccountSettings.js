@@ -18,6 +18,9 @@ export const updateSettings = async (data, type, id) => {
 
     if (res.data.status === 'success') {
       showUserAlert('success', `${type.toUpperCase()} updated successfully!`);
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
     }
   } catch (err) {
     showUserAlert('error', err.response.data.message);
@@ -50,5 +53,61 @@ export const createUserRecord = async (data, type) => {
     }
   } catch (err) {
     showUserAlert('error', err.response.data.message);
+  }
+};
+
+export const sendPasswordResetLink = async (data, type) => {
+  try {
+    const url = type === 'reset' ? '/clubmembers/forgotPassword' : '';
+
+    const res = await axios({
+      method: 'POST',
+      url,
+      data,
+    });
+
+    if (res.data.status === 'success') {
+      showUserAlert('success', `${type.toUpperCase()} password link sent successfully!`);
+      if (type === 'reset') {
+        window.setTimeout(() => {
+          location.assign('/');
+        }, 1500);
+      } else {
+        window.setTimeout(() => {
+          location.assign('/');
+        }, 1500);
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    showUserAlert('error', 'An error occurred. Email not sent!');
+  }
+};
+
+export const clubmemberPasswordReset = async (data, type) => {
+  try {
+    const token = window.location.href.split('/')[5];
+    const url = type === 'passwordReset' ? `/clubmembers/clubmemberPasswordReset/${token}` : '';
+
+    const res = await axios({
+      method: 'PATCH',
+      url,
+      data,
+    });
+
+    if (res.data.status === 'success') {
+      showUserAlert('success', `${type.toUpperCase()} was successfully! Please log in again.`);
+      if (type === 'passwordReset') {
+        window.setTimeout(() => {
+          location.assign('/clubmembers/login');
+        }, 1500);
+      } else {
+        window.setTimeout(() => {
+          location.assign('/');
+        }, 1500);
+      }
+    }
+  } catch (err) {
+    showUserAlert('error', 'Token is invalid or has expired');
   }
 };
