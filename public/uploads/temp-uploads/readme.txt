@@ -1,0 +1,1 @@
+This folder is a temporary folder where attachments are uploaded first before being email. The folder will always have this one file as the attached files are immediately deleted after the email is flagged as successful.
