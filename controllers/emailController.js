@@ -189,6 +189,17 @@ exports.mailContactForm = catchAsync(async (req, res, next) => {
 });
 
 exports.sendClassQuestion = catchAsync(async (req, res, next) => {
+  var fullnamestr = req.body.fullname;
+  var questionstr = req.body.askQuestion;
+
+  if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(questionstr) || new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(fullnamestr)) {
+    // return new AppError('URL is not accepted on this form!.', 400), false;
+    return res.render('brainstv/eclassroom', {
+      pageTitle: 'E-Classroom',
+      errorMessage: 'URL is not accepted on this form!',
+    });
+  }
+
   const webForm = `
   <h2>E-Class Question</h2>
     <p>A Club Member has sent in the following question</p>
