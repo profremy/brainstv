@@ -58,11 +58,13 @@ const emailTransporter = () => {
     return nodemailer.createTransport({
       host: process.env.BTV_EMAIL_HOST,
       port: process.env.BTV_EMAIL_PORT,
-      secure: true,
+      secure: false,
       auth: {
         user: process.env.BTV_EMAIL,
         pass: process.env.BTV_EMAIL_PASSWORD,
       },
+      //Transport Layer Security - use only for testing on local server
+      tls: { rejectUnauthorized: false },
     });
   }
 

@@ -72,14 +72,10 @@ export const sendPasswordResetLink = async (data, type) => {
         window.setTimeout(() => {
           location.assign('/');
         }, 1500);
-      } else {
-        window.setTimeout(() => {
-          location.assign('/');
-        }, 1500);
       }
     }
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     showUserAlert('error', 'An error occurred. Email not sent!');
   }
 };

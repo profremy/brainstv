@@ -8744,10 +8744,6 @@ var sendPasswordResetLink = /*#__PURE__*/function () {
                 window.setTimeout(function () {
                   location.assign('/');
                 }, 1500);
-              } else {
-                window.setTimeout(function () {
-                  location.assign('/');
-                }, 1500);
               }
             }
 
