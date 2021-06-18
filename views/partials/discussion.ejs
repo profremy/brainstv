@@ -1,0 +1,32 @@
+<div class="sectionDiscussion _hideElement" id="discussionPanel">
+
+    <form id="discussionForm" class="bg-white p-3 rounded">
+        <h4 class="display-4 letterSpacing-3">Discuss</h4>
+        <br>
+        <input id="name" name="name" value="<%= user ? `${user.firstname} ${user.lastname}` : ''  %>"
+            class="form-control" placeholder="Name">
+        <br>
+        <textarea id="message" name="message" class="form-control" placeholder="Type Here">
+</textarea>
+        <br>
+        <button id="send" class="btn btn-outline-info">Send</button>
+        <!-- <button type="submit" id="send" class="btn btn-outline-info">Send</button> -->
+
+    </form>
+    <div class="row marginTopBottomSmall">
+        <div class="col mt-1">
+            <button type="button" class="btn btn-outline-info closeDiscussionPanel"><i class="fa fa-times-circle-o"
+                    aria-hidden="true"></i>Close Discussion</button>
+        </div>
+    </div>
+    <div class="overflow-auto shadow-sm p-3" style="max-height: 600px;">
+        <% if(discussion != null && discussion.length > 0) { %>
+        <li class="list-group-item">Discussion Messages</li>
+        <ul class="list-unstyled" id="messages">
+
+        </ul>
+        <% } else { %>
+        <li class="list-group-item">No Messages</li>
+        <% } %>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="jumbotron container-fluid">
+    <!-- <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Search Result</a>
+    </nav> -->
+
+    <% if (show != null) { %>
+    <p>Showing a total of <strong><%= show.length %></strong> results</p>
+    <% } %>
+    <hr class="my-1 document-divider" />
+
+    <div class="table-responsive-sm shadow">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="hideElement">
+                    <th scope="col">Title</th>
+                    <th scope="col">Introduction</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% show.forEach(show => { %>
+                <tr>
+                    <td><%= show.showTitle %></td>
+                    <% if(show.introParagraph.length < 60) { %>
+                    <td> <%= show.introParagraph %></td>
+                    <% } else { %>
+                    <td><%= show.introParagraph.slice(0, 60) + '...' %></td>
+                    <% } %>
+                    <td><%= show.showType %></td>
+                    <td>
+                        <a href="/brainstv/show/<%= show.slug %>" target="_blank">
+                            <div style="height:100%;width:100%">
+                                View '<%= show.showTitle.toLowerCase() %>'
+                            </div>
+                        </a>
+                    </td>
+
+
+                </tr>
+                <% }) %>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

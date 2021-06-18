@@ -123,12 +123,12 @@
                         <div class="custom-control custom-radio">
                             <input type="radio" class="custom-control-input form__input gender" value="Male" id="boy"
                                 name="gender">
-                            <label class="custom-control-label" for="boy">Male</label>
+                            <label class="custom-control-label alignLabels" for="boy">Male</label>
                         </div>
                         <div class="custom-control custom-radio mb-3">
                             <input type="radio" class="custom-control-input gender" value="Female" id="girl"
                                 name="gender">
-                            <label class="custom-control-label form__input" for="girl">Female</label>
+                            <label class="custom-control-label form__input alignLabels" for="girl">Female</label>
                         </div>
 
                         <h5 class="marginTopBottomSmall">Class <i><small>(Example: Year 6)</small></i> <span
@@ -223,7 +223,7 @@
                             </div>
                             <div id="passwordError" class="form-field-error hideElement"></div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group hideElement" id="showGDPR">
                             <div class="custom-control custom-checkbox">
                                 <input class="custom-control-input" type="checkbox" name="signedConsent" id="check"
                                     value="YES">
@@ -238,6 +238,9 @@
                         </div>
                         <div class="switchIdButtons" style="display: flex !important;justify-content: space-between;">
                             <a id="switch-2list-contact-details" class="btn btn-primary msf-cta">Previous</a>
+                            <a href="https://flutterwave.com/pay/brainsclub" target="_blank" id="pay"
+                                class="btn btn-warning">Pay
+                                Annual Subscription</a>
                         </div>
                         <!-- <div class="submit-success alert-primary marginTopBottomSmall">Form successfully submitted</div>
                         <div class="submit-error alert-warning marginTopBottomSmall">There was an error, review all

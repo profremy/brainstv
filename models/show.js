@@ -159,11 +159,19 @@ showSchema.virtual('showStatus').get(function () {
   }
 });
 
-// Because of parent referencing used in for Reviews (Show/Clubmember)
-// Virtual Populate is required to get make reviews available in the Shows
+// Because of parent referencing used in for Reviews (Show/Clubmember as parents)
+// Virtual Populate is required to make reviews available in the Shows
 showSchema.virtual('reviews', {
   ref: 'Review', // name of model to reference
   foreignField: 'show', // this is the id in the reviewModel
+  localField: '_id', // this is the id in the showModel
+});
+
+// Because of parent referencing used in for Discussion (Show/Clubmember as parents)
+// Virtual Populate is required to make Discussion message available in the Shows
+showSchema.virtual('discussions', {
+  ref: 'Message', // name of model to reference
+  foreignField: 'show', // this is the id in the discussionModel
   localField: '_id', // this is the id in the showModel
 });
 

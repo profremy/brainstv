@@ -19,7 +19,7 @@
     <div class="col-md-6 mb-2">
         <select class="custom-select" name="className" id="className" required>
             <% classes.forEach(c => { %>
-            <% if (c.id == livestream.className) { %>
+            <% if (c.id == livestream.className.id) { %>
             <option selected label="<%= c.className %>" value="<%= c.id %>">
             </option>
             <% } else { %>

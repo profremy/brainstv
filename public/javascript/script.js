@@ -2,6 +2,7 @@ console.log('Script started!');
 import '@babel/polyfill';
 import { login, logout } from './login';
 import { updateSettings, createUserRecord, sendPasswordResetLink, clubmemberPasswordReset } from './userAccountSettings';
+// import { updateSettings, createUserRecord, sendPasswordResetLink, clubmemberPasswordReset, sendMessage, getMessages } from './userAccountSettings';
 import { showUserAlert } from './alerts';
 
 // window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -10,6 +11,159 @@ import { showUserAlert } from './alerts';
 //   alert(message);
 //   return false;
 // };
+/*
+let socket = io();
+
+// Discussion
+
+(() => {
+  // Using AXIOS TO SEND DISCUSSION DATA
+  const discussionForm = document.getElementById('discussionForm');
+  if (discussionForm) {
+    discussionForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.getElementById('send').textContent = 'Sending...';
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+      socket.emit('message', { name, message });
+
+      await sendMessage({ name, message });
+      document.getElementById('message').value = '';
+
+      document.getElementById('send').textContent = 'Send';
+    });
+  }
+
+  getMessages();
+})();
+socket.on('message', addMessages);
+
+socket.on('connection', () => {
+  console.log('Connected to server!');
+});
+
+socket.on('disconnect', () => {
+  console.log('Disconnected from server!');
+});
+
+function addMessages(message) {
+  let messages = document.getElementById('messages');
+  if (messages) {
+    let chatMessage = `
+    <li class="media">
+      <img src="/images/blank-profile-picture.png" class="mr-3 rounded-circle" alt="Profile Avatar" style="width:30px; height:30px;">
+      <div class="media-body">
+        <h5 class="mt-0 mb-1">${message.name}</h5>
+        <p><small>${message.message}</small></p>
+      </div>
+    </li>`;
+    messages.insertAdjacentHTML('beforeend', chatMessage);
+  }
+}
+
+async function getMessages() {
+  console.log('Getting messages');
+
+  const url = '/discussion/messages';
+  const res = await axios
+    .get(`${url}`)
+    .then(function (res) {
+      console.log(res);
+      const currentMessages = res.data;
+      currentMessages.forEach(addMessages);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+  // .then(function () {
+  //   showUserAlert('success', 'A new Message Arrived');
+  // });
+}
+
+// Send Message
+async function sendMessage(message) {
+  const url = '/discussion/messages';
+  const res = await axios
+    .post(`${url}`, {
+      name: name,
+      message: message,
+    })
+    .then(function (res) {
+      console.log(res);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+*/
+
+/*
+let socket = io();
+
+(() => {
+  let send = document.getElementById('send');
+  if (send) {
+    send.addEventListener('click', async (e) => {
+      console.log('send clicked');
+      e.preventDefault();
+      let name = document.getElementById('name');
+      let message = document.getElementById('message');
+      window.setTimeout(() => {
+        document.getElementById('send').textContent = 'Sending...';
+      }, 2000);
+      await sendMessage({
+        name: name.value,
+        message: message.value,
+      });
+      document.getElementById('send').textContent = 'Send';
+      // document.getElementById('message').value = '';
+      getMessages();
+      console.log('Getting messages');
+    });
+  }
+  getMessages();
+  console.log('Getting messages');
+})();
+
+socket.on('message', addMessages);
+
+socket.on('connection', () => {
+  console.log('Connected to server!');
+});
+
+socket.on('disconnect', () => {
+  console.log('Disconnected from server!');
+});
+
+function addMessages(message) {
+  // console.log('Added message');
+  let messages = document.getElementById('messages');
+  if (messages) {
+    let chatMessage = `
+    <li class="media">
+      <img src="/images/blank-profile-picture.png" class="mr-3 rounded-circle" alt="Profile Avatar" style="width:30px; height:30px;">
+      <div class="media-body">
+        <h5 class="mt-0 mb-1">${message.name}</h5>
+        <p><small>${message.message}</small></p>
+      </div>
+    </li>`;
+    messages.insertAdjacentHTML('beforeend', chatMessage);
+  }
+}
+
+function getMessages() {
+  $.get('/discussion/messages', (data) => {
+    data.forEach(addMessages);
+    // console.log('Message displayed');
+  });
+}
+
+function sendMessage(message) {
+  $.post('/discussion/messages', message);
+  document.getElementById('message').value = '';
+  // console.log('Message sent and saved');
+}
+*/
 
 // DOM ELEMENTS
 const elements = {
@@ -362,6 +516,231 @@ const elements = {
 }
 
 {
+  // Poll Panel
+  const pollPanel = document.getElementById('pollPanel');
+  const openPollPanel = document.querySelector('.openPollPanel');
+  const closePollPanel = document.querySelector('.closePollPanel');
+
+  if (openPollPanel) {
+    openPollPanel.addEventListener('click', (e) => {
+      if (e) {
+        pollPanel.classList.remove('hideElement');
+        openPollPanel.classList.add('hideElement');
+      }
+    });
+  }
+
+  if (closePollPanel) {
+    closePollPanel.addEventListener('click', (e) => {
+      if (e) {
+        pollPanel.classList.add('hideElement');
+        openPollPanel.classList.remove('hideElement');
+      }
+    });
+  }
+}
+
+{
+  // Discussion Panel
+  const discussionPanel = document.getElementById('discussionPanel');
+  const openDiscussionPanel = document.querySelector('.openDiscussionPanel');
+  const closeDiscussionPanel = document.querySelector('.closeDiscussionPanel');
+
+  if (openDiscussionPanel) {
+    openDiscussionPanel.addEventListener('click', (e) => {
+      if (e) {
+        discussionPanel.classList.remove('hideElement');
+        openDiscussionPanel.classList.add('hideElement');
+      }
+    });
+  }
+
+  if (closeDiscussionPanel) {
+    closeDiscussionPanel.addEventListener('click', (e) => {
+      if (e) {
+        discussionPanel.classList.add('hideElement');
+        openDiscussionPanel.classList.remove('hideElement');
+      }
+    });
+  }
+}
+
+{
+  // Front end voting script for Favorite part of school day
+  const schoolDayPollForm = document.getElementById('vote-form');
+  if (schoolDayPollForm) {
+    schoolDayPollForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (localStorage.favoritePartOfSchoolDayVote) {
+        return showUserAlert('error', 'Your have already voted!');
+      }
+      const choice = document.querySelector('input[name=partOfSchoolDay]:checked').value;
+
+      const data = {
+        partOfSchoolDay: choice,
+      };
+
+      // fetch('http://localhost:5000/poll/favoriteSchoolDay', {
+      fetch('/poll/favoriteSchoolDay', {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+      showUserAlert('success', 'Your vote was transmitted successfully!');
+      localStorage.setItem('favoritePartOfSchoolDayVote', 'f-p-o-s-d-p-c');
+    });
+  }
+
+  // Fetch data from database to display chart on front end
+  // fetch('http://localhost:5000/poll/favoriteSchoolDay')
+  fetch('/poll/favoriteSchoolDay')
+    .then((res) => res.json())
+    .then((data) => {
+      //console.log(data);
+      const votes = data.schoolday;
+      const totalVotes = votes.length;
+
+      // Count vote points -  acc/current
+      const voteCounts = votes.reduce((acc, vote) => ((acc[vote.partOfSchoolDay] = (acc[vote.partOfSchoolDay] || 0) + vote.points), acc), {});
+      let dataPoints = [
+        { label: 'Recess', y: voteCounts.Recess },
+        { label: 'Lunch', y: voteCounts.Lunch },
+        { label: 'Art', y: voteCounts.Art },
+      ];
+
+      const schoolDayResultContainer = document.getElementById('schoolDayResultContainer');
+      if (schoolDayResultContainer) {
+        const chart = new CanvasJS.Chart('schoolDayResultContainer', {
+          animationEnabled: true,
+          theme: 'theme1',
+          title: {
+            text: `Total Votes: ${totalVotes}`,
+          },
+          data: [
+            {
+              type: 'column',
+              dataPoints: dataPoints,
+            },
+          ],
+        });
+        chart.render();
+
+        // Enable pusher logging - don't include this in production
+        //Pusher.logToConsole = true;
+
+        var pusher = new Pusher('a22577bf8709837c8fb4', {
+          cluster: 'eu',
+        });
+
+        var channel = pusher.subscribe('schoolDay-Poll');
+        channel.bind('schoolDay-Vote', function (data) {
+          dataPoints = dataPoints.map((x) => {
+            if (x.label == data.partOfSchoolDay) {
+              x.y += data.points;
+              return x;
+            } else {
+              return x;
+            }
+          });
+          chart.render();
+        });
+      }
+    });
+}
+
+{
+  // Front end voting script for Most Admired Parent
+  const mostAdmiredPollForm = document.getElementById('vote-mostAdmired-form');
+  if (mostAdmiredPollForm) {
+    mostAdmiredPollForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (localStorage.mostAdmiredVote) {
+        return showUserAlert('error', 'Your have already voted!');
+      }
+      const choice = document.querySelector('input[name=mostAdmired]:checked').value;
+
+      const data = {
+        mostAdmired: choice,
+      };
+
+      // fetch('http://localhost:5000/poll/mostAdmiredParent', {
+      fetch('/poll/mostAdmiredParent', {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+      showUserAlert('success', 'Your vote was transmitted successfully!');
+      localStorage.setItem('mostAdmiredVote', 'm-a-p-c');
+    });
+  }
+
+  // Fetch data from database to display chart on front end
+  // fetch('http://localhost:5000/poll/mostAdmiredParent')
+  fetch('/poll/mostAdmiredParent')
+    .then((res) => res.json())
+    .then((data) => {
+      //console.log(data);
+      const votes = data.mostAdmired;
+      const totalVotes = votes.length;
+
+      // Count vote points -  acc/current
+      const voteCounts = votes.reduce((acc, vote) => ((acc[vote.mostAdmired] = (acc[vote.mostAdmired] || 0) + vote.points), acc), {});
+      let dataPoints = [
+        { label: 'Daddy', y: voteCounts.Daddy },
+        { label: 'Mummy', y: voteCounts.Mummy },
+      ];
+
+      const mumAndDadResultContainer = document.getElementById('mumAndDadResultContainer');
+      if (mumAndDadResultContainer) {
+        const chart = new CanvasJS.Chart('mumAndDadResultContainer', {
+          animationEnabled: true,
+          theme: 'theme1',
+          title: {
+            text: `Total Votes: ${totalVotes}`,
+          },
+          data: [
+            {
+              type: 'column',
+              dataPoints: dataPoints,
+            },
+          ],
+        });
+        chart.render();
+
+        // Enable pusher logging - don't include this in production
+        //Pusher.logToConsole = true;
+
+        var pusher = new Pusher('a22577bf8709837c8fb4', {
+          cluster: 'eu',
+        });
+
+        var channel = pusher.subscribe('mostAdmired-Poll');
+        channel.bind('mostAdmired-Vote', function (data) {
+          dataPoints = dataPoints.map((x) => {
+            if (x.label == data.mostAdmired) {
+              x.y += data.points;
+              return x;
+            } else {
+              return x;
+            }
+          });
+          chart.render();
+        });
+      }
+    });
+}
+
+{
   // Disable form submit button
   // DELEGATION
   if (elements.btnCheck && elements.checkBox) {
@@ -613,22 +992,6 @@ window.addEventListener('scroll', scrollThrottle);
         }
       }
     }
-    /*
-    if (switchId === 'switch-') {
-      var id = targetLink.slice(7);
-      var idString = id + '-list';
-      simulateClick(idString);
-
-      // $(document).on('click', '#switch-list-moreInfo', function (event) {
-      //   event.preventDefault();
-      //   $('#list-moreInfo' + '-list').click();
-      // });
-    } else if (remainderzero === 2) {
-      id = targetLink.slice(8);
-      idString = id + '-list';
-      simulateClick(idString);
-    }
-    */
   });
 }
 
@@ -761,6 +1124,13 @@ var swiper = new Swiper('.btvbirthday-slider', {
   },
 });
 
-// scheduled eclassroom thumbnail slider
-
+const pay = document.getElementById('pay');
+const showGDPR = document.getElementById('showGDPR');
+if (pay) {
+  pay.addEventListener('click', (e) => {
+    if (e) {
+      showGDPR.classList.remove('hideElement');
+    }
+  });
+}
 console.log('end of script');

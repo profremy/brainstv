@@ -1,0 +1,50 @@
+<div class="jumbotron container-fluid">
+    <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+            aria-hidden="true"></i><span>Back</span></a>
+
+    <hr class="my-1 document-divider" />
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand">Search Reviews By Review</a>
+        <form action="/brainstvadmins/reviews" method="GET" class="form-inline my-2 my-lg-0 searchForm">
+            <input type="search" class="form-control mr-sm-2" name="review" value="<%= searchOptions.review %>"
+                placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 searchBtn" type="submit" id="loader">Search</button>
+        </form>
+    </nav>
+    <hr class="my-1" />
+    <% if (review != null) { %>
+    <p>Listing a total of <strong><%= review.length %></strong> Reviews</p>
+    <% } %>
+
+    <div class="table-responsive-sm">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Review</th>
+                    <th scope="col">ClubMember</th>
+                    <th scope="col">Show</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% review.forEach(review => { %>
+                <tr>
+                    <td style="width: 40%;"><%= review.review %></td>
+                    <td><%= review.clubmember.firstname %> <%= review.clubmember.lastname %></td>
+                    <td><%= review.show.showTitle %></td>
+                    <td><%= review.rating %></td>
+                    <td><%= review.createdAt.toISOString().split('T')[0] %></td>
+                    <td>
+                        <!-- this is ejs rendering of delete form button in partials folder -->
+                        <%- include('../../partials/deleteForm', { url: `/brainstvadmins/reviews/${review.id}` }) %>
+                    </td>
+                </tr>
+                <% }) %>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

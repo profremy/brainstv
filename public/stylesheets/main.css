@@ -30,6 +30,44 @@ body {
 
 }
 
+.alignLabels {
+    line-height: initial;
+}
+
+.letterSpacing-3 {
+    letter-spacing: 3px;
+}
+
+#messages li {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#messages li.media:first-child {
+    border-radius: 0 0 1.5rem 0;
+    background-color: var(--warning);
+}
+
+#messages li.media:not(:first-child) {
+    border-radius: 1.5rem 0 1.5rem 0;
+}
+
+
+#messages li.media:nth-of-type(odd):not(:first-child) {
+    /* background-color: #cfd8dc; */
+    background-color: #69f0ae
+}
+
+#messages li.media:nth-of-type(even) {
+    /* background-color: #eceff1; */
+    background-color: #b9f6ca;
+}
+
+.chartSizing {
+    width: 100%;
+    height: 400px;
+}
+
 input[type="date"]:before {
     content: attr(placeholder) !important;
     color: #929496;

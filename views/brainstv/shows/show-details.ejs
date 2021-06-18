@@ -134,16 +134,31 @@
                         </div>
                         <div class="col-sm-3 mb-2">
                             <button type="button" class="btn btn-outline-danger cancelOp"><i
-                                    class="fa fa-times-circle-o" aria-hidden="true"></i><span>Cancel</span></button>
+                                    class="fa fa-times-circle-o" aria-hidden="true"></i><span>Close</span></button>
                         </div>
 
                     </div>
                 </form>
             </div>
             <% } else if (show.takePartType === 'Discussion') { %>
-            <a href="#" class="btn btn-outline-info">Start Discussion</a>
+
+            <button type="button" class="btn btn-outline-info mb-3 openDiscussionPanel hideElement"><i
+                    class="fa fa-comments-o" aria-hidden="true"></i>Start Discussion</button>
+            <!-- This next line holds the discussion for current discussion show -->
+            <%- include('../../partials/discussion.ejs') %>
+
             <% } else if (show.takePartType === 'Poll') { %>
-            <a href="#" class="btn btn-outline-info">Take a Poll</a>
+            <button type="button" class="btn btn-outline-primary mb-3 openPollPanel hideElement"><i
+                    class="fa fa-bar-chart" aria-hidden="true"></i>Open Poll Panel</button>
+            <% if (show.showTitle === 'School day' && user.role === 'clubMember') { %>
+            <%- include('../../partials/schoolDayPoll.ejs') %>
+            <% } else if(show.showTitle === 'Mum and Dad' && user.role === 'clubMember') { %>
+            <%- include('../../partials/mumAndDadPoll.ejs') %>
+            <% } else { %>
+            <p class="text-center"><small>Not for <strong><%= user.role %></strong>. Only Users with club member status
+                    can participate.</small></p>
+            <% } %>
+
             <% } %>
             <% } %>
 
@@ -162,7 +177,7 @@
 
 
             <% if(show.ageGroup || show.footNote) { %>
-            <div class="d-flex flex-wrap justify-content-around bg-warning p-2 mt-3">
+            <div class="d-flex flex-wrap justify-content-around bg-warning p-2 mt-2">
                 <p class="mb-0"><%= show.ageGroup%></p>
                 <% if(show.footNote) { %>
                 <p class="mb-0 text-danger">|</p>

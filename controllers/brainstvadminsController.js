@@ -8,8 +8,12 @@ const ClassName = require('../models/class');
 const Tvschedule = require('../models/tvschedule');
 const Faq = require('../models/faq');
 const Show = require('../models/show');
+const Review = require('../models/reviewModel');
+const Message = require('../models/discussionModel');
 const Livestream = require('../models/livestream');
 const Birthday = require('../models/birthday');
+const Schoolday = require('../models/schoolDayModel');
+const MostAdmired = require('../models/mumAndDadModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
@@ -334,9 +338,11 @@ exports.updateBirthday = catchAsync(async (req, res, next) => {
 exports.getLivestream = catchAsync(async (req, res, next) => {
   let livestream;
   try {
-    livestream = await Livestream.find({});
+    livestream = await Livestream.find({}).populate({ path: 'className', model: ClassName }).exec();
+    const eclass = await ClassName.find({});
     res.render('brainstvadmins/livestream/index', {
       livestream: livestream,
+      eclass: eclass,
       pageTitle: 'Live Stream',
     });
   } catch {
@@ -351,6 +357,7 @@ exports.newLivestream = catchAsync(async (req, res, next) => {
 exports.createLivestream = catchAsync(async (req, res, next) => {
   const livestream = new Livestream({
     livestreamURL: req.body.livestreamURL,
+    className: req.body.className,
   });
 
   try {
@@ -381,6 +388,40 @@ exports.getAdminUsers = catchAsync(async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.redirect('brainstvadmins');
+  }
+});
+
+exports.getAllReviews = catchAsync(async (req, res, next) => {
+  let searchOptions = {};
+  if (req.query.review != null && req.query.review !== '') {
+    searchOptions.review = new RegExp(req.query.review, 'i');
+  }
+  try {
+    const review = await Review.find(searchOptions).populate({ path: 'show', select: 'showTitle' });
+    res.render('brainstvadmins/reviews', {
+      review,
+      searchOptions: req.query,
+      pageTitle: 'All Reviews',
+    });
+  } catch (error) {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.getAllDiscussions = catchAsync(async (req, res, next) => {
+  let searchOptions = {};
+  if (req.query.message != null && req.query.message !== '') {
+    searchOptions.message = new RegExp(req.query.message, 'i');
+  }
+  try {
+    const message = await Message.find(searchOptions);
+    res.render('brainstvadmins/discussions', {
+      message,
+      searchOptions: req.query,
+      pageTitle: 'All Discussions',
+    });
+  } catch (err) {
+    res.redirect('/brainstvadmins');
   }
 });
 
@@ -751,9 +792,10 @@ exports.editClass = catchAsync(async (req, res, next) => {
 
 exports.editLivestream = catchAsync(async (req, res, next) => {
   try {
-    const livestream = await Livestream.findById(req.params.id);
+    const livestream = await Livestream.findById(req.params.id).populate({ path: 'className', model: ClassName }).exec();
     res.render('brainstvadmins/livestream/edit', {
       livestream: livestream,
+      className: req.body.className,
       pageTitle: 'Edit Live Stream',
     });
   } catch {
@@ -835,9 +877,9 @@ exports.updateLivestream = catchAsync(async (req, res, next) => {
   let livestream;
 
   try {
-    livestream = await Livestream.findById(req.params.id);
+    livestream = await Livestream.findById(req.params.id).populate({ path: 'className', model: ClassName }).exec();
     livestream.livestreamURL = req.body.livestreamURL;
-
+    livestream.className = req.body.className;
     await livestream.save();
     res.redirect('/brainstvadmins/livestream');
   } catch {
@@ -966,6 +1008,70 @@ exports.deleteBirthday = catchAsync(async (req, res, next) => {
     res.redirect('/brainstvadmins/birthdays');
   } catch {
     res.redirect('/brainstvadmins/birthdays');
+  }
+});
+
+exports.getFavoritePartOfSchool = catchAsync(async (req, res, next) => {
+  try {
+    const schoolday = await Schoolday.find({});
+    res.status(200).render('brainstvadmins/favoritePartOfSchool/index', {
+      schoolday,
+      pageTitle: 'Favorite Part Of School Day Votes',
+    });
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.deleteFavoritePartOfSchoolById = catchAsync(async (req, res, next) => {
+  try {
+    const deleteVote = await Schoolday.findById(req.params.id);
+    await deleteVote.remove();
+    res.redirect('/brainstvadmins/favoritePartOfSchool');
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.getMumAndDadVote = catchAsync(async (req, res, next) => {
+  try {
+    const mostAdmired = await MostAdmired.find({});
+    res.status(200).render('brainstvadmins/mumAndDad/index', {
+      mostAdmired,
+      pageTitle: 'Most Admired Votes',
+    });
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.deleteMumAndDadVoteById = catchAsync(async (req, res, next) => {
+  try {
+    const deleteVote = await MostAdmired.findById(req.params.id);
+    await deleteVote.remove();
+    res.redirect('/brainstvadmins/mumAndDad');
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.deleteMemberReview = catchAsync(async (req, res, next) => {
+  try {
+    const deleteReview = await Review.findById(req.params.id);
+    await deleteReview.remove();
+    res.redirect('/brainstvadmins/reviews');
+  } catch (error) {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.deleteMemberDiscussion = catchAsync(async (req, res, next) => {
+  try {
+    const deleteDiscussion = await Message.findById(req.params.id);
+    await deleteDiscussion.remove();
+    res.redirect('/brainstvadmins/discussions');
+  } catch (error) {
+    res.redirect('/brainstvadmins');
   }
 });
 

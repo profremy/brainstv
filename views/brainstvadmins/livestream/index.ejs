@@ -6,24 +6,30 @@
     <nav class="navbar navbar-light bg-info">
         <a class="navbar-brand">Live Stream URL ID</a>
     </nav>
+    <p><span class="requiredfield"><small>Please be aware it is better to edit a stream here than to delete and add a
+                new one.
+                Deleted Stream will
+                temporarily alter the layout of the related page(s) until it is add back.</small></span></p>
     <hr class="my-1" />
+
     <div class="table-responsive-sm">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Live Stream URL ID</th>
+                    <th scope="col">Live Stream To Class</th>
                     <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody>
                 <% livestream.forEach(stream => { %>
-
                 <tr>
                     <th scope="row"><a href="/brainstvadmins/livestream/<%= stream.id %>/edit" class="text-success"
                             title="Edit Category"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </th>
                     <td><%= stream.livestreamURL %></td>
+                    <td><%= stream.className.className %></td>
                     <td>
                         <!-- this is ejs rendering of delete form button in partials folder -->
                         <%- include('../../partials/deleteForm', { url: `/brainstvadmins/livestream/${stream.id}` }) %>

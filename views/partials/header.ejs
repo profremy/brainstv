@@ -21,14 +21,14 @@
       <i class="fa fa-linkedin-square fa-lg" aria-hidden="true"></i>
     </div>
     <div class="search-bar">
-      <form class="form-inline my-2 my-lg-0" id="searchForm">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <form action="/brainstv/search" method="GET" class="form-inline my-2 my-lg-0" id="searchForm">
+        <input type="search" class="form-control mr-sm-2" name="showTitle"
+          value="<%#= allShowsA_Z != null ? searchOptions.showTitle : '' %>" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" id="searchBtn" type="submit">Search</button>
       </form>
     </div>
     <div class="navbar" id="auth-link">
-      <% if (user) { %>
-      <div class="d-flex align-items-center">
+      <% if (user) { %> <div class="d-flex align-items-center">
         <a id="userOptions" class="nav-link">
           <div class="userCaretDown">
             <i class="fa fa-caret-down" aria-hidden="true"></i>

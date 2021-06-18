@@ -9,6 +9,9 @@ const reviewRouter = require('./reviewRoutes');
 
 router.route('/sendContactForm').post(emailController.uploadContactUsAttachmentFile, emailController.mailContactForm, brainstvController.getAllShows);
 
+// Home Page Header Search Functionality
+router.route('/search').get(brainstvController.searchDocuments);
+
 router.route('/eClassRoomQuestion').post(emailController.sendClassQuestion, brainstvController.getAllClassroom);
 
 router.use(authController.isLoggedIn); // throwing error on all routes

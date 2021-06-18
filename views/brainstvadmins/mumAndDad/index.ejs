@@ -1,0 +1,42 @@
+<div class="jumbotron container-fluid">
+    <a href="/brainstvadmins" class="btn btn-info marginTopBottomSmall"><i class="fa fa-arrow-circle-left"
+            aria-hidden="true"></i><span>Back</span></a>
+    <h4>Mum and Dad Poll</h4>
+    <hr class="my-1 document-divider" />
+    <nav class="navbar navbar-light bg-info">
+        <a class="navbar-brand letterSpacing-3 text-uppercase text-light">Clear Votes</a>
+        <!-- <a href="/brainstvadmins/dropMumAndDadVotes" class="btn btn-lg btn-warning"><i
+                class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>Clear All
+            Votes</a> -->
+    </nav>
+    <hr class="my-1" />
+    <% if (mostAdmired != null) { %>
+    <p>Listing a total of <strong><%= mostAdmired.length %></strong> votes</p>
+    <% } %>
+
+    <div class="table-responsive-sm">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Vote</th>
+                    <th scope="col">Point</th>
+                    <th scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% mostAdmired.forEach(vote => { %>
+                <tr>
+                    <td><%= vote.mostAdmired %></td>
+                    <td><%= vote.points %></td>
+                    <td>
+                        <!-- this is ejs rendering of delete form button in partials folder -->
+                        <%- include('../../partials/deleteForm', { url: `/brainstvadmins/mumAndDad/${vote.id}` }) %>
+                    </td>
+                </tr>
+                <% }) %>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

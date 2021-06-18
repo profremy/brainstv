@@ -1,17 +1,19 @@
 const path = require('path');
-
 const dotenv = require('dotenv');
 const result = dotenv.config({ path: './.env' });
 // if (process.env.NODE_ENV !== 'production') {
 // }
 
-process.on('uncaughtException', (err) => {
-  console.log(err.name, err.message);
-  console.log('UNCAUGHT EXCEPTION! Shutting down ...');
-  process.exit(1);
-});
+// process.on('uncaughtException', (err) => {
+//   console.log(err.name, err.message);
+//   console.log('UNCAUGHT EXCEPTION! Shutting down ...');
+//   process.exit(1);
+// });
 
+const http = require('http');
 const express = require('express');
+const socketIO = require('socket.io');
+const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
@@ -24,8 +26,6 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-// const indexRouter = require('./routes/index');
-//const loginRouter = require('./routes/llogin');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const brainstvadminRouter = require('./routes/brainstvadmins');
@@ -37,6 +37,8 @@ const flashinfoRouter = require('./routes/flashinfos');
 const popupRouter = require('./routes/popups');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const pollRouter = require('./routes/pollRoutes');
+// const discussionRouter = require('./routes/discussionRoutes');
 
 // Import model to expose local variables to all routes
 // Then use app.locals.<variable name> = <variable> in app.use(function) below
@@ -50,11 +52,17 @@ const Show = require('./models/show');
 const Livestream = require('./models/livestream');
 const Birthday = require('./models/birthday');
 const Tvschedule = require('./models/tvschedule');
+const Schoolday = require('./models/schoolDayModel');
+const Message = require('./models/discussionModel');
 
-const app = express();
+// const app = express();
+let app = express();
+let server = http.createServer(app);
+// let io = socketIO(server, { wsEngine: 'ws' });
+let io = socketIO(server);
 
 const PORT = process.env.PORT || 5000;
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 //For Production server only
 const DB = process.env.DB_CONN_STRING.replace('<password>', process.env.DB_CONN_PW);
 
@@ -93,7 +101,7 @@ app.use(
         childSrc: ["'self'", 'blob:'],
         imgSrc: ["'self'", 'data:', '*.ytimg.com', 'blob:'],
         formAction: ["'self'"],
-        connectSrc: ["'self'", "'unsafe-inline'", 'data:', 'blob:', 'https://*.stripe.com', '*.unpkg.com', 'https://*.mapbox.com', 'https://*.cloudflare.com/', 'https://bundle.js:*', 'ws://localhost:*/', 'http://localhost:*/'],
+        connectSrc: ["'self'", "'unsafe-inline'", 'data:', 'blob:', 'https://*.stripe.com', '*.unpkg.com', 'https://*.mapbox.com', 'https://*.cloudflare.com/', 'https://bundle.js:*', 'ws://localhost:*/', 'http://localhost:*/', 'https://*.pusher.com'],
         upgradeInsecureRequests: [],
       },
     },
@@ -117,6 +125,7 @@ app.use(express.static('public'));
 
 // BodyParser, reading data from body into req.body
 // This object will contain key-value pairs, where the value can be a string or array (when extended is false), or any type (when extended is true).
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json({ limit: '10kb' })); // this is bodyParser for postman testing
 app.use(cookieParser());
@@ -160,12 +169,17 @@ app.use(async (req, res, next) => {
   app.locals.classes = await ClassName.find({});
   app.locals.allShows = await Show.find({}).sort({ datePosted: -1 });
   app.locals.allShowsA_Z = await Show.find({}).sort({ showTitle: 1 });
-  app.locals.livestream = await Livestream.findOne({});
+  app.locals.livestream = await Livestream.findOne({}).sort({ createdAt: -1 });
+  app.locals.classLivestream = await Livestream.find({}, { livestreamURL: 1, className: 1 });
   app.locals.liveTV = await Tvschedule.find({}).limit(3).sort({ showingStatus: -1 });
+  app.locals.newsUpdateVideos = await Show.find({ showType: 'Video' }).limit(3).sort({ datePosted: -1 });
   app.locals.fourRecentVideos = await Show.find({ showType: 'Video' }).limit(4).sort({ datePosted: -1 });
   app.locals.eightRecentShows = await Show.find({ showType: 'Show' }).limit(8).sort({ datePosted: -1 });
   app.locals.fourRecentTakePart = await Show.find({ showType: 'TakePart' }).limit(4).sort({ datePosted: -1 });
   app.locals.birthdayCelebrants = await Birthday.find({});
+  // app.locals.schoolDayData = await Schoolday.find({});
+  app.locals.discussion = await Message.find({}).sort({ createdAt: -1 });
+  // app.locals.discussion = await Discussion.findOne({}); //.sort({ createdAt: -1 });
 
   next();
 });
@@ -176,6 +190,13 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Middleware to initialize user --Delete this block
+app.use(function (req, res, next) {
+  res.locals.searchOptions = null;
+
+  next();
+});
+
 // Middleware to check request time and headers
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
@@ -183,6 +204,59 @@ app.use((req, res, next) => {
   //console.log(req.cookies);
 
   next();
+});
+
+/*
+// 13/06/2021 -  Discussion
+var Message = mongoose.model('Message', {
+  name: String,
+  message: String,
+});
+*/
+
+// app.get('/messages', (req, res) => {
+//   Message.findById(req.params.id, (err, messages) => {
+//     res.send(messages);
+//   }).populate('discussions');
+// });
+
+app.get('/messages', (req, res) => {
+  Message.find({}, (err, messages) => {
+    res.send(messages);
+  });
+});
+
+app.get('/messages', (req, res) => {
+  Message.find({}, (err, messages) => {
+    res.send(messages);
+  });
+});
+
+app.post('/messages', (req, res) => {
+  const noURLName = req.body.name;
+  const noURLMessage = req.body.message;
+  if (new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(noURLName) || new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?').test(noURLMessage)) {
+    return res.render('brainstv/shows', {
+      pageTitle: 'Welcome',
+      errorMessage: 'URL is not accepted on discussion activities!',
+    });
+  }
+
+  let newMessage = Message.create(req.body);
+  io.emit('message', req.body);
+  res.status(201).json({
+    status: 'success',
+    data: {
+      discussion: newMessage,
+    },
+  });
+
+  // let message = new Message(req.body);
+  // message.save((err) => {
+  //   if (err) sendStatus(500);
+  //   io.emit('message', req.body);
+  //   res.sendStatus(200);
+  // });
 });
 
 // Connect to live database
@@ -215,6 +289,9 @@ app.use('/sitelogos', sitelogoRouter);
 app.use('/flashinfos', flashinfoRouter);
 app.use('/popups', popupRouter);
 app.use('/reviews', reviewRouter);
+app.use('/poll', pollRouter);
+// app.use('/', discussionRouter);
+// app.use('/discussion', discussionRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`The requested url ${req.originalUrl} could not be found on this server!`, 404));
@@ -222,8 +299,21 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-const server = app.listen(PORT, () => {
+// const server = app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
+});
+
+io.on('connection', (socket) => {
+  console.log(`Client connected  to server: ${socket.id}`);
+
+  socket.on('message', (message) => {
+    console.log(`From Client: ${message}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client was disconnected');
+  });
 });
 
 process.on('unhandledRejection', (err) => {

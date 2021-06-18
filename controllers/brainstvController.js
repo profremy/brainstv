@@ -161,3 +161,22 @@ exports.getAdverts = catchAsync(async (req, res, next) => {
 exports.getShop = catchAsync(async (req, res, next) => {
   res.status(200).render('brainstv/shop', { pageTitle: 'Shop with discounts on us' });
 });
+
+exports.searchDocuments = catchAsync(async (req, res, next) => {
+  let searchOptions = {};
+  if (req.query.showTitle != null && req.query.showTitle !== '') {
+    searchOptions.showTitle = new RegExp(req.query.showTitle, 'i');
+  }
+  console.log(req.query);
+
+  try {
+    const show = await Show.find(searchOptions).sort({ showTitle: 1 });
+    res.status(200).render('brainstv/search', {
+      show: show,
+      searchOptions: req.query,
+      pageTitle: 'Search results',
+    });
+  } catch (err) {
+    res.redirect('/');
+  }
+});

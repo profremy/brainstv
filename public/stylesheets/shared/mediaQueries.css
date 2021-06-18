@@ -103,6 +103,10 @@
         width: 60%;
     }
 
+    .sideThumbnails {
+        position: relative;
+    }
+
     .auto-grid-front-page-birthdays {
         /* box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.9); */
         display: grid;
@@ -252,6 +256,10 @@
 
 @media only screen and (max-width: 667px) {
 
+    .wideTablets {
+        /* display: none !important; */
+    }
+
     .twelveplusfeedback {
         top: 80%;
         left: 130%;
@@ -265,6 +273,10 @@
     .autoGridPhotos {
         position: relative;
         width: 100%;
+    }
+
+    .sideThumbnails {
+        position: relative;
     }
 
     /* Header ejs*/

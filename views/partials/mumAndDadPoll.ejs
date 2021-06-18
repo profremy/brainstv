@@ -1,0 +1,52 @@
+<div class="sectionPoll" id="pollPanel">
+    <h2 class="text-center"><%= show.showTitle %> Poll</h2>
+    <hr class="my-1 documment-divider">
+
+    <div class="row">
+        <div class="col-sm-3 d-flex flex-column _justify-content-around border-right">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-takepoll-tab" data-toggle="pill" href="#v-pills-takepoll"
+                    role="tab" aria-controls="v-pills-takepoll" aria-selected="true">Take Poll</a>
+                <a class="nav-link" id="v-pills-pollresult-tab" data-toggle="pill" href="#v-pills-pollresult" role="tab"
+                    aria-controls="v-pills-pollresult" aria-selected="false">
+                    See Result
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-takepoll" role="tabpanel"
+                    aria-labelledby="v-pills-takepoll-tab">
+                    <!-- A: Daddy, B: Mummy -->
+                    <p>Vote for who you admire the most.</p>
+                    <form id="vote-mostAdmired-form" class="bg-white p-3 rounded">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="mostAdmired" id="daddy"
+                                Value="Daddy">
+                            <label class="custom-control-label alignLabels" for="daddy">Daddy</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="mostAdmired" id="mummy"
+                                Value="Mummy">
+                            <label class="custom-control-label alignLabels" for="mummy">Mummy</label>
+                        </div>
+                        <input type="submit" value="Vote" class="btn btn-outline-primary mt-3 letterSpacing-3">
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="v-pills-pollresult" role="tabpanel"
+                    aria-labelledby="v-pills-pollresult-tab">
+                    <div id="mumAndDadResultContainer" class="chartSizing">
+                        Mom and Dad Poll result chart is here
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row marginTopBottomSmall">
+            <div class="col mt-1">
+                <button type="button" class="btn btn-outline-primary closePollPanel"><i class="fa fa-times-circle-o"
+                        aria-hidden="true"></i><span>Close Poll
+                        Panel</span></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,6 +19,12 @@ router.route('/upload-app-file').post(authController.protect, authController.res
 // View All Admin Users Route
 router.route('/viewAdmin').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getAdminUsers);
 
+// View All Reviews Route
+router.route('/reviews').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getAllReviews);
+
+// View All Discussion/Messaging Route
+router.route('/discussions').get(authController.protect, authController.restrictTo('superAdmin', 'basicAdmin'), brainstvadminsController.getAllDiscussions);
+
 //New Admin User Route
 router.route('/new').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.newAdminUser);
 
@@ -143,5 +149,19 @@ router.route('/shows/:id').delete(authController.protect, authController.restric
 
 // Delete TV Schedule by id
 router.route('/tvschedule/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteTVSchedule);
+
+// Get Favorite part of school day
+router.route('/favoritePartOfSchool').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getFavoritePartOfSchool);
+
+router.route('/favoritePartOfSchool/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteFavoritePartOfSchoolById);
+
+// Get mostAdmired votes
+router.route('/mumAndDad').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getMumAndDadVote);
+
+router.route('/mumAndDad/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteMumAndDadVoteById);
+
+router.route('/reviews/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteMemberReview);
+
+router.route('/discussions/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteMemberDiscussion);
 
 module.exports = router;

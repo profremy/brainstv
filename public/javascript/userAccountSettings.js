@@ -1,6 +1,8 @@
 /* eslint-disable */
+import 'regenerator-runtime/runtime';
 import axios from 'axios';
 import { showUserAlert } from './alerts';
+let socket = io();
 
 // type is either 'password', 'regisration', 'userprofile' or 'review'
 // 'http://localhost:5000/clubmembers/updateMe'
@@ -107,3 +109,38 @@ export const clubmemberPasswordReset = async (data, type) => {
     showUserAlert('error', 'Token is invalid or has expired');
   }
 };
+
+/*
+// Send Message
+export const sendMessage = async (message) => {
+  try {
+    const url = '/discussion/messages';
+    const res = await axios.post(`${url}`, message);
+    const newMessage = res.message;
+
+    if (res.data.statusText === 'OK') {
+      showUserAlert('success', 'Message sent!');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Get Chat Messages
+export const getMessages = async () => {
+  try {
+    const url = '/discussion/messages';
+
+    const res = await axios.get(`${url}`);
+    const currentMessages = res.data;
+
+    if (currentMessages.length > 0) {
+      console.log(currentMessages.length);
+      console.log(`Saved Message: ${currentMessages}`);
+      currentMessages.forEach(addMessages);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+*/
