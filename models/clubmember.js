@@ -71,6 +71,10 @@ const clubmemberSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
+  confirmRegEmail: {
+    type: Boolean,
+    default: false,
+  },
   dateJoined: {
     type: Date,
     required: true,

@@ -27,9 +27,6 @@ const createSendToken = (clubmember, statusCode, res) => {
   // Remove password from output
   clubmember.password = undefined;
 
-  // res.status(statusCode).render('clubmembers/registered', { status: 'success', token, pageTitle: 'Registeration Completed', data: { clubmember } });
-  // res.status(200).render('clubmembers/registered', { pageTitle: 'Registeration Completed' });
-
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -80,11 +77,13 @@ exports.join = catchAsync(async (req, res, next) => {
   }
 
   const newClubmember = await clubmember.save();
-
-  const url = `${req.protocol}://${req.get('host')}/clubmembers/profile/${clubmember._id}/edit`;
+  // const url = `${req.protocol}://${req.get('host')}/clubmembers/profile/${clubmember._id}/edit`;
+  const url = `${req.protocol}://${req.get('host')}/clubmembers/confirmRegistrationEmail/${clubmember._id}`;
   await new Email(clubmember, url).sendWelcome();
+  // await new Email(clubmember, url).sendWelcome();
 
-  createSendToken(newClubmember, 201, res);
+  //createSendToken(newClubmember, 201, res);
+  next();
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -97,6 +96,12 @@ exports.login = catchAsync(async (req, res, next) => {
   // 2) Check if member exists && password is correct. Password needed inclusion here
   // with ".select('+password')" because select is set to false in model.
   const clubmember = await ClubMember.findOne({ email }).select('+password');
+
+  // Check that the user have confirmed their email address
+  if (!clubmember.confirmRegEmail) {
+    return next(new AppError('You must confirm your email address to login.', 401)); //Unauthorized
+  }
+
   // correct = await clubmemember.correctPassword(password, clubmemember.password);
   if (!clubmember || !(await clubmember.correctPassword(password, clubmember.password))) {
     return next(new AppError('Incorrect email or password', 401)); //Unauthorized

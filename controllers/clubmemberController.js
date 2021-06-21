@@ -155,6 +155,17 @@ exports.registered = (req, res) => {
   res.render('clubmembers/registered', { pageTitle: 'Registeration Completed' });
 };
 
+exports.confirmRegistrationEmail = catchAsync(async (req, res, next) => {
+  try {
+    const clubmemberId = req.originalUrl.split('/')[3];
+    req.params.id = clubmemberId;
+    await ClubMember.findByIdAndUpdate({ _id: req.params.id }, { confirmRegEmail: true });
+    return res.redirect('/clubmembers/login');
+  } catch (err) {
+    return res.redirect('/');
+  }
+});
+
 exports.getLoginForm = (req, res) => {
   res.status(200).render('clubmembers/signin/index', { pageTitle: 'Log into your account' });
 };

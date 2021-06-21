@@ -9585,8 +9585,12 @@ var elements = (_elements = {
                 document.getElementById('password').value = '';
                 document.getElementById('confirmPassword').value = '';
                 document.getElementById('check').value = '';
+                (0, _alerts.showUserAlert)('success', "Email confirmation link was created and sent successfully!");
+                window.setTimeout(function () {
+                  location.assign('/clubmembers/registered');
+                }, 1500);
 
-              case 32:
+              case 34:
               case "end":
                 return _context4.stop();
             }
@@ -10391,7 +10395,7 @@ var swiper = new Swiper('.btvbirthday-slider', {
     invert: false
   },
   autoplay: {
-    delay: 2500,
+    delay: 10000,
     disableOnInteraction: false
   },
   // autoHeight: true,
@@ -10440,7 +10444,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63911" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61145" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

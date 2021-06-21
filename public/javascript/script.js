@@ -373,6 +373,12 @@ const elements = {
       document.getElementById('password').value = '';
       document.getElementById('confirmPassword').value = '';
       document.getElementById('check').value = '';
+
+      showUserAlert('success', `Email confirmation link was created and sent successfully!`);
+
+      window.setTimeout(() => {
+        location.assign('/clubmembers/registered');
+      }, 1500);
     });
   }
 }
@@ -1114,7 +1120,7 @@ var swiper = new Swiper('.btvbirthday-slider', {
     invert: false,
   },
   autoplay: {
-    delay: 2500,
+    delay: 10000,
     disableOnInteraction: false,
   },
   // autoHeight: true,

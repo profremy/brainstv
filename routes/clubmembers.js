@@ -12,6 +12,9 @@ router.route('/forgotten').get(clubmemberController.getForgottenForm);
 router.post('/forgotPassword', authController.forgotPassword);
 // router.patch('/resetPassword/:token', authController.resetPassword);
 
+// Confirm Registration Email
+router.get('/confirmRegistrationEmail/:id', clubmemberController.confirmRegistrationEmail);
+
 // Get Reset Password Form
 router.get('/resetPassword/:token', clubmemberController.getAccountPasswordResetForm);
 // Post new Password
