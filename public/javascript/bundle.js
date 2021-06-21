@@ -10395,7 +10395,7 @@ var swiper = new Swiper('.btvbirthday-slider', {
     invert: false
   },
   autoplay: {
-    delay: 10000,
+    delay: 6000,
     disableOnInteraction: false
   },
   // autoHeight: true,
