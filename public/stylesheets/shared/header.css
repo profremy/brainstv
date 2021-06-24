@@ -110,3 +110,7 @@ header {
 header.sticky {
     transition: all 8s ease;
 }
+
+.dropdown-menu-custom-left {
+    left: -35px;
+}

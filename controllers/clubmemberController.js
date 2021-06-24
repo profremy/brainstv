@@ -117,6 +117,9 @@ exports.getAllClubMembers = catchAsync(async (req, res, next) => {
 exports.newMember = async (req, res) => {
   renderNewMember(res, new ClubMember());
 };
+exports.newMemberIntroPage = async (req, res) => {
+  res.status(200).render('clubmembers/join-brains-club', { pageTitle: 'Joining Brains club is easy' });
+};
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.clubmember.id;

@@ -31,6 +31,7 @@ router.post('/login', authController.login);
 
 //New Club member Route
 router.route('/joinbrainsclub').get(clubmemberController.newMember);
+router.route('/joining-brains-club-is-easy').get(clubmemberController.newMemberIntroPage);
 router.post('/join', authController.join);
 
 //Thank you for Registering page
