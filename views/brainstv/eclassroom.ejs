@@ -39,12 +39,12 @@
     </ul>
     <h2 class="text-center mt-3">Scheduled Live Classes</h2>
 
-    <div class="tab-content timber-gradient mb-5 p-3" id="pills-tabContent">
+    <div class="tab-content _timber-gradient mb-5 p-3" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-sortA-Z" role="tabpanel" aria-labelledby="pills-sortA-Z-tab">
 
             <div class="auto-grid-front-page-shows mb-3">
                 <% allShowsA_Z.forEach(show => { %>
-                <% if(show.showType === "Video") { %>
+                <% if(show.showType === "E-Class") { %>
                 <div class="autoGridPhotos transform-scale">
                     <a href="/brainstv/show/<%= show.slug %>">
                         <div class="noBorderResourcesOverlay"></div>
@@ -64,7 +64,7 @@
 
             <div class="auto-grid-front-page-shows mb-3">
                 <% allShows.forEach(show => { %>
-                <% if(show.showType === "Video") { %>
+                <% if(show.showType === "E-Class") { %>
                 <div class="autoGridPhotos transform-scale">
                     <a href="/brainstv/show/<%= show.slug %>">
                         <div class="noBorderResourcesOverlay"></div>

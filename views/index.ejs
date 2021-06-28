@@ -25,18 +25,33 @@
         <% }) %>
         <div
           class="d-flex flex-fill flex-shrink-1 justify-content-around align-content-center flex-column bd-highlight px-1">
-
+          <% console.log(liveTV) %>
           <div class="rounded-pill bg-warning text-center mb-3 pt-2 pb-2 text-light">
-            <p class="mb-0 font-weight-bold">On Now: <%= liveTV[0].showingTime %></p>
-            <%= liveTV[0].showingStatus === 'On Now' ? liveTV[0].showingName : 'No Live Schedule' %>
+            <% if(liveTV[0]) { %>
+            <p class="mb-0 font-weight-bold"><%= liveTV[0].showingTime %></p>
+            <%= liveTV[0].showingName %>
+            <%= liveTV[0].showingDate.toDateString() %>
+            <% } else { %>
+            <p class="mb-0 font-weight-bold pt-3 pb-3">No Live Schedule</p>
+            <% } %>
           </div>
           <div class="rounded-pill bg-info text-center mb-3 pt-2 pb-2 text-light">
-            <p class="mb-0 font-weight-bold">Next: <%= liveTV[1].showingTime %></p>
-            <%= liveTV[1].showingStatus === 'Next' ? liveTV[1].showingName : 'No Live Schedule' %>
+            <% if(liveTV[1]) { %>
+            <p class="mb-0 font-weight-bold"><%= liveTV[1].showingTime %></p>
+            <%= liveTV[1].showingName %>
+            <%= liveTV[1].showingDate.toDateString() %>
+            <% } else { %>
+            <p class="mb-0 font-weight-bold pt-3 pb-3">No Live Schedule</p>
+            <% } %>
           </div>
           <div class="onNow rounded-pill bg-primary text-center mb-3 pt-2 pb-2 text-light">
-            <p class="mb-0 font-weight-bold">Later: <%= liveTV[2].showingTime %></p>
-            <%= liveTV[2].showingStatus === 'In Queue' ? liveTV[2].showingName : 'No Live Schedule' %>
+            <% if(liveTV[2]) { %>
+            <p class="mb-0 font-weight-bold"><%= liveTV[2].showingTime %></p>
+            <%= liveTV[2].showingName %>
+            <%= liveTV[2].showingDate.toDateString() %>
+            <% } else { %>
+            <p class="mb-0 font-weight-bold pt-3 pb-3">No Live Schedule</p>
+            <% } %>
           </div>
           <a href="/brainstv/tvschedule" class="text-center">Click For Full Schedule</a>
 
@@ -65,50 +80,6 @@
       <a href="/brainstv/videos" class="btn btn-outline-light mt-3">All Videos</a>
     </div>
   </div>
-
-  <!-- style="background-color: #355394;" -->
-  <!-- <div class="container-fluid p-3" style="background-color: #355394;">
-    <h3 class="text-center text-light">Birthday Celebrants</h3>
-    <div class="auto-grid-front-page-birthdays">
-      <div class="left-column p-3">
-        <p class="text-light font-italic">Do you want your birthday card here? Join the Brains club <a
-            href="/clubmembers/joinbrainsclub">HERE</a></p>
-      </div>
-
-      <div class="right-column p-2">
-        <div id="birthdayCarousel" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner" style="width: 640px; height:560px;">
-            <div class="carousel-item active">
-              <img src="/img/clubmembers/birthday.png" class="d-block img-fluid _img-thumbnail" alt="Birthday Card">
-              <div class="carousel-caption d-none d-md-block p-3 birthdayMessage">
-                <h5>Let's Celebrate your birthday!</h5>
-                <p class="font-italic">We're happy to celebrate your special day with you here.</p>
-              </div>
-            </div>
-            <%# birthdayCelebrants.forEach(celebrant => { %>
-            <div class="carousel-item">
-              <img src="<%#= celebrant.birthdayCardPath %>" class="d-block img-fluid _img-thumbnail" alt="Birthday Card">
-              <div class="carousel-caption d-none d-md-block p-3 birthdayMessage">
-                <h5><%#= celebrant.fullName %> </h5>
-                <p class="font-italic"><%#= celebrant.birthdayMessage %></p>
-              </div>
-            </div>
-            <%# }) %>
-          </div>
-          <a class="carousel-control-prev" href="#birthdayCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#birthdayCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </div> -->
-  <!-- <div class="section__slider"></div> -->
 
   <h3 class="text-center text-dark">Birthday Celebrants</h3>
 
@@ -221,4 +192,7 @@
 
 
 
-</div>
+<!-- </div> -->
+
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/live_stream?channel=UCutQfJ_vHQC789bhRWDq53A"
+  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

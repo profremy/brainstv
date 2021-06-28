@@ -111,7 +111,6 @@
     </div>
 
 
-
     <div class="row">
         <div class="col-md-11 mx-auto">
             <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
@@ -137,7 +136,8 @@
 
             <div class="auto-grid-front-page-shows mb-3">
                 <% allShowsA_Z.forEach(show => { %>
-                <% if(show.showType === "News" || show.showType === "Video") { %>
+                <%# if(show.showType === "News" || show.showType === "Video") { %>
+                <% if(show.showType === "News") { %>
                 <div class="autoGridPhotos transform-scale">
                     <a href="/brainstv/show/<%= show.slug %>">
                         <div class="noBorderResourcesOverlay"></div>
@@ -157,7 +157,8 @@
 
             <div class="auto-grid-front-page-shows mb-3">
                 <% allShows.forEach(show => { %>
-                <% if(show.showType === "News" || show.showType === "Video") { %>
+                <%# if(show.showType === "News" || show.showType === "Video") { %>
+                <% if(show.showType === "News") { %>
                 <div class="autoGridPhotos transform-scale">
                     <a href="/brainstv/show/<%= show.slug %>">
                         <div class="noBorderResourcesOverlay"></div>

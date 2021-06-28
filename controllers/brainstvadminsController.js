@@ -14,6 +14,7 @@ const Livestream = require('../models/livestream');
 const Birthday = require('../models/birthday');
 const Schoolday = require('../models/schoolDayModel');
 const MostAdmired = require('../models/mumAndDadModel');
+const Whencanyoustop = require('../models/whenCanYouStop');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
@@ -633,7 +634,7 @@ exports.getTVSchedule = catchAsync(async (req, res, next) => {
     searchOptions.showingName = new RegExp(req.query.showingName, 'i');
   }
   try {
-    const tvschedule = await Tvschedule.find(searchOptions).sort({ createdAt: -1 });
+    const tvschedule = await Tvschedule.find(searchOptions); //.sort({ createdAt: -1 });
     res.render('brainstvadmins/tvschedule', {
       tvschedule: tvschedule,
       searchOptions: req.query,
@@ -654,7 +655,7 @@ exports.createNewTVSchedule = catchAsync(async (req, res, next) => {
     showingTime: req.body.showingTime,
     showingName: req.body.showingName,
     showPageLink: req.body.showPageLink,
-    showingStatus: req.body.showingStatus,
+    // showingStatus: req.body.showingStatus,
   });
 
   try {
@@ -692,7 +693,7 @@ exports.updateTVSchedule = catchAsync(async (req, res, next) => {
     tvschedule.showingTime = req.body.showingTime;
     tvschedule.showingName = req.body.showingName;
     tvschedule.showPageLink = req.body.showPageLink;
-    tvschedule.showingStatus = req.body.showingStatus;
+    // tvschedule.showingStatus = req.body.showingStatus;
 
     await tvschedule.save();
     res.redirect('/brainstvadmins/tvschedule');
@@ -1050,6 +1051,28 @@ exports.deleteMumAndDadVoteById = catchAsync(async (req, res, next) => {
     const deleteVote = await MostAdmired.findById(req.params.id);
     await deleteVote.remove();
     res.redirect('/brainstvadmins/mumAndDad');
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.getWhenCanYouStopVote = catchAsync(async (req, res, next) => {
+  try {
+    const whencanyoustop = await Whencanyoustop.find({});
+    res.status(200).render('brainstvadmins/whenCanYouStop/index', {
+      whencanyoustop,
+      pageTitle: 'Most Admired Votes',
+    });
+  } catch {
+    res.redirect('/brainstvadmins');
+  }
+});
+
+exports.deleteWhenCanYouStopVoteById = catchAsync(async (req, res, next) => {
+  try {
+    const deleteVote = await Whencanyoustop.findById(req.params.id);
+    await deleteVote.remove();
+    res.redirect('/brainstvadmins/whenCanYouStop');
   } catch {
     res.redirect('/brainstvadmins');
   }

@@ -10,7 +10,7 @@ const tvScheduleSchema = new mongoose.Schema(
     // },
     // airTime: { type: Date },
     showingTime: { type: String, required: true },
-    showingStatus: { type: String, required: true },
+    // showingStatus: { type: String, required: true },
     showingName: {
       type: String,
       required: true,
@@ -20,7 +20,7 @@ const tvScheduleSchema = new mongoose.Schema(
       },
     },
     slug: String,
-    showPageLink: { type: String, required: true },
+    showPageLink: { type: String, required: true, default: '/' },
   },
   {
     timestamps: true,

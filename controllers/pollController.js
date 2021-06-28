@@ -3,6 +3,7 @@ const catchAsync = require('./../utils/catchAsync');
 const mongoose = require('mongoose');
 const Schoolday = require('../models/schoolDayModel');
 const MostAdmired = require('../models/mumAndDadModel');
+const Whencanyoustop = require('../models/whenCanYouStop');
 
 const Pusher = require('pusher');
 
@@ -28,6 +29,15 @@ exports.getMostAdmiredPoll = catchAsync(async (req, res, next) => {
     res.json({
       success: true,
       mostAdmired: mostAdmired,
+    })
+  );
+});
+
+exports.getWhenCanYouStopPoll = catchAsync(async (req, res, next) => {
+  Whencanyoustop.find().then((whenCanYouStop) =>
+    res.json({
+      success: true,
+      whenCanYouStop: whenCanYouStop,
     })
   );
 });
@@ -60,6 +70,23 @@ exports.postMumAndDadPoll = catchAsync(async (req, res, next) => {
     pusher.trigger('mostAdmired-Poll', 'mostAdmired-Vote', {
       mostAdmired: mostAdmired.mostAdmired,
       points: mostAdmired.points,
+    });
+  });
+
+  return; //res.json({ success: true, message: 'Thank you for voting' });
+});
+
+exports.postWhenCanYouStopPoll = catchAsync(async (req, res, next) => {
+  const newWhenCanYouStop = {
+    points: 1,
+    whenCanYouStop: req.body.whenCanYouStop,
+  };
+
+  new Whencanyoustop(newWhenCanYouStop).save().then((whenCanYouStop) => {
+    //  pusher.trigger 'my-channel', 'my-event'
+    pusher.trigger('whenCanYouStop-Poll', 'whenCanYouStop-Vote', {
+      whenCanYouStop: whenCanYouStop.whenCanYouStop,
+      points: whenCanYouStop.points,
     });
   });
 

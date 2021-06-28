@@ -158,7 +158,12 @@ router.route('/favoritePartOfSchool/:id').delete(authController.protect, authCon
 // Get mostAdmired votes
 router.route('/mumAndDad').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getMumAndDadVote);
 
+// Get whenCanYouStop votes
+router.route('/whenCanYouStop').get(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.getWhenCanYouStopVote);
+
 router.route('/mumAndDad/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteMumAndDadVoteById);
+
+router.route('/whenCanYouStop/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteWhenCanYouStopVoteById);
 
 router.route('/reviews/:id').delete(authController.protect, authController.restrictTo('superAdmin'), brainstvadminsController.deleteMemberReview);
 

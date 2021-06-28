@@ -21,7 +21,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Show Status</th>
+                    <!-- <th scope="col">Show Status</th> -->
                     <th scope="col">Show Date</th>
                     <th scope="col">Show Time</th>
                     <th scope="col">Showing Name</th>
@@ -38,7 +38,7 @@
                         <a href="/brainstvadmins/tvschedule/<%= schedule.id %>/edit" class="text-success"
                             title="Edit Schedule"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </th>
-                    <td><%= schedule.showingStatus %></td>
+                    <!-- <td><%#= schedule.showingStatus %></td> -->
                     <td><%= schedule.showingDate.toDateString() %>
                     </td>
                     <td><%= schedule.showingTime %></td>

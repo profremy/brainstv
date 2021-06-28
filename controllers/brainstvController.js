@@ -9,12 +9,13 @@ const factory = require('./handlerFactory');
 exports.downloadActivityFile = catchAsync(async (req, res, next) => {
   let show;
   try {
-    show = await Show.findOne(req.params.id);
+    show = await Show.findById(req.params.id);
     const filePath = `views/brainstv/downloadables/${show.downloadableDocument}`; // The path to the file
     const fileName = `${show.downloadableDocument}`; // The default name the browser will use
 
     res.download(filePath, fileName);
-  } catch {
+  } catch (error) {
+    // console.log(error);
     res.redirect('/');
   }
 });

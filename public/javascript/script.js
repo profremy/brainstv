@@ -747,6 +747,93 @@ const elements = {
 }
 
 {
+  // Front end voting script for When can you stop
+  const whenCanYouStopPollForm = document.getElementById('vote-whenCanYouStop-form');
+  if (whenCanYouStopPollForm) {
+    whenCanYouStopPollForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (localStorage.whenCanYouStopVote) {
+        return showUserAlert('error', 'Your have already voted!');
+      }
+      const choice = document.querySelector('input[name=whenCanYouStop]:checked').value;
+
+      const data = {
+        whenCanYouStop: choice,
+      };
+
+      // fetch('http://localhost:5000/poll/whenCanYouStop', {
+      fetch('/poll/whenCanYouStop', {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+      showUserAlert('success', 'Your vote was transmitted successfully!');
+      localStorage.setItem('whenCanYouStopVote', 'w-c-y-s-v');
+    });
+  }
+
+  // Fetch data from database to display chart on front end
+  // fetch('http://localhost:5000/poll/whenCanYouStop')
+  fetch('/poll/whenCanYouStop')
+    .then((res) => res.json())
+    .then((data) => {
+      //console.log(data);
+      const votes = data.whenCanYouStop;
+      const totalVotes = votes.length;
+
+      // Count vote points -  acc/current
+      const voteCounts = votes.reduce((acc, vote) => ((acc[vote.whenCanYouStop] = (acc[vote.whenCanYouStop] || 0) + vote.points), acc), {});
+      let dataPoints = [
+        { label: 'YES', y: voteCounts.YES },
+        { label: 'NO', y: voteCounts.NO },
+      ];
+
+      const whenCanYouStopResultContainer = document.getElementById('whenCanYouStopResultContainer');
+      if (whenCanYouStopResultContainer) {
+        const chart = new CanvasJS.Chart('whenCanYouStopResultContainer', {
+          animationEnabled: true,
+          theme: 'theme1',
+          title: {
+            text: `Total Votes: ${totalVotes}`,
+          },
+          data: [
+            {
+              type: 'column',
+              dataPoints: dataPoints,
+            },
+          ],
+        });
+        chart.render();
+
+        // Enable pusher logging - don't include this in production
+        //Pusher.logToConsole = true;
+
+        var pusher = new Pusher('a22577bf8709837c8fb4', {
+          cluster: 'eu',
+        });
+
+        var channel = pusher.subscribe('whenCanYouStop-Poll');
+        channel.bind('whenCanYouStop-Vote', function (data) {
+          dataPoints = dataPoints.map((x) => {
+            if (x.label == data.whenCanYouStop) {
+              x.y += data.points;
+              return x;
+            } else {
+              return x;
+            }
+          });
+          chart.render();
+        });
+      }
+    });
+}
+
+{
   // Disable form submit button
   // DELEGATION
   if (elements.btnCheck && elements.checkBox) {

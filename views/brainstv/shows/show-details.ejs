@@ -68,7 +68,7 @@
     <!-- End of ShowType = Video -->
 
     <!-- Start of ShowType = Show -->
-    <% if (show.showType === "Show" || show.showType === "Activity" || show.showType === "Game" || show.showType === "TakePart") { %>
+    <% if (show.showType === "Show" || show.showType === "Activity" || show.showType === "Game" || show.showType === "TakePart" || show.showType === "News") { %>
     <div class="media bg-light d-sm-flex flex-wrap">
         <img src="/images/show_images/<%= show.showThumbnail %>" class="align-self-start mr-3 img-fluid"
             alt="<%= show.showTitle %>">
@@ -154,7 +154,9 @@
             <%- include('../../partials/schoolDayPoll.ejs') %>
             <% } else if(show.showTitle === 'Mum and Dad' && user.role === 'clubMember') { %>
             <%- include('../../partials/mumAndDadPoll.ejs') %>
-            <% } else { %>
+            <% } else if(show.showTitle === 'When can you stop' && user.role === 'clubMember') { %>
+            <%- include('../../partials/whenCanYouStop.ejs') %>
+            <% } else if(user.role === 'superAdmin' || user.role === 'basicAdmin') { %>
             <p class="text-center"><small>Not for <strong><%= user.role %></strong>. Only Users with club member status
                     can participate.</small></p>
             <% } %>
@@ -163,7 +165,7 @@
             <% } %>
 
             <% if(show.downloadableDocument != null) { %>
-            <a href="/brainstv/download-activity-file" class="btn btn-lg btn-outline-info"
+            <a href="/brainstv/download-activity-file/<%= show.id %>" class="btn btn-lg btn-outline-info"
                 title="<%= show.showTitle %> "><i class="fa fa-download" aria-hidden="true"></i>Download this
                 Activity</a>
             <% } %>
