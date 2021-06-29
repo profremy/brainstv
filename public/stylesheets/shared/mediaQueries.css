@@ -100,7 +100,8 @@
 
     .autoGridPhotos {
         position: relative;
-        width: 60%;
+        max-width: fit-content;
+        /* width: 60%; */
     }
 
     .sideThumbnails {

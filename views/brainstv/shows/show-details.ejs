@@ -1,7 +1,7 @@
 <div class="jumbotron container-fluid instagram-gradient _bg-show-details pb-1">
     <!-- <hr class="my-1 document-divider"> -->
     <!-- <div class="_show-details-container bg-light rounded p-3"> -->
-    <% if (show.showType === "Video") { %>
+    <% if (show.showType === "Video" || show.showType === "News" || show.showType === "E-Class") { %>
     <!-- <img src="/images/show_images/<%#= show.showThumbnail %>" width="100%" height="100%" class="_img-fluid"
             alt="<%#= show.showTitle %>"> -->
 
@@ -68,7 +68,7 @@
     <!-- End of ShowType = Video -->
 
     <!-- Start of ShowType = Show -->
-    <% if (show.showType === "Show" || show.showType === "Activity" || show.showType === "Game" || show.showType === "TakePart" || show.showType === "News") { %>
+    <% if (show.showType === "Show" || show.showType === "Activity" || show.showType === "TakePart") { %>
     <div class="media bg-light d-sm-flex flex-wrap">
         <img src="/images/show_images/<%= show.showThumbnail %>" class="align-self-start mr-3 img-fluid"
             alt="<%= show.showTitle %>">
@@ -398,7 +398,7 @@
                         <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
 
                         <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
-                            class="img-fluid" alt="<%= show.showTitle %>">
+                            class="myImgFluid _img-fluid" alt="<%= show.showTitle %>">
 
                         <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
                     </div>
