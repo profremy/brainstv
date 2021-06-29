@@ -27,10 +27,10 @@
         <div
           class="d-flex flex-fill flex-shrink-1 justify-content-around align-content-center flex-column bd-highlight px-1">
           <%# console.log(liveTV) %>
-          <div class="rounded-pill bg-warning text-center mb-3 pt-2 pb-2 text-light">
+          <div class="rounded-pill bg-warning text-center mb-3 p-2 pt-2 pb-2 text-light">
             <% if(liveTV[0]) { %>
             <p class="mb-0 font-weight-bold"><%= liveTV[0].showingTime %></p>
-            <%= liveTV[0].showingName %>
+            <%= liveTV[0].showingName %><br>
             <%= liveTV[0].showingDate.toDateString() %>
             <% } else { %>
             <p class="mb-0 font-weight-bold pt-3 pb-3">No Live Schedule</p>
@@ -39,7 +39,7 @@
           <div class="rounded-pill bg-info text-center mb-3 pt-2 pb-2 text-light">
             <% if(liveTV[1]) { %>
             <p class="mb-0 font-weight-bold"><%= liveTV[1].showingTime %></p>
-            <%= liveTV[1].showingName %>
+            <%= liveTV[1].showingName %><br>
             <%= liveTV[1].showingDate.toDateString() %>
             <% } else { %>
             <p class="mb-0 font-weight-bold pt-3 pb-3">No Live Schedule</p>
@@ -48,7 +48,7 @@
           <div class="onNow rounded-pill bg-primary text-center mb-3 pt-2 pb-2 text-light">
             <% if(liveTV[2]) { %>
             <p class="mb-0 font-weight-bold"><%= liveTV[2].showingTime %></p>
-            <%= liveTV[2].showingName %>
+            <%= liveTV[2].showingName %><br>
             <%= liveTV[2].showingDate.toDateString() %>
             <% } else { %>
             <p class="mb-0 font-weight-bold pt-3 pb-3">No Live Schedule</p>
