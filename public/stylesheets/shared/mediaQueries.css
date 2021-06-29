@@ -100,7 +100,7 @@
 
     .autoGridPhotos {
         position: relative;
-        max-width: fit-content;
+        max-width: 60%;
         /* width: 60%; */
     }
 
