@@ -12,7 +12,7 @@
                     <div class="p-2 w-100 bd-highlight mobileScreen mb-3">
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe class="responsive-iframe" width="560" height="315"
-                                src="https://www.youtube-nocookie.com/embed/<%= newsUpdateVideos[0].showId %>?rel=0&modestbranding=1"
+                                src="https://www.youtube-nocookie.com/embed/<%= fourRecentVideos[0] ? fourRecentVideos[0].showId : '' %>?rel=0&modestbranding=1"
                                 frameborder="0"
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
@@ -22,7 +22,7 @@
                     <div class="p-2 w-100 bd-highlight desktopScreen mr-2 mb-3">
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe class="responsive-iframe" width="560" height="315"
-                                src="https://www.youtube-nocookie.com/embed/<%= newsUpdateVideos[0].showId %>?rel=0&modestbranding=1"
+                                src="https://www.youtube-nocookie.com/embed/<%= fourRecentVideos[0] ? fourRecentVideos[0].showId : '' %>?rel=0&modestbranding=1"
                                 frameborder="0"
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
@@ -35,7 +35,7 @@
                         <div class="p-2 w-100 bd-highlight mobileScreen mb-3">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="responsive-iframe" width="560" height="315"
-                                    src="https://www.youtube-nocookie.com/embed/<%= newsUpdateVideos[1].showId %>?rel=0&modestbranding=1"
+                                    src="https://www.youtube-nocookie.com/embed/<%= fourRecentVideos[1] ? fourRecentVideos[1].showId : '' %>?rel=0&modestbranding=1"
                                     frameborder="0"
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe>
@@ -45,7 +45,7 @@
                         <div class="p-2 w-100 bd-highlight desktopScreen mr-2 mb-3">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="responsive-iframe" width="560" height="315"
-                                    src="https://www.youtube-nocookie.com/embed/<%= newsUpdateVideos[1].showId %>?rel=0&modestbranding=1"
+                                    src="https://www.youtube-nocookie.com/embed/<%= fourRecentVideos[1] ? fourRecentVideos[1].showId : '' %>?rel=0&modestbranding=1"
                                     frameborder="0"
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe>
@@ -59,7 +59,7 @@
                         <div class="p-2 w-100 bd-highlight mobileScreen mb-3">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="responsive-iframe" width="560" height="315"
-                                    src="https://www.youtube-nocookie.com/embed/<%= newsUpdateVideos[2].showId %>?rel=0&modestbranding=1"
+                                    src="https://www.youtube-nocookie.com/embed/<%= fourRecentVideos[2] ? fourRecentVideos[2].showId : '' %>?rel=0&modestbranding=1"
                                     frameborder="0"
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe>
@@ -69,7 +69,7 @@
                         <div class="p-2 w-100 bd-highlight desktopScreen mr-2 mb-3">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="responsive-iframe" width="560" height="315"
-                                    src="https://www.youtube-nocookie.com/embed/<%= newsUpdateVideos[2].showId %>?rel=0&modestbranding=1"
+                                    src="https://www.youtube-nocookie.com/embed/<%= fourRecentVideos[2] ? fourRecentVideos[2].showId : '' %>?rel=0&modestbranding=1"
                                     frameborder="0"
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe>
@@ -79,7 +79,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 d-flex flex-column justify-content-around wideTablets">
+        <% if(fourRecentVideos[1] || fourRecentVideos[2]) { %>
+        <div class="col-sm-3 d-flex flex-column justify-content-start wideTablets">
             <div class="input-group margin-bottom-sm">
                 <span class="dark-blue-gradient-background py-1 px-3">Next Video</span>
             </div>
@@ -87,26 +88,31 @@
                 <a class="nav-link active hideElement" id="v-pills-default-tab" data-toggle="pill"
                     href="#v-pills-default" role="tab" aria-controls="v-pills-default" aria-selected="true">Latest
                     Video</a>
+                <% if(fourRecentVideos[1]) { %>
                 <a class="nav-link" id="v-pills-next-1-tab" data-toggle="pill" href="#v-pills-next-1" role="tab"
                     aria-controls="v-pills-next-1" aria-selected="false">
                     <div class="sideThumbnails transform-scale">
-                        <img src="/images/show_images/<%= newsUpdateVideos[1].showThumbnail %>" width="100%"
-                            height="180px" class="_myImg-fluid _img-fluid" alt="<%= newsUpdateVideos[1].showTitle %>">
-                        <div class="noBorderLearningResourcesBottomTitle"><%= newsUpdateVideos[1].showTitle %>
+                        <img src="/images/show_images/<%= fourRecentVideos[1].showThumbnail %>" width="100%"
+                            height="180px" class="_myImg-fluid _img-fluid" alt="<%= fourRecentVideos[1].showTitle %>">
+                        <div class="noBorderLearningResourcesBottomTitle"><%= fourRecentVideos[1].showTitle %>
                         </div>
                     </div>
                 </a>
+                <% } %>
+                <% if(fourRecentVideos[2]) { %>
                 <a class="nav-link" id="v-pills-next-2-tab" data-toggle="pill" href="#v-pills-next-2" role="tab"
                     aria-controls="v-pills-next-2" aria-selected="false">
                     <div class="sideThumbnails transform-scale">
-                        <img src="/images/show_images/<%= newsUpdateVideos[2].showThumbnail %>" width="100%"
-                            height="180px" class="_myImg-fluid _img-fluid" alt="<%= newsUpdateVideos[2].showTitle %>">
-                        <div class="noBorderLearningResourcesBottomTitle"><%= newsUpdateVideos[2].showTitle %>
+                        <img src="/images/show_images/<%= fourRecentVideos[2].showThumbnail %>" width="100%"
+                            height="180px" class="_myImg-fluid _img-fluid" alt="<%= fourRecentVideos[2].showTitle %>">
+                        <div class="noBorderLearningResourcesBottomTitle"><%= fourRecentVideos[2].showTitle %>
                         </div>
                     </div>
                 </a>
+                <% } %>
             </div>
         </div>
+        <% } %>
     </div>
 
 
@@ -143,9 +149,9 @@
                     <% } %>
                     <% }) %>
                 </div>
-                <div class="text-center">
+                <!-- <div class="text-center">
                     <a href="/brainstv/videos" class="btn btn-outline-light mt-3">All Videos</a>
-                </div>
+                </div> -->
             </div>
 
 
@@ -196,9 +202,9 @@
                     <% } %>
                     <% }) %>
                 </div>
-                <div class="text-center">
+                <!-- <div class="text-center">
                     <a href="/brainstv/videos" class="btn btn-outline-light mt-3">All Videos</a>
-                </div>
+                </div> -->
             </div>
 
 

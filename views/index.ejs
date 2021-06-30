@@ -5,21 +5,33 @@
         <% classLivestream.forEach(stream => { %>
         <% if (stream.className.className === 'Default LiveStream') { %>
         <div class="p-2 vw-100 bd-highlight mobileScreen mb-3">
-          <div class="embed-responsive embed-responsive-16by9">
+          <!-- <div class="embed-responsive embed-responsive-16by9">
             <iframe class="responsive-iframe" width="560" height="315"
-              src="https://www.youtube-nocookie.com/embed/<%= stream.livestreamURL %>?rel=0&modestbranding=1"
+              src="https://www.youtube-nocookie.com/embed/<%#= stream.livestreamURL %>?rel=0&modestbranding=1"
               frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope;
               picture-in-picture" allowfullscreen></iframe>
+          </div> -->
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="responsive-iframe" width="560" height="315"
+              src="https://www.youtube.com/embed/live_stream?channel=UCutQfJ_vHQC789bhRWDq53A&rel=0&modestbranding=1"
+              frameborder="0" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope;
+                picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
 
         <div class="p-2 myhome-w-75 bd-highlight desktopScreen mr-2 mb-3">
-          <div class="embed-responsive embed-responsive-16by9">
+          <!-- <div class="embed-responsive embed-responsive-16by9">
             <iframe class="responsive-iframe" width="360" height="215"
-              src="https://www.youtube-nocookie.com/embed/<%= stream.livestreamURL %>?rel=0&modestbranding=1"
+              src="https://www.youtube-nocookie.com/embed/<%#= stream.livestreamURL %>?rel=0&modestbranding=1"
               frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope;
               picture-in-picture" allowfullscreen></iframe>
 
+          </div> -->
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="responsive-iframe" width="560" height="315"
+              src="https://www.youtube.com/embed/live_stream?channel=UCutQfJ_vHQC789bhRWDq53A&rel=0&modestbranding=1"
+              frameborder="0" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope;
+                picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
         <% } %>
