@@ -4,11 +4,11 @@ const result = dotenv.config({ path: './.env' });
 // if (process.env.NODE_ENV !== 'production') {
 // }
 
-// process.on('uncaughtException', (err) => {
-//   console.log(err.name, err.message);
-//   console.log('UNCAUGHT EXCEPTION! Shutting down ...');
-//   process.exit(1);
-// });
+process.on('uncaughtException', (err) => {
+  console.log(err.name, err.message);
+  console.log('UNCAUGHT EXCEPTION! Shutting down ...');
+  process.exit(1);
+});
 
 const http = require('http');
 const express = require('express');
@@ -99,7 +99,7 @@ app.use(
         styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
         workerSrc: ["'self'", 'data:', 'blob:', 'https://*.tiles.mapbox.com', 'https://api.mapbox.com', 'https://events.mapbox.com', 'https://m.stripe.network'],
         childSrc: ["'self'", 'blob:'],
-        imgSrc: ["'self'", 'data:', '*.ytimg.com', 'blob:'],
+        imgSrc: ["'self'", 'data:', '*.ytimg.com', '*.amazonaws.com', 'blob:'],
         formAction: ["'self'"],
         connectSrc: ["'self'", "'unsafe-inline'", 'data:', 'blob:', 'https://*.stripe.com', '*.unpkg.com', 'https://*.mapbox.com', 'https://*.cloudflare.com/', 'https://bundle.js:*', 'ws://localhost:*/', 'http://localhost:*/', 'https://*.pusher.com'],
         upgradeInsecureRequests: [],
@@ -231,6 +231,15 @@ app.get('/messages', (req, res) => {
   Message.find({}, (err, messages) => {
     res.send(messages);
   });
+});
+
+// Make Get request to S3 server to get files using getFileStream function in brainstvadminsController
+const { getFileStream } = require('./controllers/brainstvadminsController');
+app.get('/images/show_images/:key', (req, res) => {
+  const key = req.params.key;
+  const readStream = getFileStream(key);
+
+  readStream.pipe(res);
 });
 
 app.post('/messages', (req, res) => {

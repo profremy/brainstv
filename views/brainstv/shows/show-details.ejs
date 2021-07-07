@@ -75,7 +75,12 @@
         <div class="media-body p-2">
             <h1><%= show.showTitle %> </h1>
             <p><%= show.introParagraph %></p>
+            <% if(show.showType === "Show" && show.showTitle === "In the News") { %>
+            <span><%= show.bodyParagraph1 %>
+                <a href="https://brainstv.info/submission-form/">Here</a></span>
+            <% } else { %>
             <p><%= show.bodyParagraph1 %></p>
+            <% } %>
             <p><%= show.bodyParagraph2 %></p>
             <p><%= show.bodyParagraph3 %></p>
             <p><%= show.bodyParagraph4 %></p>
@@ -165,9 +170,13 @@
             <% } %>
 
             <% if(show.downloadableDocument != null) { %>
-            <a href="/brainstv/download-activity-file/<%= show.id %>" class="btn btn-lg btn-outline-info"
-                title="<%= show.showTitle %> "><i class="fa fa-download" aria-hidden="true"></i>Download this
+            <a href="/images/show_images/<%= show.downloadableDocument %>" class="btn btn-lg btn-outline-info"
+                title="<%= show.showTitle %> " download><i class="fa fa-download" aria-hidden="true"></i>Download this
                 Activity</a>
+            <!-- <a href="/brainstv/download-activity-file/<%#= show.downloadableDocument %>"
+                class="btn btn-lg btn-outline-info" title="<%#= show.showTitle %> "><i class="fa fa-download"
+                    aria-hidden="true"></i>Download this
+                Activity</a> -->
             <% } %>
 
 
@@ -398,9 +407,11 @@
                         <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
 
                         <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
-                            class="myImgFluid _img-fluid" alt="<%= show.showTitle %>">
+                            class="_myImgFluid img-fluid" alt="<%= show.showTitle %>">
 
-                        <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
+                        <div class="noBorderLearningResourcesBottomTitle">
+                            <%= show.showTitle.length <= 25 ? show.showTitle : show.showTitle.split(' ').slice(0, 2).join(' ') + ' ...'  %>
+                        </div>
                     </div>
                     <% } %>
                     <% }) %>

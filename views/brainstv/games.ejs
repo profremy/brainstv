@@ -25,67 +25,86 @@
     </ul>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-puzzle" role="tabpanel" aria-labelledby="pills-puzzle-tab">
-            <div class="main-flex">
-
-                <% allShows.forEach(show => { %>
-                <% if(show.showType === "Game" && show.takePartType === "Puzzle") { %>
+            <div class="dark-blue-gradient-background text-center mb-3">
+                <div class="col-md-8 mx-auto">
+                    <a href="https://brainstv.info/puzzle" target="_blank" class="btn btn-outline-light btn-lg m-3">Play
+                        Puzzle Game</a>
+                </div>
+            </div>
+            <!-- <div class="main-flex">
+                <%# allShows.forEach(show => { %>
+                <%# if(show.showType === "Game" && show.takePartType === "Puzzle") { %>
                 <div class="col-sm-3 flex-item">
                     <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
+                        <a href="/brainstv/show/<%#= show.slug %>">
                             <div class="resourcesOverlay"></div>
                         </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                        <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div>
+                        <img src="/images/show_images/<%#= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%#= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%#= show.showTitle %> </div>
                     </div>
                 </div>
-                <% } %>
-                <% }) %>
+                <%# } %>
+                <%# }) %> 
 
-            </div>
+            </div>-->
         </div>
         <div class="tab-pane fade" id="pills-colouring" role="tabpanel" aria-labelledby="pills-colouring-tab">
-            <div class="main-flex">
+            <div class="dark-blue-gradient-background text-center mb-3">
+                <div class="col-md-8 mx-auto">
+                    <a href="https://brainstv.info/colouring-book" target="_blank"
+                        class="btn btn-outline-light btn-lg m-3">Play
+                        Colouring Game</a>
+                </div>
+            </div>
+            <!-- <div class="main-flex">
 
-                <% allShows.forEach(show => { %>
-                <% if(show.showType === "Game" && show.takePartType === "Colouring") { %>
+                <%# allShows.forEach(show => { %>
+                <%# if(show.showType === "Game" && show.takePartType === "Colouring") { %>
                 <div class="col-sm-3 flex-item">
                     <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
+                        <a href="/brainstv/show/<%#= show.slug %>">
                             <div class="resourcesOverlay"></div>
                         </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                        <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div>
+                        <img src="/images/show_images/<%#= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%#= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%#= show.showTitle %> </div>
                     </div>
                 </div>
-                <% } %>
-                <% }) %>
+                <%# } %>
+                <%# }) %>
 
-            </div>
+            </div> -->
         </div>
         <div class="tab-pane fade" id="pills-quizz" role="tabpanel" aria-labelledby="pills-quizz-tab">
-            <div class="main-flex">
+            <div class="dark-blue-gradient-background text-center mb-3">
+                <div class="col-md-8 mx-auto">
+                    <a href="https://brainstv.info/quiz/game/" target="_blank"
+                        class="btn btn-outline-light btn-lg m-3">Play
+                        Quiz Game</a>
+                </div>
+            </div>
+            <!-- <div class="main-flex">
 
-                <% allShows.forEach(show => { %>
-                <% if(show.showType === "Game" && show.takePartType === "Quizz") { %>
+                <%# allShows.forEach(show => { %>
+                <%# if(show.showType === "Game" && show.takePartType === "Quizz") { %>
                 <div class="col-sm-3 flex-item">
                     <div class="embed-responsive _embed-responsive-16by9 transform-scale">
-                        <a href="/brainstv/show/<%= show.slug %>">
+                        <a href="/brainstv/show/<%#= show.slug %>">
                             <div class="resourcesOverlay"></div>
                         </a>
-                        <div class="learningResourcesTopTitle"><%= show.showStatus %> </div>
-                        <img src="/images/show_images/<%= show.showThumbnail %>" width="315" height="200"
-                            class="_img-fluid" alt="<%= show.showTitle %>">
-                        <div class="learningResourcesBottomTitle"><%= show.showTitle %> </div>
+                        <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div>
+                        <img src="/images/show_images/<%#= show.showThumbnail %>" width="315" height="200"
+                            class="_img-fluid" alt="<%#= show.showTitle %>">
+                        <div class="learningResourcesBottomTitle"><%#= show.showTitle %> </div>
                     </div>
                 </div>
-                <% } %>
-                <% }) %>
+                <%# } %>
+                <%# }) %>
 
-            </div>
+            </div> -->
         </div>
         <div class="tab-pane fade" id="pills-others" role="tabpanel" aria-labelledby="pills-others-tab">
             <div class="main-flex">

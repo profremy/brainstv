@@ -9524,7 +9524,7 @@ var elements = (_elements = {
   if (elements.joinbrainsclub) {
     elements.joinbrainsclub.addEventListener('submit', /*#__PURE__*/function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
-        var memberCategory, className, firstname, lastname, email, dob, phone, city, gender, password, confirmPassword, signedConsent;
+        var memberCategory, className, firstname, lastname, email, dob, phone, city, genderArr, gender, i, password, confirmPassword, signedConsent;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
@@ -9542,21 +9542,45 @@ var elements = (_elements = {
                 dob = document.getElementById('dob').value;
                 phone = document.getElementById('phone').value;
                 city = document.getElementById('city').value;
-                gender = document.querySelector('.gender').value;
+                genderArr = document.getElementsByName('gender');
+                gender = '';
+                i = 0;
+
+              case 14:
+                if (!(i < genderArr.length)) {
+                  _context4.next = 21;
+                  break;
+                }
+
+                if (!genderArr[i].checked) {
+                  _context4.next = 18;
+                  break;
+                }
+
+                gender = genderArr[i].value;
+                return _context4.abrupt("break", 21);
+
+              case 18:
+                i++;
+                _context4.next = 14;
+                break;
+
+              case 21:
+                // const gender = document.querySelector('.gender').value;
                 password = document.getElementById('password').value;
                 confirmPassword = document.getElementById('confirmPassword').value;
                 signedConsent = document.getElementById('check').value;
 
                 if (!(password != confirmPassword)) {
-                  _context4.next = 18;
+                  _context4.next = 27;
                   break;
                 }
 
                 document.getElementById('passwordError').classList.remove('hideElement');
                 return _context4.abrupt("return", document.getElementById('passwordError').textContent = 'Passwords do not match');
 
-              case 18:
-                _context4.next = 20;
+              case 27:
+                _context4.next = 29;
                 return (0, _userAccountSettings.createUserRecord)({
                   memberCategory: memberCategory,
                   className: className,
@@ -9572,7 +9596,7 @@ var elements = (_elements = {
                   signedConsent: signedConsent
                 }, 'clubmember');
 
-              case 20:
+              case 29:
                 document.getElementById('category').value = '';
                 document.getElementById('className').value = '';
                 document.getElementById('firstname').value = '';
@@ -9590,7 +9614,7 @@ var elements = (_elements = {
                   location.assign('/clubmembers/registered');
                 }, 1500);
 
-              case 34:
+              case 43:
               case "end":
                 return _context4.stop();
             }
@@ -9609,7 +9633,7 @@ var elements = (_elements = {
   if (elements.registeradmin) {
     elements.registeradmin.addEventListener('submit', /*#__PURE__*/function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(e) {
-        var firstname, lastname, email, role, dob, phone, city, gender, password, confirmPassword, signedConsent;
+        var firstname, lastname, email, role, dob, phone, city, genderArr, gender, i, password, confirmPassword, signedConsent;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
@@ -9626,11 +9650,35 @@ var elements = (_elements = {
                 dob = document.getElementById('dob').value;
                 phone = document.getElementById('phone').value;
                 city = document.getElementById('city').value;
-                gender = document.querySelector('.gender').value;
+                genderArr = document.getElementsByName('gender');
+                gender = '';
+                i = 0;
+
+              case 13:
+                if (!(i < genderArr.length)) {
+                  _context5.next = 20;
+                  break;
+                }
+
+                if (!genderArr[i].checked) {
+                  _context5.next = 17;
+                  break;
+                }
+
+                gender = genderArr[i].value;
+                return _context5.abrupt("break", 20);
+
+              case 17:
+                i++;
+                _context5.next = 13;
+                break;
+
+              case 20:
+                // const gender = document.querySelector('.gender').value;
                 password = document.getElementById('password').value;
                 confirmPassword = document.getElementById('confirmPassword').value;
                 signedConsent = document.getElementById('check').value;
-                _context5.next = 16;
+                _context5.next = 25;
                 return (0, _userAccountSettings.createUserRecord)({
                   firstname: firstname,
                   lastname: lastname,
@@ -9645,7 +9693,7 @@ var elements = (_elements = {
                   signedConsent: signedConsent
                 }, 'adminuser');
 
-              case 16:
+              case 25:
                 document.getElementById('firstname').value = '';
                 document.getElementById('lastname').value = '';
                 document.getElementById('email').value = '';
@@ -9653,12 +9701,12 @@ var elements = (_elements = {
                 document.getElementById('dob').value = '';
                 document.getElementById('phone').value = '';
                 document.getElementById('city').value = '';
-                document.querySelector('.gender').value = '';
+                document.querySelector('.gender').checked.value = '';
                 document.getElementById('password').value = '';
                 document.getElementById('confirmPassword').value = '';
                 document.getElementById('check').value = '';
 
-              case 27:
+              case 36:
               case "end":
                 return _context5.stop();
             }
@@ -10533,7 +10581,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59118" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61732" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

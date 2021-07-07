@@ -349,7 +349,16 @@ const elements = {
       const dob = document.getElementById('dob').value;
       const phone = document.getElementById('phone').value;
       const city = document.getElementById('city').value;
-      const gender = document.querySelector('.gender').value;
+
+      const genderArr = document.getElementsByName('gender');
+      let gender = '';
+      for (let i = 0; i < genderArr.length; i++) {
+        if (genderArr[i].checked) {
+          gender = genderArr[i].value;
+          break;
+        }
+      }
+      // const gender = document.querySelector('.gender').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
       const signedConsent = document.getElementById('check').value;
@@ -401,7 +410,16 @@ const elements = {
       const dob = document.getElementById('dob').value;
       const phone = document.getElementById('phone').value;
       const city = document.getElementById('city').value;
-      const gender = document.querySelector('.gender').value;
+
+      const genderArr = document.getElementsByName('gender');
+      let gender = '';
+      for (let i = 0; i < genderArr.length; i++) {
+        if (genderArr[i].checked) {
+          gender = genderArr[i].value;
+          break;
+        }
+      }
+      // const gender = document.querySelector('.gender').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
       const signedConsent = document.getElementById('check').value;
@@ -415,7 +433,7 @@ const elements = {
       document.getElementById('dob').value = '';
       document.getElementById('phone').value = '';
       document.getElementById('city').value = '';
-      document.querySelector('.gender').value = '';
+      document.querySelector('.gender').checked.value = '';
       document.getElementById('password').value = '';
       document.getElementById('confirmPassword').value = '';
       document.getElementById('check').value = '';

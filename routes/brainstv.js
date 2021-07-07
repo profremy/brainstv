@@ -41,10 +41,10 @@ router.route('/videos').get(brainstvController.getAllVideos);
 
 //Activities
 router.route('/activities').get(brainstvController.getAllActivities);
-
+/*
 // DOWNLOADS UPLOADS
 router.route('/download-activity-file/:id').get(authController.protect, authController.restrictTo('clubMember'), brainstvController.downloadActivityFile);
-
+*/
 router.route('/advertising-price-list').get(brainstvController.downloadAdvertPricing);
 
 //Take Part

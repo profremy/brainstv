@@ -30,9 +30,11 @@
                     <!-- <div class="learningResourcesTopTitle"><%#= show.showStatus %> </div> -->
 
                     <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
-                        class="myImg-fluid _img-fluid" alt="<%= show.showTitle %>">
+                        class="myImg-fluid _img-fluid" alt=" <%= show.showTitle %>">
 
-                    <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
+                    <div class="noBorderLearningResourcesBottomTitle">
+                        <%= show.showTitle.length <= 25 ? show.showTitle : show.showTitle.split(' ').slice(0, 2).join(' ') + ' ...' %>
+                    </div>
                 </div>
                 <% } %>
                 <% }) %>
@@ -51,7 +53,9 @@
                     <img src="/images/show_images/<%= show.showThumbnail %>" width="100%" height="200"
                         class="myImg-fluid _img-fluid" alt="<%= show.showTitle %>">
 
-                    <div class="noBorderLearningResourcesBottomTitle"><%= show.showTitle %> </div>
+                    <div class="noBorderLearningResourcesBottomTitle">
+                        <%= show.showTitle.length <= 25 ? show.showTitle : show.showTitle.split(' ').slice(0, 2).join(' ') + ' ...' %>
+                    </div>
                 </div>
                 <% } %>
                 <% }) %>

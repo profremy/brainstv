@@ -1,4 +1,5 @@
 const multer = require('multer');
+const multerS3 = require('multer-s3');
 const path = require('path');
 const fsPromises = require('fs').promises;
 const sharp = require('sharp');
@@ -21,6 +22,49 @@ const AppError = require('./../utils/appError');
 const imageMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
 
 const factory = require('./handlerFactory');
+
+const dotenv = require('dotenv').config();
+const fs = require('fs');
+const S3 = require('aws-sdk/clients/s3');
+// const aws = require('aws-sdk');
+
+const bucketName = process.env.AWS_BUCKET_NAME;
+const region = process.env.AWS_BUCKET_REGION;
+const accessKeyId = process.env.AWS_BUCKET_ACCESS_KEY;
+const secretAccessKey = process.env.AWS_BUCKET_SECRET_KEY;
+
+const s3 = new S3({ region, accessKeyId, secretAccessKey });
+// const s3 = new aws.S3({ region, accessKeyId, secretAccessKey });
+
+const uploadS3 = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: bucketName,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      //console.log(file);
+      let ext = '';
+      if (file) {
+        ext = file.originalname.split('.')[1];
+      }
+
+      if (file.mimetype.startsWith('image')) ext = 'jpeg';
+
+      cb(null, `${req.body.showTitle.split(' ').join('_').toLowerCase()}.${ext}`);
+    },
+  }),
+});
+
+function getFileStream(fileKey) {
+  const downloadParams = {
+    Key: fileKey,
+    Bucket: bucketName,
+  };
+  return s3.getObject(downloadParams).createReadStream();
+}
+exports.getFileStream = getFileStream;
 
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -94,7 +138,7 @@ exports.birthdayCardUploadHandler = catchAsync(async (req, res, next) => {
 */
 
 // Multiple field names with multiple files (maxCount: 3) or single file (maxCount: 1) of any mime type
-exports.uploadShowResourceFiles = upload.fields([
+exports.uploadShowResourceFiles = uploadS3.fields([
   { name: 'showThumbnail', maxCount: 1 },
   { name: 'downloadableDocument', maxCount: 1 },
 ]);
@@ -110,25 +154,30 @@ exports.fileUploadHandler = catchAsync(async (req, res, next) => {
   if (!req.files) {
     return next();
   }
+  //console.log(req.files);
 
   // use the filter to test if the file is an image and a pdf here
   if (req.files.showThumbnail && req.files.downloadableDocument) {
-    req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
-    await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
+    req.body.showThumbnail = `${req.files.showThumbnail[0].key}`;
+    // req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
+    // await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
 
-    req.body.downloadableDocument = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.pdf`;
-    await fsPromises.writeFile(`views/brainstv/downloadables/${req.body.downloadableDocument}`, req.files.downloadableDocument[0].buffer);
+    req.body.downloadableDocument = `${req.files.downloadableDocument[0].key}`;
+    // req.body.downloadableDocument = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.pdf`;
+    // await fsPromises.writeFile(`views/brainstv/downloadables/${req.body.downloadableDocument}`, req.files.downloadableDocument[0].buffer);
 
     return next();
   }
 
   // use the filter to test if the file is an image. Test for file type here
   if (req.files.showThumbnail) {
-    req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
+    //* req.body.showThumbnail = `${req.body.showTitle.split(' ').join('_').toLowerCase()}.jpeg`;
+    req.body.showThumbnail = `${req.files.showThumbnail[0].key}`;
+    //console.log(req.files.showThumbnail[0].key);
 
     // Do image resizing with the sharp package
     // This creates an object in which we can chain multiple methods eg. resize, toFormat
-    await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
+    //*await sharp(req.files.showThumbnail[0].buffer).resize(500, 500).withMetadata().toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/images/show_images/${req.body.showThumbnail}`);
 
     return next();
   }
@@ -327,7 +376,7 @@ exports.updateBirthday = catchAsync(async (req, res, next) => {
 
     res.redirect(`/brainstvadmins/birthdays`);
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     if (birthday != null) {
       renderEditBirthday(res, birthday, true);
     } else {
@@ -387,7 +436,7 @@ exports.getAdminUsers = catchAsync(async (req, res, next) => {
       pageTitle: 'Admin users',
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.redirect('brainstvadmins');
   }
 });
@@ -440,7 +489,7 @@ exports.getShows = catchAsync(async (req, res, next) => {
       pageTitle: 'Shows',
     });
   } catch {
-    res.redirect('brainstvadmins');
+    res.redirect('/brainstvadmins');
   }
 });
 
@@ -448,7 +497,8 @@ exports.newShow = catchAsync(async (req, res, next) => {
   try {
     res.render('brainstvadmins/shows/new', { show: new Show(), pageTitle: 'New show' });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
+    res.redirect('/brainstvadmins');
   }
 });
 
@@ -842,7 +892,7 @@ exports.updateAdminUser = catchAsync(async (req, res, next) => {
     //res.redirect(`/brainstvadmins/${admin.id}`);
     res.redirect('/brainstvadmins/viewAdmin');
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     if (admin == null) {
       res.redirect('/brainstvadmins/viewAdmin');
     } else {

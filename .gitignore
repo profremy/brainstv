@@ -3,9 +3,12 @@ node_modules
 docs
 arootfolder
 public/img/clubmembers
+views/brainstv/downloadables
+public/images/show_images
 
 # misc
 .env
+config.json
 
 #others
 .cache
