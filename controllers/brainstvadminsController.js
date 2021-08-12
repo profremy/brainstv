@@ -52,7 +52,7 @@ const uploadS3 = multer({
 
       if (file.mimetype.startsWith('image')) ext = 'jpeg';
 
-      cb(null, `${req.body.showTitle.split(' ').join('_').toLowerCase()}.${ext}`);
+      cb(null, `${req.body.showTitle.replace('?', '').split(' ').join('_').toLowerCase()}.${ext}`);
     },
   }),
 });
@@ -201,7 +201,7 @@ exports.fileUploadHandler = catchAsync(async (req, res, next) => {
 });
 
 exports.updateSlug = catchAsync(async (req, res, next) => {
-  req.body.slug = `${req.body.showTitle.split(' ').join('-').toLowerCase()}`;
+  req.body.slug = `${req.body.showTitle.replace('?', '').split(' ').join('-').toLowerCase()}`;
   next();
 });
 /*

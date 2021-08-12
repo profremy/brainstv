@@ -1,7 +1,7 @@
 # dependencies
 node_modules
 docs
-arootfolder
+arootfolder/
 public/img/clubmembers
 views/brainstv/downloadables
 public/images/show_images
@@ -11,5 +11,6 @@ public/images/show_images
 config.json
 
 #others
-.cache
-.vs
+.cache/
+.vs/
+.vscode/
